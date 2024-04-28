@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: patrigma_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: patrigma
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: patrigma_db
