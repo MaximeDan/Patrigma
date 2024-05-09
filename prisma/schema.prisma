@@ -12,3 +12,125 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Role {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  userRoles   UserRole[]
+}
+
+model User {
+  id          Int         @id @default(autoincrement())
+  name        String
+  lastName    String
+  email       String      @unique
+  username    String
+  password    String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  isVerified  Boolean     @default(false)
+  dateOfBirth DateTime
+  avatar      String?
+  experience  Int         @default(0)
+  userRoles   UserRole[] // liste des rôles de l'utilisateur
+  userEvents  UserEvent[] // liste des events auxquels l'utilisateur participe
+  comments    Comment[] // liste des commentaires créés par l'utilisateur
+  journey     Journey[] // liste des parcours créés par l'utilisateur
+  events      Event[] // liste des events créés par l'utilisateur
+}
+
+model UserRole {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  roleId Int
+  user   User @relation(fields: [userId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
+}
+
+model Event {
+  id              Int         @id @default(autoincrement())
+  authorId        Int
+  journeyId       Int
+  title           String
+  image           String
+  numberPlayerMin Int
+  numberPlayerMax Int
+  description     String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  isPrivate       Boolean     @default(false)
+  accessCode      String?
+  startTime       DateTime
+  endTime         DateTime
+  userEvents      UserEvent[]
+  author          User        @relation(fields: [authorId], references: [id])
+  journey         Journey     @relation(fields: [journeyId], references: [id])
+}
+
+model UserEvent {
+  id         Int   @id @default(autoincrement())
+  userId     Int
+  eventId    Int
+  lastStepId Int?
+  user       User  @relation(fields: [userId], references: [id])
+  event      Event @relation(fields: [eventId], references: [id])
+  lastStep   Step? @relation(fields: [lastStepId], references: [id])
+}
+
+model Journey {
+  id                  Int       @id @default(autoincrement())
+  authorId            Int
+  journeyId           Int
+  title               String
+  description         String
+  requirement         String
+  treasure            String
+  estimatedDistance   Int
+  estimatedDuration   Int?
+  cluesDifficulty     Int
+  physicalDifficulty  Int
+  lastCompletion      DateTime?
+  mobilityImpaired    String
+  PartiallySighted    String
+  PartiallyDeaf       String
+  CognitivelyImpaired String
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  steps               Step[]
+  Comment             Comment[]
+  author              User      @relation(fields: [authorId], references: [id])
+  events              Event[]
+}
+
+model Step {
+  id            Int         @id @default(autoincrement())
+  journeyId     Int
+  puzzle        String
+  answer        String
+  hint          String
+  picturePuzzle String?
+  pictureHint   String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  coordinates   String
+  address       String
+  city          String
+  postalCode    String
+  country       String
+  stepNumber    Int
+  journey       Journey     @relation(fields: [journeyId], references: [id])
+  userEvents    UserEvent[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  authorId  Int
+  content   String
+  rating    Int?
+  journeyId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [authorId], references: [id])
+  journey   Journey  @relation(fields: [journeyId], references: [id])
+}
