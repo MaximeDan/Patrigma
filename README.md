@@ -32,7 +32,8 @@ Patrigma is a Progressive Web Application (PWA) designed to enhance social inter
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/patrigma.git
-   cd patrigma```
+   cd patrigma
+   ```
 
 2. Install dependencies:
     ```bash
@@ -45,7 +46,24 @@ Patrigma is a Progressive Web Application (PWA) designed to enhance social inter
     NEXT_PUBLIC_MAPBOX_KEY="your-public-mapbox-api-key"
     JWT_SECRET="mysecret"
     ```
-4. Run the development server:
+4. Apply database migrations:  
+
+    Dev environment : 
+    ```bash
+    npx prisma migrate dev
+    ```
+
+    Prod environment : 
+    ```bash
+    npx prisma migrate deploy
+    ```
+
+5. Seeding database (optionnal):
+    ```bash
+    npx prisma db seed
+    ```
+
+6. Run the development server:
     ```bash
     npm run dev
     ```
