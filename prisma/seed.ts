@@ -1,6 +1,5 @@
-import { Journey, Event, PrismaClient, Role, User, UserEvent, Comment } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { Journey, Event, Role, User, UserEvent, Comment } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 async function main() {
   const adminRole: Role = await prisma.role.upsert({
@@ -19,7 +18,7 @@ async function main() {
       name: "USER",
       description: "USER role",
     },
-  });  
+  });
 
   const alice: User = await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
@@ -49,7 +48,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -74,7 +73,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -99,7 +98,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -124,7 +123,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -149,7 +148,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -174,7 +173,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -199,7 +198,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -224,7 +223,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -249,7 +248,7 @@ async function main() {
             },
           },
         ],
-      },      
+      },
     },
   });
 
@@ -259,7 +258,8 @@ async function main() {
     create: {
       authorId: alice.id,
       title: "Treasure Hunt in Old Paris",
-      description: "Discover the historical heritage of Paris by solving puzzles and following clues to find the hidden treasure.",
+      description:
+        "Discover the historical heritage of Paris by solving puzzles and following clues to find the hidden treasure.",
       requirement: "No specific skills required. Suitable for all ages.",
       treasure: "A chest filled with gold coins and historical souvenirs.",
       estimatedDistance: 5,
@@ -274,7 +274,8 @@ async function main() {
       steps: {
         create: [
           {
-            puzzle: "Which famous tower in Paris is known for its iron structure?",
+            puzzle:
+              "Which famous tower in Paris is known for its iron structure?",
             answer: "Eiffel Tower",
             hint: "It was built by Gustave Eiffel for the 1889 Universal Exposition.",
             picturePuzzle: "https://picsum.photos/",
@@ -300,7 +301,8 @@ async function main() {
             stepNumber: 2,
           },
           {
-            puzzle: "In which district of Paris is the Notre-Dame Cathedral located?",
+            puzzle:
+              "In which district of Paris is the Notre-Dame Cathedral located?",
             answer: "Île de la Cité",
             hint: "It is located on an island in the middle of the Seine River.",
             picturePuzzle: "https://picsum.photos/",
@@ -313,7 +315,8 @@ async function main() {
             stepNumber: 3,
           },
           {
-            puzzle: "Which famous cabaret is known for its dance and music shows?",
+            puzzle:
+              "Which famous cabaret is known for its dance and music shows?",
             answer: "Moulin Rouge",
             hint: "It is located in the Pigalle district, known for its lively nightlife.",
             picturePuzzle: "https://picsum.photos/",
@@ -326,7 +329,8 @@ async function main() {
             stepNumber: 4,
           },
           {
-            puzzle: "Which famous monument commemorates the French soldiers who died in World War I?",
+            puzzle:
+              "Which famous monument commemorates the French soldiers who died in World War I?",
             answer: "Arc de Triomphe",
             hint: "It is located at the end of the Champs-Élysées avenue.",
             picturePuzzle: "https://picsum.photos/",
@@ -339,7 +343,8 @@ async function main() {
             stepNumber: 5,
           },
           {
-            puzzle: "Which famous cathedral is located on the highest point in Paris?",
+            puzzle:
+              "Which famous cathedral is located on the highest point in Paris?",
             answer: "Sacré-Cœur Basilica",
             hint: "It offers a panoramic view of the city from its dome.",
             picturePuzzle: "https://picsum.photos/",
@@ -352,7 +357,8 @@ async function main() {
             stepNumber: 6,
           },
           {
-            puzzle: "Which famous avenue in Paris is known for its luxury shops and theaters?",
+            puzzle:
+              "Which famous avenue in Paris is known for its luxury shops and theaters?",
             answer: "Champs-Élysées",
             hint: "It is often called 'the most beautiful avenue in the world'.",
             picturePuzzle: "https://picsum.photos/",
@@ -365,7 +371,8 @@ async function main() {
             stepNumber: 7,
           },
           {
-            puzzle: "Which famous opera house in Paris is known for its grand architecture?",
+            puzzle:
+              "Which famous opera house in Paris is known for its grand architecture?",
             answer: "Palais Garnier",
             hint: "It was designed by Charles Garnier and opened in 1875.",
             picturePuzzle: "https://picsum.photos/",
@@ -388,7 +395,8 @@ async function main() {
     create: {
       authorId: alice.id,
       title: "Treasure Hunt in the Latin Quarter",
-      description: "Explore the Latin Quarter in Paris by solving puzzles and following clues to find the hidden treasure.",
+      description:
+        "Explore the Latin Quarter in Paris by solving puzzles and following clues to find the hidden treasure.",
       requirement: "No specific skills required. Suitable for all ages.",
       treasure: "A chest filled with gold coins and cultural souvenirs.",
       estimatedDistance: 2,
@@ -439,7 +447,8 @@ async function main() {
     create: {
       authorId: alice.id,
       title: "Treasure Hunt through the Heritage of Rouen",
-      description: "Embark on a discovery of Rouen's historic and cultural heritage by solving puzzles and following clues to find the hidden treasure.",
+      description:
+        "Embark on a discovery of Rouen's historic and cultural heritage by solving puzzles and following clues to find the hidden treasure.",
       requirement: "No specific skills required. Suitable for all ages.",
       treasure: "A chest filled with gold coins and historical souvenirs.",
       estimatedDistance: 5,
@@ -454,7 +463,8 @@ async function main() {
       steps: {
         create: [
           {
-            puzzle: "Which famous monument is located on the Place du Vieux-Marché?",
+            puzzle:
+              "Which famous monument is located on the Place du Vieux-Marché?",
             answer: "Saint Joan of Arc Church",
             hint: "This church is dedicated to Joan of Arc and is located on the site where she was burned at the stake.",
             picturePuzzle: "https://picsum.photos/",
@@ -467,7 +477,8 @@ async function main() {
             stepNumber: 1,
           },
           {
-            puzzle: "Which famous museum is located on the left bank of the Seine?",
+            puzzle:
+              "Which famous museum is located on the left bank of the Seine?",
             answer: "Museum of Fine Arts of Rouen",
             hint: "This museum houses an important collection of artworks from the Middle Ages to the 21st century.",
             picturePuzzle: "https://picsum.photos/",
@@ -532,7 +543,8 @@ async function main() {
             stepNumber: 6,
           },
           {
-            puzzle: "Which famous street is known for its half-timbered houses?",
+            puzzle:
+              "Which famous street is known for its half-timbered houses?",
             answer: "Rue du Gros-Horloge",
             hint: "This street is one of the most picturesque in Rouen and is lined with beautiful half-timbered houses.",
             picturePuzzle: "https://picsum.photos/",
@@ -545,7 +557,8 @@ async function main() {
             stepNumber: 7,
           },
           {
-            puzzle: "Which famous square is located near the Rue du Gros-Horloge?",
+            puzzle:
+              "Which famous square is located near the Rue du Gros-Horloge?",
             answer: "Place de la Calende",
             hint: "This square is a lively area in Rouen with many shops, cafes, and restaurants.",
             picturePuzzle: "https://picsum.photos/",
@@ -568,7 +581,8 @@ async function main() {
     create: {
       authorId: alice.id,
       title: "Treasure Hunt in Old Nice",
-      description: "Discover the historical heritage of Nice by solving puzzles and following clues to find the hidden treasure.",
+      description:
+        "Discover the historical heritage of Nice by solving puzzles and following clues to find the hidden treasure.",
       requirement: "No particular skills required. Suitable for all ages.",
       treasure: "A chest filled with gold coins and historical souvenirs.",
       estimatedDistance: 4,
@@ -583,7 +597,8 @@ async function main() {
       steps: {
         create: [
           {
-            puzzle: "Which famous monument is located on the Promenade des Anglais?",
+            puzzle:
+              "Which famous monument is located on the Promenade des Anglais?",
             answer: "Hôtel Negresco",
             hint: "This iconic hotel is a symbol of the city of Nice.",
             picturePuzzle: "https://picsum.photos/",
@@ -596,7 +611,8 @@ async function main() {
             stepNumber: 1,
           },
           {
-            puzzle: "Which famous park is located at the top of the Castle Hill?",
+            puzzle:
+              "Which famous park is located at the top of the Castle Hill?",
             answer: "Parc de la Colline du Château",
             hint: "This park offers a panoramic view of the city of Nice.",
             picturePuzzle: "https://picsum.photos/",
@@ -645,7 +661,8 @@ async function main() {
     create: {
       authorId: alice.id,
       title: "Treasure Hunt through the Heritage of Toulouse",
-      description: "Embark on a journey to discover the historical and cultural heritage of Toulouse by solving puzzles and following clues to find the hidden treasure.",
+      description:
+        "Embark on a journey to discover the historical and cultural heritage of Toulouse by solving puzzles and following clues to find the hidden treasure.",
       requirement: "No particular skills required. Suitable for all ages.",
       treasure: "A chest filled with gold coins and historical souvenirs.",
       estimatedDistance: 5,
@@ -713,10 +730,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 10,
       numberPlayerMin: 1,
-      description: "Join us for an exciting race filled with challenges and puzzles!",
+      description:
+        "Join us for an exciting race filled with challenges and puzzles!",
       accessCode: "1234",
       startTime: new Date("2024-05-01"),
-      endTime: new Date("2024-05-01"),         
+      endTime: new Date("2024-05-01"),
     },
   });
 
@@ -733,7 +751,7 @@ async function main() {
       description: "Can you solve the puzzles and escape the room in time?",
       accessCode: "5678",
       startTime: new Date("2024-06-01"),
-      endTime: new Date("2024-06-01"),         
+      endTime: new Date("2024-06-01"),
     },
   });
 
@@ -747,10 +765,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
-      description: "Embark on a thrilling treasure hunt and uncover hidden secrets!",
+      description:
+        "Embark on a thrilling treasure hunt and uncover hidden secrets!",
       accessCode: "abcd",
       startTime: new Date("2024-07-01"),
-      endTime: new Date("2024-07-01"),         
+      endTime: new Date("2024-07-01"),
     },
   });
 
@@ -764,10 +783,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 12,
       numberPlayerMin: 3,
-      description: "Explore the haunted mansion and solve the mystery that lies within!",
+      description:
+        "Explore the haunted mansion and solve the mystery that lies within!",
       accessCode: "efgh",
       startTime: new Date("2024-08-01"),
-      endTime: new Date("2024-08-01"),         
+      endTime: new Date("2024-08-01"),
     },
   });
 
@@ -781,10 +801,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 6,
       numberPlayerMin: 1,
-      description: "Test your puzzle-solving skills in this challenging adventure!",
+      description:
+        "Test your puzzle-solving skills in this challenging adventure!",
       accessCode: "ijkl",
       startTime: new Date("2024-09-01"),
-      endTime: new Date("2024-09-01"),         
+      endTime: new Date("2024-09-01"),
     },
   });
 
@@ -798,10 +819,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
-      description: "Embark on an exciting outdoor expedition and conquer nature's challenges!",
+      description:
+        "Embark on an exciting outdoor expedition and conquer nature's challenges!",
       accessCode: "mnop",
       startTime: new Date("2024-10-01"),
-      endTime: new Date("2024-10-01"),         
+      endTime: new Date("2024-10-01"),
     },
   });
 
@@ -815,10 +837,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 10,
       numberPlayerMin: 1,
-      description: "Explore the city and solve clues to complete the ultimate scavenger hunt!",
+      description:
+        "Explore the city and solve clues to complete the ultimate scavenger hunt!",
       accessCode: "qrst",
       startTime: new Date("2024-11-01"),
-      endTime: new Date("2024-11-01"),         
+      endTime: new Date("2024-11-01"),
     },
   });
 
@@ -832,10 +855,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 4,
       numberPlayerMin: 1,
-      description: "Enhance teamwork and communication skills in this thrilling team building challenge!",
+      description:
+        "Enhance teamwork and communication skills in this thrilling team building challenge!",
       accessCode: "uvwx",
       startTime: new Date("2024-12-01"),
-      endTime: new Date("2024-12-01"),         
+      endTime: new Date("2024-12-01"),
     },
   });
 
@@ -849,10 +873,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 6,
       numberPlayerMin: 1,
-      description: "Escape the ordinary and immerse yourself in an unforgettable outdoor adventure!",
+      description:
+        "Escape the ordinary and immerse yourself in an unforgettable outdoor adventure!",
       accessCode: "yzab",
       startTime: new Date("2024-05-01"),
-      endTime: new Date("2024-05-01"),         
+      endTime: new Date("2024-05-01"),
     },
   });
 
@@ -866,10 +891,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
-      description: "Unravel the secrets of a mysterious island in this thrilling adventure!",
+      description:
+        "Unravel the secrets of a mysterious island in this thrilling adventure!",
       accessCode: "cdef",
       startTime: new Date("2024-06-01"),
-      endTime: new Date("2024-06-01"),         
+      endTime: new Date("2024-06-01"),
     },
   });
 
@@ -883,10 +909,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 12,
       numberPlayerMin: 3,
-      description: "Step into the enchanted forest and embark on a magical journey like no other!",
+      description:
+        "Step into the enchanted forest and embark on a magical journey like no other!",
       accessCode: "ghij",
       startTime: new Date("2024-07-01"),
-      endTime: new Date("2024-07-01"),         
+      endTime: new Date("2024-07-01"),
     },
   });
 
@@ -900,10 +927,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 10,
       numberPlayerMin: 1,
-      description: "Embark on an epic quest filled with challenges, puzzles, and adventure!",
+      description:
+        "Embark on an epic quest filled with challenges, puzzles, and adventure!",
       accessCode: "klmn",
       startTime: new Date("2024-08-01"),
-      endTime: new Date("2024-08-01"),         
+      endTime: new Date("2024-08-01"),
     },
   });
 
@@ -917,10 +945,11 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
-      description: "Enter the mystic temple and solve ancient riddles to unlock its secrets!",
+      description:
+        "Enter the mystic temple and solve ancient riddles to unlock its secrets!",
       accessCode: "opqr",
       startTime: new Date("2024-09-01"),
-      endTime: new Date("2024-09-01"),         
+      endTime: new Date("2024-09-01"),
     },
   });
 
@@ -934,15 +963,41 @@ async function main() {
       image: "https://picsum.photos/",
       numberPlayerMax: 6,
       numberPlayerMin: 1,
-      description: "Immerse yourself in a thrilling virtual reality adventure like never before!",
+      description:
+        "Immerse yourself in a thrilling virtual reality adventure like never before!",
       accessCode: "stuv",
       startTime: new Date("2024-10-01"),
-      endTime: new Date("2024-10-01"),         
+      endTime: new Date("2024-10-01"),
     },
   });
 
-  const users = [alice, bob, charlie, david, emma, frank, grace, henry, isabella];
-  const events: Event[] = [event1, event2, event3, event4, event5, event6, event7, event8, event9, event10, event11, event12, event13, event14];
+  const users = [
+    alice,
+    bob,
+    charlie,
+    david,
+    emma,
+    frank,
+    grace,
+    henry,
+    isabella,
+  ];
+  const events: Event[] = [
+    event1,
+    event2,
+    event3,
+    event4,
+    event5,
+    event6,
+    event7,
+    event8,
+    event9,
+    event10,
+    event11,
+    event12,
+    event13,
+    event14,
+  ];
 
   for (let i = 0; i < users.length; i++) {
     const randomEventIndex = Math.floor(Math.random() * events.length);
@@ -995,7 +1050,8 @@ async function main() {
       update: {},
       create: {
         authorId: alice.id,
-        content: "The treasure hunt was so much fun! We found the hidden treasure!",
+        content:
+          "The treasure hunt was so much fun! We found the hidden treasure!",
         rating: 5,
         journeyId: journey2.id,
       },
@@ -1005,7 +1061,8 @@ async function main() {
       update: {},
       create: {
         authorId: grace.id,
-        content: "The puzzles were challenging but rewarding. Highly recommend!",
+        content:
+          "The puzzles were challenging but rewarding. Highly recommend!",
         rating: 4,
         journeyId: journey2.id,
       },
@@ -1015,7 +1072,8 @@ async function main() {
       update: {},
       create: {
         authorId: emma.id,
-        content: "The treasure hunt was a great team-building activity. Thumbs up!",
+        content:
+          "The treasure hunt was a great team-building activity. Thumbs up!",
         rating: 5,
         journeyId: journey2.id,
       },
@@ -1028,7 +1086,8 @@ async function main() {
       update: {},
       create: {
         authorId: david.id,
-        content: "The outdoor expedition was an amazing adventure! Loved every moment.",
+        content:
+          "The outdoor expedition was an amazing adventure! Loved every moment.",
         rating: 5,
         journeyId: journey3.id,
       },
@@ -1038,7 +1097,8 @@ async function main() {
       update: {},
       create: {
         authorId: frank.id,
-        content: "The city scavenger hunt was so much fun! We explored hidden gems in the city.",
+        content:
+          "The city scavenger hunt was so much fun! We explored hidden gems in the city.",
         rating: 4,
         journeyId: journey3.id,
       },
@@ -1048,14 +1108,14 @@ async function main() {
       update: {},
       create: {
         authorId: charlie.id,
-        content: "The team building challenge was a great way to bond with colleagues. Highly recommend!",
+        content:
+          "The team building challenge was a great way to bond with colleagues. Highly recommend!",
         rating: 5,
         journeyId: journey3.id,
       },
     }),
   ];
 
-  
   const comments4: Comment[] = [
     await prisma.comment.upsert({
       where: { id: 11 },
@@ -1072,7 +1132,8 @@ async function main() {
       update: {},
       create: {
         authorId: isabella.id,
-        content: "The mysterious island was underwhelming. Expected more excitement.",
+        content:
+          "The mysterious island was underwhelming. Expected more excitement.",
         rating: 3,
         journeyId: journey4.id,
       },
@@ -1095,7 +1156,8 @@ async function main() {
       update: {},
       create: {
         authorId: isabella.id,
-        content: "The epic quest was absolutely thrilling! The challenges were mind-bending.",
+        content:
+          "The epic quest was absolutely thrilling! The challenges were mind-bending.",
         rating: 5,
         journeyId: journey5.id,
       },
@@ -1105,7 +1167,8 @@ async function main() {
       update: {},
       create: {
         authorId: henry.id,
-        content: "The mystic temple was an incredible experience. The riddles were challenging but solvable.",
+        content:
+          "The mystic temple was an incredible experience. The riddles were challenging but solvable.",
         rating: 4,
         journeyId: journey5.id,
       },
@@ -1115,14 +1178,14 @@ async function main() {
       update: {},
       create: {
         authorId: charlie.id,
-        content: "The virtual reality adventure was mind-blowing! It felt like being in a different world.",
+        content:
+          "The virtual reality adventure was mind-blowing! It felt like being in a different world.",
         rating: 5,
         journeyId: journey5.id,
       },
     }),
   ];
 }
-
 
 main()
   .then(async () => {
