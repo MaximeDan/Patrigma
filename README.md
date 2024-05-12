@@ -46,7 +46,8 @@ Patrigma is a Progressive Web Application (PWA) designed to enhance social inter
     NEXT_PUBLIC_MAPBOX_KEY="your-public-mapbox-api-key"
     JWT_SECRET="mysecret"
     ```
-4. Apply database migrations:
+4. Apply database migrations:  
+
     Dev environnement : 
     ```bash
     npx prisma migrate dev
