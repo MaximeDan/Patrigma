@@ -81,7 +81,6 @@ model UserEvent {
 model Journey {
   id                  Int       @id @default(autoincrement())
   authorId            Int
-  journeyId           Int
   title               String
   description         String
   requirement         String
