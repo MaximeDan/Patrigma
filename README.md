@@ -48,12 +48,12 @@ Patrigma is a Progressive Web Application (PWA) designed to enhance social inter
     ```
 4. Apply database migrations:  
 
-    Dev environnement : 
+    Dev environment : 
     ```bash
     npx prisma migrate dev
     ```
 
-    Prod environnement : 
+    Prod environment : 
     ```bash
     npx prisma migrate deploy
     ```
