@@ -1,5 +1,6 @@
-import { Journey, Event, Role, User, UserEvent, Comment } from "@prisma/client";
-import prisma from "@/lib/prisma";
+import { Journey, Event, PrismaClient, Role, User, UserEvent, Comment } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 async function main() {
   const adminRole: Role = await prisma.role.upsert({
@@ -1000,15 +1001,30 @@ async function main() {
   ];
 
   for (let i = 0; i < users.length; i++) {
-    const randomEventIndex = Math.floor(Math.random() * events.length);
-    const userEvent: UserEvent = await prisma.userEvent.upsert({
-      where: { id: i + 1 },
-      update: {},
-      create: {
-        userId: users[i].id,
-        eventId: events[randomEventIndex].id,
-      },
-    });
+    const userEvents: number[] = []; // Array to store the event IDs the user is already registered for
+
+    // Generate a random number of events for the user between 0 and 6
+    const numEvents = Math.floor(Math.random() * 7);
+
+    for (let j = 0; j < numEvents; j++) {
+      let randomEventIndex = Math.floor(Math.random() * events.length);
+
+      // Check if the user is already registered for the randomly selected event
+      while (userEvents.includes(events[randomEventIndex].id)) {
+        randomEventIndex = Math.floor(Math.random() * events.length);
+      }
+
+      // Register the user for the event and add the event ID to the userEvents array
+      const userEvent: UserEvent = await prisma.userEvent.upsert({
+        where: { id: i * numEvents + j + 1 },
+        update: {},
+        create: {
+          userId: users[i].id,
+          eventId: events[randomEventIndex].id,
+        },
+      });
+      userEvents.push(events[randomEventIndex].id);
+    }
   }
 
   const comments: Comment[] = [
