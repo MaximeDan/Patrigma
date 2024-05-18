@@ -6,30 +6,42 @@ import { SignJWT, jwtVerify, JWTPayload } from 'jose';
 import { getRoleById } from './roleService';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+export type RegisterUser = {
+    email: string;
+    password: string;
+    username: string;
+ };
 
-export const registerUser = async (userData: User, roleId: number): Promise<User> => {
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    userData.password = hashedPassword;
+export const register = async (email: string, username:string, password: string): Promise<User> => {
+   try{
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Verify that the role exists
-    const userRole = await getRoleById(roleId);
+    const userData: RegisterUser = {
+        email,
+        password: hashedPassword,
+        username,
+    };
+
+    console.log(userData);
+    const userRole = await getRoleById(1);
     if (!userRole) {
         throw new Error('Role not found');
     }
 
-    // Create the user
     const newUser = await createUser(userData);
-    
-    // Assign the role to the user
+    console.log(newUser);  
     const userRoleData: UserRole = {
         userId: newUser.id,
-        roleId: roleId,
+        roleId: userRole.id,
         id: 0 
     };
     await createUserRole(userRoleData);
 
     return newUser;
+   } 
+   catch (error) {
+    throw new Error('User not created');
+   }
 };
 
 export const signIn = async (email: string, password: string): Promise<string> => {
@@ -60,8 +72,8 @@ export const verifyToken = async (token: string): Promise<JWTPayload> => {
 export const assignRoleToUser = async (userId: number, roleId: number): Promise<UserRole> => {
     // Assigner le rôle à l'utilisateur
     const userRoleData: UserRole = {
-        userId: userId,
-        roleId: roleId,
+        userId,
+        roleId,
         id: 0 // L'id sera généré automatiquement par Prisma
     };
     return await createUserRole(userRoleData);
@@ -94,3 +106,4 @@ export const removeUser = async (id: number): Promise<User | null> => {
     }
     return await deleteUser(id);
 };
+

@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createStep, readStep, readSteps, updateStep, deleteStep } from '../repositories/stepRepository';
+import { createStep, getStep, getSteps, updateStep, deleteStep } from '../repositories/stepRepository';
 import { Step } from '@prisma/client';
 
 export const registerStep = async (stepData: Step): Promise<Step> => {
@@ -12,7 +12,7 @@ export const registerStep = async (stepData: Step): Promise<Step> => {
 };
 
 export const getStepById = async (id: number): Promise<Step | null> => {
-    const step = await readStep(id);
+    const step = await getStep(id);
 
     if (!step) 
         throw new NotFoundException('Step not found');
@@ -21,7 +21,7 @@ export const getStepById = async (id: number): Promise<Step | null> => {
 };
 
 export const getAllSteps = async (): Promise<Step[]> => {
-    const steps = await readSteps();
+    const steps = await getSteps();
 
     if(steps.length === 0) 
         throw new NotFoundException('No steps found');
@@ -30,7 +30,7 @@ export const getAllSteps = async (): Promise<Step[]> => {
 };
 
 export const modifyStep = async (id: number, stepData: Step): Promise<Step | null> => {
-    const step = await readStep(id);
+    const step = await getStep(id);
 
     if (!step) 
         throw new NotFoundException('Step not found');
@@ -44,7 +44,7 @@ export const modifyStep = async (id: number, stepData: Step): Promise<Step | nul
 };
 
 export const removeStep = async (id: number): Promise<Step | null> => {
-    const step = await readStep(id);
+    const step = await getStep(id);
 
     if (!step) 
         throw new NotFoundException('Step not found');

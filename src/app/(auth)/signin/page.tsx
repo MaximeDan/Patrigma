@@ -1,7 +1,8 @@
 import React from "react";
 import Login from "@/components/form/Login";
 
-const Connexion = () => {
+const SignInPage = () => {
+
   return (
     <main>
       <h1>Connexion</h1>
@@ -10,4 +11,4 @@ const Connexion = () => {
   );
 };
 
-export default Connexion;
+export default SignInPage;

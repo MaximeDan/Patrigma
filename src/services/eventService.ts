@@ -1,6 +1,6 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createEvent, readEvent, readEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
-import { createUserEvent, readUserEvent, updateUserEvent } from '../repositories/userEventRepository';
+import { createEvent, getEvent, getEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
+import { createUserEvent, getUserEvent, updateUserEvent } from '../repositories/userEventRepository';
 import { Event, UserEvent } from '@prisma/client';
 
 export const registerEvent = async (eventData: Event): Promise<Event> => {
@@ -13,7 +13,7 @@ export const registerEvent = async (eventData: Event): Promise<Event> => {
 };
 
 export const getEventById = async (id: number): Promise<Event | null> => {
-    const event = await readEvent(id);
+    const event = await getEvent(id);
 
     if (!event) 
         throw new NotFoundException('Event not found');
@@ -22,7 +22,7 @@ export const getEventById = async (id: number): Promise<Event | null> => {
 };
 
 export const getAllEvents = async (): Promise<Event[]> => {
-    const events = await readEvents();
+    const events = await getEvents();
 
     if(events.length === 0) 
         throw new NotFoundException('No events found');
@@ -31,7 +31,7 @@ export const getAllEvents = async (): Promise<Event[]> => {
 };
 
 export const modifyEvent = async (id: number, eventData: Event): Promise<Event | null> => {
-    const event = await readEvent(id);
+    const event = await getEvent(id);
 
     if (!event) 
         throw new NotFoundException('Event not found');
@@ -45,7 +45,7 @@ export const modifyEvent = async (id: number, eventData: Event): Promise<Event |
 };
 
 export const removeEvent = async (id: number): Promise<Event | null> => {
-    const event = await readEvent(id);
+    const event = await getEvent(id);
 
     if (!event) 
         throw new NotFoundException('Event not found');
@@ -59,7 +59,7 @@ export const removeEvent = async (id: number): Promise<Event | null> => {
 };
 
 export const joinEvent = async (userId: number, eventId: number): Promise<UserEvent> => {
-    const event = await readEvent(eventId);
+    const event = await getEvent(eventId);
 
     if (!event) 
         throw new NotFoundException('Event not found');
@@ -80,7 +80,7 @@ export const joinEvent = async (userId: number, eventId: number): Promise<UserEv
 };
 
 export const updateLastStepId = async (userEventId: number, lastStepId: number): Promise<UserEvent | null> => {
-    const userEvent = await readUserEvent(userEventId);
+    const userEvent = await getUserEvent(userEventId);
   
     if (!userEvent) 
       throw new NotFoundException('UserEvent not found');
