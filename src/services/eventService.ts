@@ -1,46 +1,96 @@
+import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
 import { createEvent, readEvent, readEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
-import { createUserEvent } from '../repositories/userEventRepository';
+import { createUserEvent, readUserEvent, updateUserEvent } from '../repositories/userEventRepository';
 import { Event, UserEvent } from '@prisma/client';
 
 export const registerEvent = async (eventData: Event): Promise<Event> => {
-    return await createEvent(eventData);
-};
+    const result = await createEvent(eventData);
 
-export const joinEvent = async (userId: number, eventId: number): Promise<UserEvent> => {
-    // Register the user for the event
-    const userEventData: UserEvent = {
-        id: 0,
-        userId: userId,
-        eventId: eventId,
-        lastStepId: null
-    };
-    return await createUserEvent(userEventData);
+    if (!result) 
+        throw new InternalServerErrorException('Internal server error');
+    
+    return result;
 };
 
 export const getEventById = async (id: number): Promise<Event | null> => {
     const event = await readEvent(id);
-    if (!event) {
-        throw new Error('Event not found');
-    }
+
+    if (!event) 
+        throw new NotFoundException('Event not found');
+    
     return event;
 };
 
 export const getAllEvents = async (): Promise<Event[]> => {
-    return await readEvents();
+    const events = await readEvents();
+
+    if(events.length === 0) 
+        throw new NotFoundException('No events found');
+
+    return events;
 };
 
 export const modifyEvent = async (id: number, eventData: Event): Promise<Event | null> => {
     const event = await readEvent(id);
-    if (!event) {
-        throw new Error('Event not found');
-    }
-    return await updateEvent(id, eventData);
+
+    if (!event) 
+        throw new NotFoundException('Event not found');
+    
+    const result = await updateEvent(id, eventData);
+
+    if(!result) 
+        throw new InternalServerErrorException('Internal server error');
+    
+    return result;
 };
 
 export const removeEvent = async (id: number): Promise<Event | null> => {
     const event = await readEvent(id);
-    if (!event) {
-        throw new Error('Event not found');
-    }
-    return await deleteEvent(id);
+
+    if (!event) 
+        throw new NotFoundException('Event not found');
+    
+    const result = await deleteEvent(id);
+
+    if(!result) 
+        throw new InternalServerErrorException('Internal server error');
+
+    return result;
 };
+
+export const joinEvent = async (userId: number, eventId: number): Promise<UserEvent> => {
+    const event = await readEvent(eventId);
+
+    if (!event) 
+        throw new NotFoundException('Event not found');
+
+    const userEventData: UserEvent = {
+        userId: userId,
+        eventId: eventId,
+        lastStepId: null,
+        id: 0 
+    };
+
+    const result = await createUserEvent(userEventData);
+
+    if (!result) 
+        throw new InternalServerErrorException('Internal server error');
+    
+    return result;
+};
+
+export const updateLastStepId = async (userEventId: number, lastStepId: number): Promise<UserEvent | null> => {
+    const userEvent = await readUserEvent(userEventId);
+  
+    if (!userEvent) 
+      throw new NotFoundException('UserEvent not found');
+  
+    userEvent.lastStepId = lastStepId;
+  
+    const result = await updateUserEvent(userEventId, userEvent);
+
+    if (!result) 
+      throw new InternalServerErrorException('Internal server error');
+  
+    return result;
+  };
