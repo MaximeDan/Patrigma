@@ -7,11 +7,11 @@ export const createJourney = async (data: Journey): Promise<Journey> => {
     });
 };
 
-export const readJourney = async (id: number): Promise<Journey | null> => {
+export const getJourney = async (id: number): Promise<Journey | null> => {
     return await prisma.journey.findUnique({ where: { id } });
 };
 
-export const readJourneys = async (): Promise<Journey[]> => {
+export const getJourneys = async (): Promise<Journey[]> => {
     return await prisma.journey.findMany();
 };
 

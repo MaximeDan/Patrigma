@@ -1,4 +1,4 @@
-import { createEvent, readEvent, readEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
+import { createEvent, getEvent, getEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
 import { createUserEvent } from '../repositories/userEventRepository';
 import { Event, UserEvent } from '@prisma/client';
 
@@ -18,7 +18,7 @@ export const joinEvent = async (userId: number, eventId: number): Promise<UserEv
 };
 
 export const getEventById = async (id: number): Promise<Event | null> => {
-    const event = await readEvent(id);
+    const event = await getEvent(id);
     if (!event) {
         throw new Error('Event not found');
     }
@@ -26,11 +26,11 @@ export const getEventById = async (id: number): Promise<Event | null> => {
 };
 
 export const getAllEvents = async (): Promise<Event[]> => {
-    return await readEvents();
+    return await getEvents();
 };
 
 export const modifyEvent = async (id: number, eventData: Event): Promise<Event | null> => {
-    const event = await readEvent(id);
+    const event = await getEvent(id);
     if (!event) {
         throw new Error('Event not found');
     }
@@ -38,7 +38,7 @@ export const modifyEvent = async (id: number, eventData: Event): Promise<Event |
 };
 
 export const removeEvent = async (id: number): Promise<Event | null> => {
-    const event = await readEvent(id);
+    const event = await getEvent(id);
     if (!event) {
         throw new Error('Event not found');
     }

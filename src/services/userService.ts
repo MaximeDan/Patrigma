@@ -1,5 +1,5 @@
-import { createUser, readUser, readUsers, updateUser, deleteUser } from '../repositories/userRepository';
-import { createUserRole, readUserRole } from '../repositories/userRoleRepository';
+import { createUser, getUser, getUsers, updateUser, deleteUser, getUserByEmail } from '../repositories/userRepository';
+import { createUserRole } from '../repositories/userRoleRepository';
 import { User, UserRole } from '@prisma/client';
 import bcrypt from "bcrypt";
 import { SignJWT, jwtVerify, JWTPayload } from 'jose';
@@ -32,8 +32,8 @@ export const registerUser = async (userData: User, roleId: number): Promise<User
     return newUser;
 };
 
-export const loginUser = async (email: string, password: string): Promise<string> => {
-    const user = await readUserByEmail(email);
+export const signIn = async (email: string, password: string): Promise<string> => {
+    const user = await getUserByEmail(email);
     if (!user) {
         throw new Error('User not found');
     }
@@ -68,7 +68,7 @@ export const assignRoleToUser = async (userId: number, roleId: number): Promise<
 };
 
 export const getUserById = async (id: number): Promise<User | null> => {
-    const user = await readUser(id);
+    const user = await getUser(id);
     if (!user) {
         throw new Error('User not found');
     }
@@ -76,11 +76,11 @@ export const getUserById = async (id: number): Promise<User | null> => {
 };
 
 export const getAllUsers = async (): Promise<User[]> => {
-    return await readUsers();
+    return await getUsers();
 };
 
 export const modifyUser = async (id: number, userData: User): Promise<User | null> => {
-    const user = await readUser(id);
+    const user = await getUser(id);
     if (!user) {
         throw new Error('User not found');
     }
@@ -88,14 +88,9 @@ export const modifyUser = async (id: number, userData: User): Promise<User | nul
 };
 
 export const removeUser = async (id: number): Promise<User | null> => {
-    const user = await readUser(id);
+    const user = await getUser(id);
     if (!user) {
         throw new Error('User not found');
     }
     return await deleteUser(id);
-};
-
-// Ajoutez cette fonction pour lire un utilisateur par email
-const readUserByEmail = async (email: string): Promise<User | null> => {
-    return await prisma.user.findUnique({ where: { email } });
 };

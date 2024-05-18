@@ -7,11 +7,11 @@ export const createComment = async (data: Comment): Promise<Comment> => {
     });
 };
 
-export const readComment = async (id: number): Promise<Comment | null> => {
+export const getComment = async (id: number): Promise<Comment | null> => {
     return await prisma.comment.findUnique({ where: { id } });
 };
 
-export const readComments = async (): Promise<Comment[]> => {
+export const getComments = async (): Promise<Comment[]> => {
     return await prisma.comment.findMany();
 };
 

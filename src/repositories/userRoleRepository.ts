@@ -7,11 +7,11 @@ export const createUserRole = async (data: UserRole): Promise<UserRole> => {
     });
 };
 
-export const readUserRole = async (id: number): Promise<UserRole | null> => {
+export const getUserRole = async (id: number): Promise<UserRole | null> => {
     return await prisma.userRole.findUnique({ where: { id } });
 };
 
-export const readUserRoles = async (): Promise<UserRole[]> => {
+export const getUserRoles = async (): Promise<UserRole[]> => {
     return await prisma.userRole.findMany();
 };
 

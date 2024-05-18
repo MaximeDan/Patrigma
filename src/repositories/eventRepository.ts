@@ -7,11 +7,11 @@ export const createEvent = async (data: Event): Promise<Event> => {
     });
 };
 
-export const readEvent = async (id: number): Promise<Event | null> => {
+export const getEvent = async (id: number): Promise<Event | null> => {
     return await prisma.event.findUnique({ where: { id } });
 };
 
-export const readEvents = async (): Promise<Event[]> => {
+export const getEvents = async (): Promise<Event[]> => {
     return await prisma.event.findMany();
 };
 

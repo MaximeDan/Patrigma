@@ -1,4 +1,4 @@
-import { createRole, readRole, readRoles, updateRole, deleteRole } from '../repositories/roleRepository';
+import { createRole, getRole, getRoles, updateRole, deleteRole } from '../repositories/roleRepository';
 import { Role } from '@prisma/client';
 
 export const registerRole = async (roleData: Role): Promise<Role> => {
@@ -6,7 +6,7 @@ export const registerRole = async (roleData: Role): Promise<Role> => {
 };
 
 export const getRoleById = async (id: number): Promise<Role | null> => {
-    const role = await readRole(id);
+    const role = await getRole(id);
     if (!role) {
         throw new Error('Role not found');
     }
@@ -14,11 +14,11 @@ export const getRoleById = async (id: number): Promise<Role | null> => {
 };
 
 export const getAllRoles = async (): Promise<Role[]> => {
-    return await readRoles();
+    return await getRoles();
 };
 
 export const modifyRole = async (id: number, roleData: Role): Promise<Role | null> => {
-    const role = await readRole(id);
+    const role = await getRole(id);
     if (!role) {
         throw new Error('Role not found');
     }
@@ -26,7 +26,7 @@ export const modifyRole = async (id: number, roleData: Role): Promise<Role | nul
 };
 
 export const removeRole = async (id: number): Promise<Role | null> => {
-    const role = await readRole(id);
+    const role = await getRole(id);
     if (!role) {
         throw new Error('Role not found');
     }

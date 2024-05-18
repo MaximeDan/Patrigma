@@ -1,4 +1,4 @@
-import { createJourney, readJourney, readJourneys, updateJourney, deleteJourney } from '../repositories/journeyRepository';
+import { createJourney, getJourney, getJourneys, updateJourney, deleteJourney } from '../repositories/journeyRepository';
 import { Journey } from '@prisma/client';
 
 export const registerJourney = async (journeyData: Journey): Promise<Journey> => {
@@ -6,7 +6,7 @@ export const registerJourney = async (journeyData: Journey): Promise<Journey> =>
 };
 
 export const getJourneyById = async (id: number): Promise<Journey | null> => {
-    const journey = await readJourney(id);
+    const journey = await getJourney(id);
     if (!journey) {
         throw new Error('Journey not found');
     }
@@ -14,11 +14,11 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
 };
 
 export const getAllJourneys = async (): Promise<Journey[]> => {
-    return await readJourneys();
+    return await getJourneys();
 };
 
 export const modifyJourney = async (id: number, journeyData: Journey): Promise<Journey | null> => {
-    const journey = await readJourney(id);
+    const journey = await getJourney(id);
     if (!journey) {
         throw new Error('Journey not found');
     }
@@ -26,7 +26,7 @@ export const modifyJourney = async (id: number, journeyData: Journey): Promise<J
 };
 
 export const removeJourney = async (id: number): Promise<Journey | null> => {
-    const journey = await readJourney(id);
+    const journey = await getJourney(id);
     if (!journey) {
         throw new Error('Journey not found');
     }

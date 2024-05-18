@@ -1,4 +1,4 @@
-import { createComment, readComment, readComments, updateComment, deleteComment } from '../repositories/commentRepository';
+import { createComment, getComment, getComments, updateComment, deleteComment } from '../repositories/commentRepository';
 import { Comment } from '@prisma/client';
 
 export const registerComment = async (commentData: Comment): Promise<Comment> => {
@@ -6,7 +6,7 @@ export const registerComment = async (commentData: Comment): Promise<Comment> =>
 };
 
 export const getCommentById = async (id: number): Promise<Comment | null> => {
-    const comment = await readComment(id);
+    const comment = await getComment(id);
     if (!comment) {
         throw new Error('Comment not found');
     }
@@ -14,11 +14,11 @@ export const getCommentById = async (id: number): Promise<Comment | null> => {
 };
 
 export const getAllComments = async (): Promise<Comment[]> => {
-    return await readComments();
+    return await getComments();
 };
 
 export const modifyComment = async (id: number, commentData: Comment): Promise<Comment | null> => {
-    const comment = await readComment(id);
+    const comment = await getComment(id);
     if (!comment) {
         throw new Error('Comment not found');
     }
@@ -26,7 +26,7 @@ export const modifyComment = async (id: number, commentData: Comment): Promise<C
 };
 
 export const removeComment = async (id: number): Promise<Comment | null> => {
-    const comment = await readComment(id);
+    const comment = await getComment(id);
     if (!comment) {
         throw new Error('Comment not found');
     }
