@@ -91,9 +91,9 @@ model Journey {
   physicalDifficulty  Int
   lastCompletion      DateTime?
   mobilityImpaired    String
-  PartiallySighted    String
-  PartiallyDeaf       String
-  CognitivelyImpaired String
+  partiallySighted    String
+  partiallyDeaf       String
+  cognitivelyImpaired String
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
   steps               Step[]
