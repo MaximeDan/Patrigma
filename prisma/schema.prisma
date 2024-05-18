@@ -44,8 +44,8 @@ model UserRole {
   id     Int  @id @default(autoincrement())
   userId Int
   roleId Int
-  user   User @relation(fields: [userId], references: [id])
-  role   Role @relation(fields: [roleId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 }
 
 model Event {
@@ -91,9 +91,9 @@ model Journey {
   physicalDifficulty  Int
   lastCompletion      DateTime?
   mobilityImpaired    String
-  PartiallySighted    String
-  PartiallyDeaf       String
-  CognitivelyImpaired String
+  partiallySighted    String
+  partiallyDeaf       String
+  cognitivelyImpaired String
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
   steps               Step[]
@@ -118,7 +118,7 @@ model Step {
   postalCode    String
   country       String
   stepNumber    Int
-  journey       Journey     @relation(fields: [journeyId], references: [id])
+  journey       Journey     @relation(fields: [journeyId], references: [id], onDelete: Cascade)
   userEvents    UserEvent[]
 }
 
@@ -130,6 +130,6 @@ model Comment {
   journeyId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [authorId], references: [id])
-  journey   Journey  @relation(fields: [journeyId], references: [id])
+  user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  journey   Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
 }

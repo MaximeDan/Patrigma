@@ -269,9 +269,9 @@ async function main() {
       physicalDifficulty: 1,
       lastCompletion: new Date("2021-01-01"),
       mobilityImpaired: "Partially accessible",
-      PartiallySighted: "Partially accessible",
-      PartiallyDeaf: "Partially accessible",
-      CognitivelyImpaired: "Partially accessible",
+      partiallySighted: "Partially accessible",
+      partiallyDeaf: "Partially accessible",
+      cognitivelyImpaired: "Partially accessible",
       steps: {
         create: [
           {
@@ -406,9 +406,9 @@ async function main() {
       physicalDifficulty: 1,
       lastCompletion: new Date("2021-02-01"),
       mobilityImpaired: "Partially accessible",
-      PartiallySighted: "Partially accessible",
-      PartiallyDeaf: "Partially accessible",
-      CognitivelyImpaired: "Partially accessible",
+      partiallySighted: "Partially accessible",
+      partiallyDeaf: "Partially accessible",
+      cognitivelyImpaired: "Partially accessible",
       steps: {
         create: [
           {
@@ -458,9 +458,9 @@ async function main() {
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-03-01"),
       mobilityImpaired: "Partially accessible",
-      PartiallySighted: "Partially accessible",
-      PartiallyDeaf: "Partially accessible",
-      CognitivelyImpaired: "Partially accessible",
+      partiallySighted: "Partially accessible",
+      partiallyDeaf: "Partially accessible",
+      cognitivelyImpaired: "Partially accessible",
       steps: {
         create: [
           {
@@ -592,9 +592,9 @@ async function main() {
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-04-01"),
       mobilityImpaired: "Partially accessible",
-      PartiallySighted: "Partially accessible",
-      PartiallyDeaf: "Partially accessible",
-      CognitivelyImpaired: "Partially accessible",
+      partiallySighted: "Partially accessible",
+      partiallyDeaf: "Partially accessible",
+      cognitivelyImpaired: "Partially accessible",
       steps: {
         create: [
           {
@@ -672,9 +672,9 @@ async function main() {
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-05-01"),
       mobilityImpaired: "Partially accessible",
-      PartiallySighted: "Partially accessible",
-      PartiallyDeaf: "Partially accessible",
-      CognitivelyImpaired: "Partially accessible",
+      partiallySighted: "Partially accessible",
+      partiallyDeaf: "Partially accessible",
+      cognitivelyImpaired: "Partially accessible",
       steps: {
         create: [
           {
