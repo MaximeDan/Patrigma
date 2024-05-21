@@ -1,4 +1,12 @@
-import { Journey, Event, PrismaClient, Role, User, UserEvent, Comment } from "@prisma/client";
+import {
+  Journey,
+  Event,
+  PrismaClient,
+  Role,
+  User,
+  UserEvent,
+  Comment,
+} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -734,8 +742,8 @@ async function main() {
       description:
         "Join us for an exciting race filled with challenges and puzzles!",
       accessCode: "1234",
-      startTime: new Date("2024-05-01"),
-      endTime: new Date("2024-05-01"),
+      startAt: new Date("2024-05-01"),
+      endAt: new Date("2024-05-01"),
     },
   });
 
@@ -751,8 +759,8 @@ async function main() {
       numberPlayerMin: 1,
       description: "Can you solve the puzzles and escape the room in time?",
       accessCode: "5678",
-      startTime: new Date("2024-06-01"),
-      endTime: new Date("2024-06-01"),
+      startAt: new Date("2024-06-01"),
+      endAt: new Date("2024-06-01"),
     },
   });
 
@@ -769,8 +777,8 @@ async function main() {
       description:
         "Embark on a thrilling treasure hunt and uncover hidden secrets!",
       accessCode: "abcd",
-      startTime: new Date("2024-07-01"),
-      endTime: new Date("2024-07-01"),
+      startAt: new Date("2024-07-01"),
+      endAt: new Date("2024-07-01"),
     },
   });
 
@@ -787,8 +795,8 @@ async function main() {
       description:
         "Explore the haunted mansion and solve the mystery that lies within!",
       accessCode: "efgh",
-      startTime: new Date("2024-08-01"),
-      endTime: new Date("2024-08-01"),
+      startAt: new Date("2024-08-01"),
+      endAt: new Date("2024-08-01"),
     },
   });
 
@@ -805,8 +813,8 @@ async function main() {
       description:
         "Test your puzzle-solving skills in this challenging adventure!",
       accessCode: "ijkl",
-      startTime: new Date("2024-09-01"),
-      endTime: new Date("2024-09-01"),
+      startAt: new Date("2024-09-01"),
+      endAt: new Date("2024-09-01"),
     },
   });
 
@@ -823,8 +831,8 @@ async function main() {
       description:
         "Embark on an exciting outdoor expedition and conquer nature's challenges!",
       accessCode: "mnop",
-      startTime: new Date("2024-10-01"),
-      endTime: new Date("2024-10-01"),
+      startAt: new Date("2024-10-01"),
+      endAt: new Date("2024-10-01"),
     },
   });
 
@@ -841,8 +849,8 @@ async function main() {
       description:
         "Explore the city and solve clues to complete the ultimate scavenger hunt!",
       accessCode: "qrst",
-      startTime: new Date("2024-11-01"),
-      endTime: new Date("2024-11-01"),
+      startAt: new Date("2024-11-01"),
+      endAt: new Date("2024-11-01"),
     },
   });
 
@@ -859,8 +867,8 @@ async function main() {
       description:
         "Enhance teamwork and communication skills in this thrilling team building challenge!",
       accessCode: "uvwx",
-      startTime: new Date("2024-12-01"),
-      endTime: new Date("2024-12-01"),
+      startAt: new Date("2024-12-01"),
+      endAt: new Date("2024-12-01"),
     },
   });
 
@@ -877,8 +885,8 @@ async function main() {
       description:
         "Escape the ordinary and immerse yourself in an unforgettable outdoor adventure!",
       accessCode: "yzab",
-      startTime: new Date("2024-05-01"),
-      endTime: new Date("2024-05-01"),
+      startAt: new Date("2024-05-01"),
+      endAt: new Date("2024-05-01"),
     },
   });
 
@@ -895,8 +903,8 @@ async function main() {
       description:
         "Unravel the secrets of a mysterious island in this thrilling adventure!",
       accessCode: "cdef",
-      startTime: new Date("2024-06-01"),
-      endTime: new Date("2024-06-01"),
+      startAt: new Date("2024-06-01"),
+      endAt: new Date("2024-06-01"),
     },
   });
 
@@ -913,8 +921,8 @@ async function main() {
       description:
         "Step into the enchanted forest and embark on a magical journey like no other!",
       accessCode: "ghij",
-      startTime: new Date("2024-07-01"),
-      endTime: new Date("2024-07-01"),
+      startAt: new Date("2024-07-01"),
+      endAt: new Date("2024-07-01"),
     },
   });
 
@@ -931,8 +939,8 @@ async function main() {
       description:
         "Embark on an epic quest filled with challenges, puzzles, and adventure!",
       accessCode: "klmn",
-      startTime: new Date("2024-08-01"),
-      endTime: new Date("2024-08-01"),
+      startAt: new Date("2024-08-01"),
+      endAt: new Date("2024-08-01"),
     },
   });
 
@@ -949,8 +957,8 @@ async function main() {
       description:
         "Enter the mystic temple and solve ancient riddles to unlock its secrets!",
       accessCode: "opqr",
-      startTime: new Date("2024-09-01"),
-      endTime: new Date("2024-09-01"),
+      startAt: new Date("2024-09-01"),
+      endAt: new Date("2024-09-01"),
     },
   });
 
@@ -967,8 +975,8 @@ async function main() {
       description:
         "Immerse yourself in a thrilling virtual reality adventure like never before!",
       accessCode: "stuv",
-      startTime: new Date("2024-10-01"),
-      endTime: new Date("2024-10-01"),
+      startAt: new Date("2024-10-01"),
+      endAt: new Date("2024-10-01"),
     },
   });
 
@@ -1201,6 +1209,69 @@ async function main() {
       },
     }),
   ];
+
+  const bobEvents = await prisma.userEvent.findMany({
+    where: { userId: bob.id },
+    select: { eventId: true },
+  });
+
+  const henryEvents = await prisma.userEvent.findMany({
+    where: { userId: henry.id },
+    select: { eventId: true },
+  });
+
+  const graceEvents = await prisma.userEvent.findMany({
+    where: { userId: grace.id },
+    select: { eventId: true },
+  });
+
+  const generateUserSteps = async (userId: number, eventIds: number[]) => {
+    const journeyIds = new Set<number>();
+
+    for (const eventId of eventIds) {
+      const event = await prisma.event.findUnique({ where: { id: eventId } });
+      if (!event) continue;
+
+      journeyIds.add(event.journeyId);
+    }
+
+    const journeys = await prisma.journey.findMany({
+      where: { id: { in: Array.from(journeyIds) } },
+      select: { id: true, steps: true },
+    });
+
+    for (const journey of journeys) {
+      for (const step of journey.steps) {
+        const startAt = new Date();
+        const endAt = new Date();
+        const durationInSecond = endAt.getTime() - startAt.getTime();
+        const dur = moment.duration(endAt.getTime() - startAt.getTime());
+
+        await prisma.userStep.create({
+          data: {
+            userId: userId,
+            stepId: step.id,
+            startAt: startAt,
+            endAt: endAt,
+            duration: duration,
+          },
+        });
+      }
+    }
+  };
+
+  await generateUserSteps(
+    bobUser.id,
+    bobEvents.map((event) => event.eventId)
+  );
+  await generateUserSteps(
+    henryUser.id,
+    henryEvents.map((event) => event.eventId)
+  );
+  await generateUserSteps(
+    graceUser.id,
+    graceEvents.map((event) => event.eventId)
+  );
 }
 
 main()

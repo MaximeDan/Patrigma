@@ -1,0 +1,30 @@
+import { NextResponse } from "next/server";
+import {
+  BadRequestException,
+  UnauthorizedException,
+  ForbiddenException,
+  NotFoundException,
+  InternalServerErrorException,
+} from "@/types/exceptions";
+
+export function handleException(error: any) {
+  console.error("An error occurred:", error);
+
+  switch (true) {
+    case error instanceof BadRequestException:
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    case error instanceof UnauthorizedException:
+      return NextResponse.json({ message: error.message }, { status: 401 });
+    case error instanceof ForbiddenException:
+      return NextResponse.json({ message: error.message }, { status: 403 });
+    case error instanceof NotFoundException:
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    case error instanceof InternalServerErrorException:
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    default:
+      return NextResponse.json(
+        { message: "An unexpected error occurred" },
+        { status: 500 }
+      );
+  }
+}
