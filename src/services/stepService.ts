@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createStep, getStep, getSteps, updateStep, deleteStep } from '../repositories/stepRepository';
+import { createStep, getStep, getSteps, updateStep, deleteStep } from '@/repositories/stepRepository';
 import { Step } from '@prisma/client';
 
 export const registerStep = async (stepData: Step): Promise<Step> => {

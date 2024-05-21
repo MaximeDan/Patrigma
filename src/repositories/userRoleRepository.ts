@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
 import { UserRole } from "@prisma/client";
+import {UserRoleData} from "@/types/userRole";
 
-export const createUserRole = async (data: UserRole): Promise<UserRole> => {
-    return await prisma.userRole.create({
+export const createUserRole = async (data: UserRoleData): Promise<UserRole> => {
+    return prisma.userRole.create({
         data,
     });
 };

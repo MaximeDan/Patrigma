@@ -1,6 +1,6 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
 import { createEvent, getEvent, getEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
-import { createUserEvent, getUserEvent, updateUserEvent } from '../repositories/userEventRepository';
+import { createUserEvent, getUserEvent, updateUserEvent } from '@/repositories/userEventRepository';
 import { Event, UserEvent } from '@prisma/client';
 
 export const registerEvent = async (eventData: Event): Promise<Event> => {

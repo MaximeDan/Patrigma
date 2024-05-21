@@ -1,50 +1,44 @@
-import { createUser, getUser, getUsers, updateUser, deleteUser, getUserByEmail } from '../repositories/userRepository';
-import { createUserRole } from '../repositories/userRoleRepository';
+import { createUser, getUser, getUsers, updateUser, deleteUser, getUserByEmail } from '@/repositories/userRepository';
+import { createUserRole } from '@/repositories/userRoleRepository';
 import { User, UserRole } from '@prisma/client';
 import bcrypt from "bcrypt";
-import { SignJWT, jwtVerify, JWTPayload } from 'jose';
 import { getRoleById } from './roleService';
+import {RegisterUser} from "@/types/register";
+import {UserRoleData} from "@/types/userRole";
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
-export type RegisterUser = {
-    email: string;
-    password: string;
-    username: string;
- };
+export const register = async (userData: RegisterUser): Promise<User> => {
+    try {
 
-export const register = async (email: string, username:string, password: string): Promise<User> => {
-   try{
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const existingUser = await getUserByEmail(userData.email);
+        if (existingUser) {
+            throw new Error('Email already in use');
+        }
+        
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-    const userData: RegisterUser = {
-        email,
-        password: hashedPassword,
-        username,
-    };
+        const newUser = await createUser({
+            ...userData,
+            password: hashedPassword,
+        });
 
-    console.log(userData);
-    const userRole = await getRoleById(1);
-    if (!userRole) {
-        throw new Error('Role not found');
+        const userRole = await getRoleById(1);
+        if (!userRole) {
+            throw new Error('Role not found');
+        }
+
+        const userRoleData: UserRoleData = {
+            userId: newUser.id,
+            roleId: userRole.id,
+        };
+        await createUserRole(userRoleData);
+
+        return newUser;
+    } catch (error: any) {
+        throw new Error(error.message);
     }
-
-    const newUser = await createUser(userData);
-    console.log(newUser);  
-    const userRoleData: UserRole = {
-        userId: newUser.id,
-        roleId: userRole.id,
-        id: 0 
-    };
-    await createUserRole(userRoleData);
-
-    return newUser;
-   } 
-   catch (error) {
-    throw new Error('User not created');
-   }
 };
 
-export const signIn = async (email: string, password: string): Promise<string> => {
+export const signIn = async (email: string, password: string): Promise<{ user: User }> => {
     const user = await getUserByEmail(email);
     if (!user) {
         throw new Error('User not found');
@@ -54,27 +48,15 @@ export const signIn = async (email: string, password: string): Promise<string> =
     if (!isPasswordValid) {
         throw new Error('Invalid password');
     }
+    
 
-    // Générer un token JWT
-    const token = await new SignJWT({ userId: user.id })
-        .setProtectedHeader({ alg: 'HS256' })
-        .setExpirationTime('1h')
-        .sign(JWT_SECRET);
-
-    return token;
-};
-
-export const verifyToken = async (token: string): Promise<JWTPayload> => {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
-    return payload;
+    return { user };
 };
 
 export const assignRoleToUser = async (userId: number, roleId: number): Promise<UserRole> => {
-    // Assigner le rôle à l'utilisateur
-    const userRoleData: UserRole = {
+    const userRoleData: UserRoleData = {
         userId,
         roleId,
-        id: 0 // L'id sera généré automatiquement par Prisma
     };
     return await createUserRole(userRoleData);
 };

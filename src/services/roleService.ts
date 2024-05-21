@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createRole, getRole, getRoles, updateRole, deleteRole } from '../repositories/roleRepository';
+import { createRole, getRole, getRoles, updateRole, deleteRole } from '@/repositories/roleRepository';
 import { Role } from '@prisma/client';
 
 export const registerRole = async (roleData: Role): Promise<Role> => {
