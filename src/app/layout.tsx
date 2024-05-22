@@ -15,6 +15,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  throw new Error("test");
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen`}>{children}</body>
