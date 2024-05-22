@@ -42,11 +42,20 @@ const steps = [
 const JourneyForm = () => {
   const { isVisible, hideModal } = useJourneyFormStore();
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
-  const [currentStep, setCurrentStep] = useState(0);
-  const [dir, setDir] = useState<"ltr" | "rtl">("rtl");
+  const [currentStep, setCurrentStep] = useState(2);
+  const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
 
   const form = useForm<JourneyFormValues>({
     resolver: zodResolver(journeyFormSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      mobilityImpaired: "undefined",
+      partiallySighted: "undefined",
+      partiallyDeaf: "undefined",
+      cognitivelyImpaired: "undefined",
+      treasure: "",
+    },
   });
 
   const processForm: SubmitHandler<JourneyFormValues> = async (data) => {
@@ -56,6 +65,7 @@ const JourneyForm = () => {
   const next = async () => {
     const fields = steps[currentStep].fields;
     const output = await form.trigger(fields as FieldName[]);
+    // console.log(output, "output");
     if (!output) return;
     if (currentStep < steps.length) {
       if (currentStep === steps.length - 1) {
