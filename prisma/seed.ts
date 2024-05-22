@@ -1,4 +1,12 @@
-import { Journey, Event, PrismaClient, Role, User, UserEvent, Comment } from "@prisma/client";
+import {
+  Journey,
+  Event,
+  PrismaClient,
+  Role,
+  User,
+  UserEvent,
+  Comment,
+} from "@prisma/client";
 
 const prisma = new PrismaClient();
 

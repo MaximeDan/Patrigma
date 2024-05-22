@@ -1,4 +1,4 @@
-import { LucideProps } from "lucide-react";
+import { LucideProps, Plus } from "lucide-react";
 
 export const Icons = {
   flag: (props: LucideProps) => (
@@ -65,4 +65,20 @@ export const Icons = {
       </defs>
     </svg>
   ),
+  mapPin: (props: LucideProps) => (
+    <svg
+      {...props}
+      width="12"
+      height="14"
+      viewBox="0 0 12 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.00001 0.333332C3.05935 0.333332 0.66668 2.726 0.66668 5.66333C0.647347 9.96 5.79735 13.5227 6.00001 13.6667C6.00001 13.6667 11.3527 9.96 11.3333 5.66667C11.3333 2.726 8.94068 0.333332 6.00001 0.333332ZM6.00001 8.33333C4.52668 8.33333 3.33335 7.14 3.33335 5.66667C3.33335 4.19333 4.52668 3 6.00001 3C7.47335 3 8.66668 4.19333 8.66668 5.66667C8.66668 7.14 7.47335 8.33333 6.00001 8.33333Z"
+        fill="black"
+      />
+    </svg>
+  ),
+  plus: (props: LucideProps) => <Plus {...props} />,
 };

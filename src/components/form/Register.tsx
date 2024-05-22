@@ -22,7 +22,8 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/tailwindUtils";
+
 import {signIn} from "next-auth/react";
 
 type RegisterForm = z.infer<typeof registerSchema>;
