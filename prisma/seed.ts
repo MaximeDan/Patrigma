@@ -289,7 +289,8 @@ async function main() {
             hint: "It was built by Gustave Eiffel for the 1889 Universal Exposition.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8584, 2.2945", // Eiffel Tower, Paris
+            latitude: 48.8584,
+            longitude: 2.2945,
             address: "Champ de Mars, 5 Avenue Anatole France",
             city: "Paris",
             postalCode: "75007",
@@ -302,7 +303,8 @@ async function main() {
             hint: "It is located in the Louvre Palace, the former residence of the French kings.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8606, 2.3376", // Louvre Museum, Paris
+            latitude: 48.8606,
+            longitude: 2.3376,
             address: "Rue de Rivoli",
             city: "Paris",
             postalCode: "75001",
@@ -316,7 +318,8 @@ async function main() {
             hint: "It is located on an island in the middle of the Seine River.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8530, 2.3499", // Île de la Cité, Paris
+            latitude: 48.853,
+            longitude: 2.3499,
             address: "6 Parvis Notre-Dame - Pl. Jean-Paul II",
             city: "Paris",
             postalCode: "75004",
@@ -330,7 +333,8 @@ async function main() {
             hint: "It is located in the Pigalle district, known for its lively nightlife.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8842, 2.3323", // Moulin Rouge, Paris
+            latitude: 48.8842,
+            longitude: 2.3323,
             address: "82 Boulevard de Clichy",
             city: "Paris",
             postalCode: "75018",
@@ -344,7 +348,8 @@ async function main() {
             hint: "It is located at the end of the Champs-Élysées avenue.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8738, 2.2950", // Arc de Triomphe, Paris
+            latitude: 48.8738,
+            longitude: 2.295,
             address: "Place Charles de Gaulle",
             city: "Paris",
             postalCode: "75008",
@@ -358,7 +363,8 @@ async function main() {
             hint: "It offers a panoramic view of the city from its dome.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8867, 2.3431", // Sacré-Cœur Basilica, Paris
+            latitude: 48.8867,
+            longitude: 2.3431,
             address: "35 Rue du Chevalier de la Barre",
             city: "Paris",
             postalCode: "75018",
@@ -372,7 +378,8 @@ async function main() {
             hint: "It is often called 'the most beautiful avenue in the world'.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8698, 2.3078", // Champs-Élysées, Paris
+            latitude: 48.8698,
+            longitude: 2.3078,
             address: "Avenue des Champs-Élysées",
             city: "Paris",
             postalCode: "75008",
@@ -386,7 +393,8 @@ async function main() {
             hint: "It was designed by Charles Garnier and opened in 1875.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8719, 2.3314", // Palais Garnier, Paris
+            latitude: 48.8719,
+            longitude: 2.3314,
             address: "Place de l'Opéra",
             city: "Paris",
             postalCode: "75009",
@@ -425,7 +433,8 @@ async function main() {
             hint: "It was founded in 1257 and is one of the oldest universities in the world.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8462, 2.3444", // Latin Quarter, Paris
+            latitude: 48.8462,
+            longitude: 2.3444,
             address: "1 Rue Victor Cousin",
             city: "Paris",
             postalCode: "75005",
@@ -438,7 +447,8 @@ async function main() {
             hint: "It was built in 1790 and houses the tombs of famous personalities.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "48.8466, 2.3469", // Pantheon, Paris
+            latitude: 48.8466,
+            longitude: 2.3469,
             address: "Place du Pantheon",
             city: "Paris",
             postalCode: "75005",
@@ -478,7 +488,8 @@ async function main() {
             hint: "This church is dedicated to Joan of Arc and is located on the site where she was burned at the stake.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4421, 1.0939",
+            latitude: 1.0939,
+            longitude: 49.4421,
             address: "Place du Vieux-Marché",
             city: "Rouen",
             postalCode: "76000",
@@ -492,7 +503,8 @@ async function main() {
             hint: "This museum houses an important collection of artworks from the Middle Ages to the 21st century.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4427, 1.0931",
+            latitude: 49.4427,
+            longitude: 1.0931,
             address: "Esplanade Marcel Duchamp",
             city: "Rouen",
             postalCode: "76000",
@@ -505,7 +517,8 @@ async function main() {
             hint: "This cathedral is one of the largest Gothic structures in Europe and has inspired many artists, including Claude Monet.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4400, 1.0949",
+            latitude: 49.44,
+            longitude: 1.0949,
             address: "Place de la Cathédrale",
             city: "Rouen",
             postalCode: "76000",
@@ -518,7 +531,8 @@ async function main() {
             hint: "This square is named after the former French president and is a popular meeting place in Rouen.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4407, 1.0937",
+            latitude: 49.4407,
+            longitude: 1.0937,
             address: "Place du Général de Gaulle",
             city: "Rouen",
             postalCode: "76000",
@@ -531,7 +545,8 @@ async function main() {
             hint: "This astronomical clock is one of the main attractions in Rouen and dates back to the 14th century.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4402, 1.0941",
+            latitude: 49.4402,
+            longitude: 1.0941,
             address: "Rue du Gros-Horloge",
             city: "Rouen",
             postalCode: "76000",
@@ -544,7 +559,8 @@ async function main() {
             hint: "This square is named after Joan of Arc, also known as the Maid of Orleans.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4404, 1.0934",
+            latitude: 49.4404,
+            longitude: 1.0934,
             address: "Place de la Pucelle",
             city: "Rouen",
             postalCode: "76000",
@@ -558,7 +574,8 @@ async function main() {
             hint: "This street is one of the most picturesque in Rouen and is lined with beautiful half-timbered houses.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4402, 1.0941",
+            latitude: 49.4402,
+            longitude: 1.0941,
             address: "Rue du Gros-Horloge",
             city: "Rouen",
             postalCode: "76000",
@@ -572,7 +589,8 @@ async function main() {
             hint: "This square is a lively area in Rouen with many shops, cafes, and restaurants.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "49.4409, 1.0936",
+            latitude: 49.4409,
+            longitude: 1.0936,
             address: "Place de la Calende",
             city: "Rouen",
             postalCode: "76000",
@@ -612,7 +630,8 @@ async function main() {
             hint: "This iconic hotel is a symbol of the city of Nice.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.6957, 7.2706", // Nice, France
+            latitude: 43.6957,
+            longitude: 7.2706,
             address: "37 Promenade des Anglais",
             city: "Nice",
             postalCode: "06000",
@@ -626,7 +645,8 @@ async function main() {
             hint: "This park offers a panoramic view of the city of Nice.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.6965, 7.2827", // Nice, France
+            latitude: 43.6965,
+            longitude: 7.2827,
             address: "Montée du Château",
             city: "Nice",
             postalCode: "06300",
@@ -639,7 +659,8 @@ async function main() {
             hint: "This museum houses a collection of modern and contemporary art.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.7037, 7.2794", // Nice, France
+            latitude: 43.7037,
+            longitude: 7.2794,
             address: "Place Yves Klein",
             city: "Nice",
             postalCode: "06300",
@@ -652,7 +673,8 @@ async function main() {
             hint: "This colorful market offers a wide variety of flowers and plants.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.6972, 7.2706", // Nice, France
+            latitude: 43.6972,
+            longitude: 7.2706,
             address: "Place Masséna",
             city: "Nice",
             postalCode: "06000",
@@ -691,7 +713,8 @@ async function main() {
             hint: "The Capitole is the city hall of Toulouse and also houses the Théâtre du Capitole.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.6045, 1.4440",
+            latitude: 43.6045,
+            longitude: 1.444,
             address: "Place du Capitole",
             city: "Toulouse",
             postalCode: "31000",
@@ -704,7 +727,8 @@ async function main() {
             hint: "The Musée des Augustins is an art museum located in a former Augustinian convent.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.5992, 1.4436",
+            latitude: 43.5992,
+            longitude: 1.4436,
             address: "21 Rue de Metz",
             city: "Toulouse",
             postalCode: "31000",
@@ -717,7 +741,8 @@ async function main() {
             hint: "The Basilique Saint-Sernin is a Romanesque church and an important pilgrimage site.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            coordinates: "43.6110, 1.4489",
+            latitude: 43.611,
+            longitude: 1.4489,
             address: "Place Saint-Sernin",
             city: "Toulouse",
             postalCode: "31000",
@@ -1012,7 +1037,15 @@ async function main() {
     const userEvents: number[] = []; // Array to store the event IDs the user is already registered for
 
     // Generate a random number of events for the user between 0 and 6
-    const numEvents = Math.floor(Math.random() * 7);
+    let numEvents = Math.floor(Math.random() * 7);
+
+    // Ensure that Bob, Henry, and Grace are registered for at least one event because we create userStep for this users
+    if (
+      users[i].id === bob.id ||
+      users[i].id === henry.id ||
+      users[i].id === grace.id
+    )
+      numEvents++;
 
     for (let j = 0; j < numEvents; j++) {
       let randomEventIndex = Math.floor(Math.random() * events.length);
@@ -1241,11 +1274,24 @@ async function main() {
     });
 
     for (const journey of journeys) {
-      for (const step of journey.steps) {
+      let numberOfStepsBeforeEnd: number = 0;
+
+      if (userId === bob.id) numberOfStepsBeforeEnd = 0;
+      if (userId === grace.id) numberOfStepsBeforeEnd = 1;
+      if (userId === henry.id) numberOfStepsBeforeEnd = 2;
+
+      for (let i = 0; i < journey.steps.length - numberOfStepsBeforeEnd; i++) {
+        const step = journey.steps[i];
         const startAt = new Date();
-        const endAt = new Date();
-        const durationInSecond = endAt.getTime() - startAt.getTime();
-        const dur = moment.duration(endAt.getTime() - startAt.getTime());
+        // Randomly generate a duration between 30 minutes and 2 hours for each step
+        const endAt = new Date(
+          startAt.getTime() +
+            Math.floor(
+              Math.random() * (2 * 60 * 60 * 1000 - 30 * 60 * 1000 + 1)
+            ) +
+            30 * 60 * 1000
+        );
+        const duration = endAt.getTime() - startAt.getTime();
 
         await prisma.userStep.create({
           data: {
@@ -1261,15 +1307,15 @@ async function main() {
   };
 
   await generateUserSteps(
-    bobUser.id,
+    bob.id,
     bobEvents.map((event) => event.eventId)
   );
   await generateUserSteps(
-    henryUser.id,
+    henry.id,
     henryEvents.map((event) => event.eventId)
   );
   await generateUserSteps(
-    graceUser.id,
+    grace.id,
     graceEvents.map((event) => event.eventId)
   );
 }

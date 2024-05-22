@@ -97,7 +97,8 @@ CREATE TABLE "Step" (
     "pictureHint" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "coordinates" TEXT NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
     "address" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "postalCode" TEXT NOT NULL,
@@ -112,10 +113,9 @@ CREATE TABLE "UserStep" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "stepId" INTEGER NOT NULL,
-    "lastStepId" INTEGER,
     "startAt" TIMESTAMP(3) NOT NULL,
     "endAt" TIMESTAMP(3) NOT NULL,
-    "duration" TIMESTAMP(3) NOT NULL,
+    "duration" INTEGER NOT NULL,
 
     CONSTRAINT "UserStep_pkey" PRIMARY KEY ("id")
 );
@@ -149,7 +149,7 @@ ALTER TABLE "Event" ADD CONSTRAINT "Event_authorId_fkey" FOREIGN KEY ("authorId"
 ALTER TABLE "Event" ADD CONSTRAINT "Event_journeyId_fkey" FOREIGN KEY ("journeyId") REFERENCES "Journey"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserEvent" ADD CONSTRAINT "UserEvent_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserEvent" ADD CONSTRAINT "UserEvent_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserEvent" ADD CONSTRAINT "UserEvent_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;

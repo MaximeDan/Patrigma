@@ -10,8 +10,11 @@ import {
   updateJourney,
   deleteJourney,
   readJourneyWithSteps,
+  readJourneyWithComments,
 } from "../repositories/journeyRepository";
 import { Journey, Step } from "@prisma/client";
+import { journeyWithSteps } from "@/types/journeyWithSteps";
+import { journeyWithComments } from "@/types/journeyWithComments";
 
 // Return a journey without steps
 export const getJourneyById = async (id: number): Promise<Journey | null> => {
@@ -24,23 +27,37 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
 // Return a journey with steps
 export const getJourneyByIdWithSteps = async (
   id: number
-): Promise<Journey | null> => {
-  const journey: Journey | null = await readJourneyWithSteps(id);
-  if (!journey) throw new NotFoundException("Journey not found");
+): Promise<journeyWithSteps | null> => {
+  const journeyWithSteps: journeyWithSteps | null = await readJourneyWithSteps(
+    id
+  );
+  if (!journeyWithSteps) throw new NotFoundException("Journey not found");
 
-  return journey;
+  return journeyWithSteps;
+};
+
+// Return a journey with comments
+export const getJourneyByIdWithComments = async (
+  id: number
+): Promise<journeyWithComments | null> => {
+  const journeyWithComments: journeyWithComments | null =
+    await readJourneyWithComments(id);
+  if (!journeyWithComments) throw new NotFoundException("Journey not found");
+
+  return journeyWithComments;
 };
 
 // Return all journeys without steps
 export const getAllJourneys = async (): Promise<Journey[]> => {
   const journeys = await readJourneys();
 
-  if (journeys.length === 0) throw new NotFoundException("No journeys found");
+  if (!journeys || journeys.length === 0)
+    throw new NotFoundException("No journeys found");
 
   return journeys;
 };
 
-// Create or update a journey based on the id value in parameter
+// Create or update a journey
 export const registerOrModifyJourney = async (
   id: number | null,
   journey: Journey,
@@ -53,32 +70,47 @@ export const registerOrModifyJourney = async (
   if (!journey) throw new BadRequestException("Invalid journey");
   if (!steps) throw new BadRequestException("Invalid steps");
 
-  let result: Journey | null;
+  // Check if steps are valid (unique and sequential)
+  for (let i = 0; i < steps.length; i++) {
+    const currentStep = steps[i];
+    const nextStep = steps[i + 1];
+
+    if (currentStep.stepNumber !== i + 1) {
+      throw new BadRequestException("Invalid stepNumber");
+    }
+
+    if (nextStep && currentStep.stepNumber >= nextStep.stepNumber) {
+      throw new BadRequestException("Duplicate or non-sequential stepNumber");
+    }
+  }
+
+  let upsertedJourneyWithSteps: journeyWithSteps | null;
 
   // Check if register or modify
   if (id === null) {
-    result = await createJourney(journey, steps);
-    if (!result)
+    upsertedJourneyWithSteps = await createJourney(journey, steps);
+    if (!upsertedJourneyWithSteps)
       throw new InternalServerErrorException("Internal server error");
   } else {
     const journeyToUpdate = await readJourney(id);
     if (!journeyToUpdate) throw new NotFoundException("Journey not found");
 
-    result = await updateJourney(id, journey, steps);
-    if (!result)
+    upsertedJourneyWithSteps = await updateJourney(id, journey, steps);
+    if (!upsertedJourneyWithSteps)
       throw new InternalServerErrorException("Internal server error");
   }
 
-  return result;
+  return upsertedJourneyWithSteps;
 };
 
 export const removeJourney = async (id: number): Promise<Journey | null> => {
   const journey = await readJourney(id);
   if (!journey) throw new NotFoundException("Journey not found");
 
-  const result = await deleteJourney(id);
+  const deletedJourney = await deleteJourney(id);
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  if (!deletedJourney)
+    throw new InternalServerErrorException("Internal server error");
 
-  return result;
+  return deletedJourney;
 };

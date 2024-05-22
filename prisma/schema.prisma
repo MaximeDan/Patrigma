@@ -73,7 +73,7 @@ model UserEvent {
   id      Int   @id @default(autoincrement())
   userId  Int
   eventId Int
-  user    User  @relation(fields: [userId], references: [id])
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
@@ -96,7 +96,7 @@ model Journey {
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
   steps               Step[]
-  Comment             Comment[]
+  comments            Comment[]
   author              User      @relation(fields: [authorId], references: [id])
   events              Event[]
 }
@@ -123,15 +123,14 @@ model Step {
 }
 
 model UserStep {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  stepId     Int
-  lastStepId Int?
-  startAt    DateTime
-  endAt      DateTime
-  duration   DateTime
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  step       Step     @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  stepId   Int
+  startAt  DateTime
+  endAt    DateTime
+  duration Int
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  step     Step     @relation(fields: [stepId], references: [id], onDelete: Cascade)
 }
 
 model Comment {

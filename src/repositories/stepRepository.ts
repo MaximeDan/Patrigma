@@ -11,10 +11,6 @@ export const readStep = async (id: number): Promise<Step | null> => {
   return await prisma.step.findUnique({ where: { id } });
 };
 
-export const readSteps = async (): Promise<Step[]> => {
-  return await prisma.step.findMany();
-};
-
 export const readStepsByJourneyId = async (
   journeyId: number
 ): Promise<Step[] | null> => {

@@ -4,7 +4,6 @@ import {
   registerOrModifyStep,
   removeStep,
 } from "@/services/stepService";
-import { InternalServerErrorException } from "@/types/exceptions";
 import { Step } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -48,9 +47,6 @@ export async function DELETE(
 
   try {
     const result = await removeStep(id);
-
-    if (!result)
-      throw new InternalServerErrorException("Internal server error");
 
     // Using Response instead of NextResponse because NextResponse doesn't handle status 204 actually
     return new Response(null, {

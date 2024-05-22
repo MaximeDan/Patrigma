@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from "@/types/exceptions";
@@ -11,52 +12,57 @@ import {
 } from "../repositories/roleRepository";
 import { Role } from "@prisma/client";
 
-export const registerRole = async (roleData: Role): Promise<Role> => {
-  const result = await createRole(roleData);
-
-  if (!result) throw new InternalServerErrorException("Internal server error");
-
-  return result;
-};
-
+// Return a role
 export const getRoleById = async (id: number): Promise<Role | null> => {
-  const role = await readRole(id);
-
+  const role: Role | null = await readRole(id);
   if (!role) throw new NotFoundException("Role not found");
 
   return role;
 };
 
-export const getAllRoles = async (): Promise<Role[]> => {
-  const roles = await readRoles();
-
-  if (roles.length === 0) throw new NotFoundException("No roles found");
-
-  return roles;
+// Return all roles
+export const getAllRoles = async (): Promise<Role[] | null> => {
+  return await readRoles();
 };
 
-export const modifyRole = async (
-  id: number,
-  roleData: Role
+// Create or update a role
+export const registerOrModifyRole = async (
+  id: number | null,
+  role: Role
 ): Promise<Role | null> => {
-  const role = await readRole(id);
+  // Check arguments
+  if (id !== null && !Number.isFinite(id)) {
+    throw new BadRequestException("Invalid id");
+  }
+  if (!role) throw new BadRequestException("Invalid role");
 
-  if (!role) throw new NotFoundException("Role not found");
+  let upsertedRole: Role | null;
 
-  const result = await updateRole(id, roleData);
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  // Check if register or modify
+  if (id === null) {
+    upsertedRole = await createRole(role);
+    if (!upsertedRole)
+      throw new InternalServerErrorException("Internal server error");
+  } else {
+    const roleToUpdate = await readRole(id);
+    if (!roleToUpdate) throw new NotFoundException("Role not found");
 
-  return result;
+    upsertedRole = await updateRole(id, role);
+    if (!upsertedRole)
+      throw new InternalServerErrorException("Internal server error");
+  }
+
+  return upsertedRole;
 };
 
 export const removeRole = async (id: number): Promise<Role | null> => {
   const role = await readRole(id);
-
   if (!role) throw new NotFoundException("Role not found");
 
-  const result = await deleteRole(id);
+  const deletedRole = await deleteRole(id);
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  if (!deletedRole)
+    throw new InternalServerErrorException("Internal server error");
 
-  return result;
+  return deletedRole;
 };

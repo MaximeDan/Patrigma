@@ -1,12 +1,20 @@
 import prisma from "@/lib/prisma";
 import { Journey, Step } from "@prisma/client";
 import { journeyWithSteps } from "@/types/journeyWithSteps";
+import { journeyWithComments } from "@/types/journeyWithComments";
 
 export const createJourney = async (
   journey: Journey,
   steps: Step[]
-): Promise<Journey | null> => {
+): Promise<journeyWithSteps | null> => {
   return await prisma.journey.create({
+    include: {
+      steps: {
+        orderBy: {
+          stepNumber: "asc",
+        },
+      },
+    },
     data: {
       authorId: journey.authorId,
       title: journey.title,
@@ -31,7 +39,8 @@ export const createJourney = async (
             hint: step.hint,
             picturePuzzle: step.picturePuzzle,
             pictureHint: step.pictureHint,
-            coordinates: step.coordinates,
+            latitude: step.latitude,
+            longitude: step.longitude,
             address: step.address,
             city: step.city,
             postalCode: step.postalCode,
@@ -63,6 +72,21 @@ export const readJourneyWithSteps = async (
   });
 };
 
+export const readJourneyWithComments = async (
+  id: number
+): Promise<journeyWithComments | null> => {
+  return await prisma.journey.findUnique({
+    where: { id },
+    include: {
+      comments: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+  });
+};
+
 export const readJourneys = async (): Promise<Journey[]> => {
   return await prisma.journey.findMany();
 };
@@ -71,10 +95,17 @@ export const updateJourney = async (
   id: number,
   journey: Journey,
   steps: Step[]
-): Promise<Journey | null> => {
+): Promise<journeyWithSteps | null> => {
   return await prisma.journey.update({
     where: {
       id: id,
+    },
+    include: {
+      steps: {
+        orderBy: {
+          stepNumber: "asc",
+        },
+      },
     },
     data: {
       authorId: journey.authorId,
@@ -100,7 +131,8 @@ export const updateJourney = async (
             hint: step.hint,
             picturePuzzle: step.picturePuzzle,
             pictureHint: step.pictureHint,
-            coordinates: step.coordinates,
+            latitude: step.latitude,
+            longitude: step.longitude,
             address: step.address,
             city: step.city,
             postalCode: step.postalCode,

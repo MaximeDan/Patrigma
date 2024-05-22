@@ -1,65 +1,62 @@
 import {
+  BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from "@/types/exceptions";
 import {
   createComment,
   readComment,
-  readComments,
   updateComment,
   deleteComment,
 } from "../repositories/commentRepository";
 import { Comment } from "@prisma/client";
 
-export const registerComment = async (
-  commentData: Comment
-): Promise<Comment> => {
-  const result = await createComment(commentData);
-
-  if (!result) throw new InternalServerErrorException("Internal server error");
-
-  return result;
-};
-
+// Return a comment
 export const getCommentById = async (id: number): Promise<Comment | null> => {
-  const comment = await readComment(id);
-
+  const comment: Comment | null = await readComment(id);
   if (!comment) throw new NotFoundException("Comment not found");
 
   return comment;
 };
 
-export const getAllComments = async (): Promise<Comment[]> => {
-  const comments = await readComments();
-
-  if (comments.length === 0) throw new NotFoundException("No comments found");
-
-  return comments;
-};
-
-export const modifyComment = async (
-  id: number,
-  commentData: Comment
+// Create or update a comment based on the id value in parameter
+export const registerOrModifyComment = async (
+  id: number | null,
+  comment: Comment
 ): Promise<Comment | null> => {
-  const comment = await readComment(id);
+  // Check arguments
+  if (id !== null && !Number.isFinite(id)) {
+    throw new BadRequestException("Invalid id");
+  }
+  if (!comment) throw new BadRequestException("Invalid comment");
 
-  if (!comment) throw new NotFoundException("Comment not found");
+  let result: Comment | null;
 
-  const result = await updateComment(id, commentData);
+  // Check if register or modify
+  if (id === null) {
+    result = await createComment(comment);
+    if (!result)
+      throw new InternalServerErrorException("Internal server error");
+  } else {
+    const commentToUpdate = await readComment(id);
+    if (!commentToUpdate) throw new NotFoundException("Comment not found");
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+    result = await updateComment(id, comment);
+    if (!result)
+      throw new InternalServerErrorException("Internal server error");
+  }
 
   return result;
 };
 
 export const removeComment = async (id: number): Promise<Comment | null> => {
   const comment = await readComment(id);
-
   if (!comment) throw new NotFoundException("Comment not found");
 
-  const result = await deleteComment(id);
+  const deletedComment = await deleteComment(id);
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  if (!deletedComment)
+    throw new InternalServerErrorException("Internal server error");
 
-  return result;
+  return deletedComment;
 };
