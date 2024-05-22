@@ -12,7 +12,10 @@ export async function DELETE(
     const userId: number = Number(params.userId);
 
     const result = await leaveEvent(id, userId);
-    return NextResponse.json({ data: result }, { status: 200 });
+    // Using Response instead of NextResponse because NextResponse doesn't handle status 204 actually
+    return new Response(null, {
+      status: 204,
+    });
   } catch (error: any) {
     return handleException(error);
   }

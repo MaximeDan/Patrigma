@@ -99,10 +99,10 @@ CREATE TABLE "Step" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "latitude" DOUBLE PRECISION NOT NULL,
     "longitude" DOUBLE PRECISION NOT NULL,
-    "address" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "postalCode" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
+    "address" TEXT,
+    "city" TEXT,
+    "postalCode" TEXT,
+    "country" TEXT,
     "stepNumber" INTEGER NOT NULL,
 
     CONSTRAINT "Step_pkey" PRIMARY KEY ("id")

@@ -1,7 +1,10 @@
 import prisma from "@/lib/prisma";
+import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 import { Comment } from "@prisma/client";
 
-export const createComment = async (data: Comment): Promise<Comment> => {
+export const createComment = async (
+  data: CommentWithoutDates
+): Promise<Comment> => {
   return await prisma.comment.create({
     data,
   });
@@ -13,7 +16,7 @@ export const readComment = async (id: number): Promise<Comment | null> => {
 
 export const updateComment = async (
   id: number,
-  data: Comment
+  data: CommentWithoutDates
 ): Promise<Comment | null> => {
   return await prisma.comment.update({
     where: { id },

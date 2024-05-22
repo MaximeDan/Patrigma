@@ -6,12 +6,14 @@ import {
   NotFoundException,
   InternalServerErrorException,
 } from "@/types/exceptions";
+import { ZodError } from "zod";
 
 export function handleException(error: any) {
   console.error("An error occurred:", error);
 
   switch (true) {
     case error instanceof BadRequestException:
+    case error instanceof ZodError:
       return NextResponse.json({ message: error.message }, { status: 400 });
     case error instanceof UnauthorizedException:
       return NextResponse.json({ message: error.message }, { status: 401 });

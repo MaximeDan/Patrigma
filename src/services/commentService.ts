@@ -10,6 +10,7 @@ import {
   deleteComment,
 } from "../repositories/commentRepository";
 import { Comment } from "@prisma/client";
+import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 
 // Return a comment
 export const getCommentById = async (id: number): Promise<Comment | null> => {
@@ -22,7 +23,7 @@ export const getCommentById = async (id: number): Promise<Comment | null> => {
 // Create or update a comment based on the id value in parameter
 export const registerOrModifyComment = async (
   id: number | null,
-  comment: Comment
+  comment: CommentWithoutDates
 ): Promise<Comment | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {

@@ -113,10 +113,10 @@ model Step {
   updatedAt     DateTime   @updatedAt
   latitude      Float
   longitude     Float
-  address       String
-  city          String
-  postalCode    String
-  country       String
+  address       String?
+  city          String?
+  postalCode    String?
+  country       String?
   stepNumber    Int
   journey       Journey    @relation(fields: [journeyId], references: [id], onDelete: Cascade)
   userSteps     UserStep[]
