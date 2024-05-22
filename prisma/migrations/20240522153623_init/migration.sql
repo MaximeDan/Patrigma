@@ -10,15 +10,15 @@ CREATE TABLE "Role" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
+    "name" TEXT,
+    "lastName" TEXT,
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "isVerified" BOOLEAN NOT NULL DEFAULT false,
-    "dateOfBirth" TIMESTAMP(3) NOT NULL,
+    "dateOfBirth" TIMESTAMP(3),
     "avatar" TEXT,
     "experience" INTEGER NOT NULL DEFAULT 0,
 
@@ -78,9 +78,9 @@ CREATE TABLE "Journey" (
     "physicalDifficulty" INTEGER NOT NULL,
     "lastCompletion" TIMESTAMP(3),
     "mobilityImpaired" TEXT NOT NULL,
-    "PartiallySighted" TEXT NOT NULL,
-    "PartiallyDeaf" TEXT NOT NULL,
-    "CognitivelyImpaired" TEXT NOT NULL,
+    "partiallySighted" TEXT NOT NULL,
+    "partiallyDeaf" TEXT NOT NULL,
+    "cognitivelyImpaired" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

@@ -1,25 +1,19 @@
-import { createUser, getUser, getUsers, updateUser, deleteUser, getUserByEmail } from '@/repositories/userRepository';
-import { createUserRole } from '@/repositories/userRoleRepository';
-import { User, UserRole } from '@prisma/client';
+import {deleteUser, getUser, getUserByEmail, getUsers, registerUser, updateUser} from '@/repositories/userRepository';
+import {createUserRole} from '@/repositories/userRoleRepository';
+import {User, UserRole} from '@prisma/client';
 import bcrypt from "bcrypt";
-import { getRoleById } from './roleService';
+import {getRoleById} from './roleService';
 import {RegisterUser} from "@/types/register";
 import {UserRoleData} from "@/types/userRole";
 
 export const register = async (userData: RegisterUser): Promise<User> => {
     try {
-
         const existingUser = await getUserByEmail(userData.email);
         if (existingUser) {
             throw new Error('Email already in use');
         }
-        
-        const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-        const newUser = await createUser({
-            ...userData,
-            password: hashedPassword,
-        });
+        userData.password = await bcrypt.hash(userData.password, 10);
 
         const userRole = await getRoleById(1);
         if (!userRole) {
@@ -27,12 +21,10 @@ export const register = async (userData: RegisterUser): Promise<User> => {
         }
 
         const userRoleData: UserRoleData = {
-            userId: newUser.id,
             roleId: userRole.id,
         };
-        await createUserRole(userRoleData);
 
-        return newUser;
+        return await registerUser(userData, userRoleData);
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -48,7 +40,6 @@ export const signIn = async (email: string, password: string): Promise<{ user: U
     if (!isPasswordValid) {
         throw new Error('Invalid password');
     }
-    
 
     return { user };
 };

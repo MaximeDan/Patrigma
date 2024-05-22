@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createEvent, getEvent, getEvents, updateEvent, deleteEvent } from '../repositories/eventRepository';
+import { createEvent, getEvent, getEvents, updateEvent, deleteEvent } from '@/repositories/eventRepository';
 import { createUserEvent, getUserEvent, updateUserEvent } from '@/repositories/userEventRepository';
 import { Event, UserEvent } from '@prisma/client';
 
@@ -65,8 +65,8 @@ export const joinEvent = async (userId: number, eventId: number): Promise<UserEv
         throw new NotFoundException('Event not found');
 
     const userEventData: UserEvent = {
-        userId: userId,
-        eventId: eventId,
+        userId,
+        eventId,
         lastStepId: null,
         id: 0 
     };
