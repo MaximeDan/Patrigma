@@ -1,7 +1,4 @@
 import { z } from "zod";
-import { addStepArraySchema, addStepAPISchema } from "./stepFormSchema";
-
-type addStepAPISchemaType = z.infer<typeof addStepAPISchema>;
 
 export const firstStepSchema = z.object({
   title: z.string({ required_error: "Ce champ est requis" }).min(1, {
@@ -50,22 +47,9 @@ export const secondStepSchema = z.object({
 });
 
 export const thirdStepSchema = z.object({
-  steps: z.string().refine((value) => {
-    const parsedSteps = addStepArraySchema.parse(value);
-    const formatedSteps: addStepAPISchemaType = parsedSteps.map((step) => {
-      return {
-        answer: step.answer,
-        hint: step.hint,
-        puzzle: step.puzzle,
-        latitude: step.coordinates.latitude,
-        longitude: step.coordinates.longitude,
-      };
-    });
-
-    console.log(formatedSteps, "formattedSteps");
-
-    return formatedSteps.length > 0;
-  }),
+  steps: z
+    .string()
+    .min(1, { message: "Vous devez ajouter au moins une étape" }),
 });
 
 export const forthStepSchema = z.object({

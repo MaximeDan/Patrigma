@@ -21,4 +21,7 @@ jobs:
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
           title: "Build failed for ${{ github.actor }}"
-          message: "Build failed. Commit message: ${{ github.event.head_commit.message }}"
+          message: |
+            Build failed
+            Commit message: ${{ github.event.head_commit.message }}
+            Commit SHA: ${{ github.sha }}

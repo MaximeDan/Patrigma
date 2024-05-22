@@ -50,10 +50,12 @@ const JourneyForm = () => {
     defaultValues: {
       title: "",
       description: "",
+      requirement: "",
       mobilityImpaired: "undefined",
       partiallySighted: "undefined",
       partiallyDeaf: "undefined",
       cognitivelyImpaired: "undefined",
+      steps: "",
       treasure: "",
     },
   });
@@ -65,7 +67,7 @@ const JourneyForm = () => {
   const next = async () => {
     const fields = steps[currentStep].fields;
     const output = await form.trigger(fields as FieldName[]);
-    // console.log(output, "output");
+    console.log(output, "output", fields, "fields");
     if (!output) return;
     if (currentStep < steps.length) {
       if (currentStep === steps.length - 1) {

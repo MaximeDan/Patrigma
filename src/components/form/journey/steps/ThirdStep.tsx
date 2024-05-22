@@ -11,7 +11,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useEffect } from "react";
 
 type ThirdStepProps = {
@@ -25,7 +24,8 @@ const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
     useJourneyFormStore();
 
   useEffect(() => {
-    form.setValue("steps", JSON.stringify(steps));
+    form.setValue("steps", steps.length ? JSON.stringify(steps) : "");
+    form.trigger("steps");
   }, [steps]);
 
   return (
@@ -49,12 +49,8 @@ const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
         control={form.control}
         name="steps"
         render={({ field }) => (
-          <FormItem hidden>
-            <FormControl>
-              <>
-                <Input {...field} id="steps" />
-              </>
-            </FormControl>
+          <FormItem>
+            <FormControl></FormControl>
             <FormMessage className="text-red-500" />
           </FormItem>
         )}
