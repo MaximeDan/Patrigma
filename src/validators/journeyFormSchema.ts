@@ -24,25 +24,25 @@ export const secondStepSchema = z.object({
     ["undefined", "unaccessible", "partiallyAccessible", "accessible"],
     {
       required_error: "Vous devez sélectionner une option",
-    }
+    },
   ),
   partiallySighted: z.enum(
     ["undefined", "unaccessible", "partiallyAccessible", "accessible"],
     {
       required_error: "Vous devez sélectionner une option",
-    }
+    },
   ),
   partiallyDeaf: z.enum(
     ["undefined", "unaccessible", "partiallyAccessible", "accessible"],
     {
       required_error: "Vous devez sélectionner une option",
-    }
+    },
   ),
   cognitivelyImpaired: z.enum(
     ["undefined", "unaccessible", "partiallyAccessible", "accessible"],
     {
       required_error: "Vous devez sélectionner une option",
-    }
+    },
   ),
 });
 
