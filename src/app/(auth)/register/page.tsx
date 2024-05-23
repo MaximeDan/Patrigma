@@ -1,7 +1,7 @@
 import React from "react";
 import Register from "@/components/form/Register";
 
-const Inscription = () => {
+const RegisterPage = () => {
   return (
     <main>
       <h1>Inscription</h1>
@@ -10,4 +10,4 @@ const Inscription = () => {
   );
 };
 
-export default Inscription;
+export default RegisterPage;
