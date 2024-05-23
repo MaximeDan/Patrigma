@@ -1,4 +1,3 @@
-// __tests__/auth/register.test.tsx
 import React from "react";
 import {
   render,

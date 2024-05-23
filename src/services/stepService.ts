@@ -1,63 +1,129 @@
 import {
+  BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from "@/types/exceptions";
 import {
   createStep,
-  getStep,
-  getSteps,
+  readStep,
   updateStep,
   deleteStep,
-} from "@/repositories/stepRepository";
+  readStepsByJourneyId,
+} from "../repositories/stepRepository";
 import { Step } from "@prisma/client";
+import { readJourneyWithSteps } from "@/repositories/journeyRepository";
 
-export const registerStep = async (stepData: Step): Promise<Step> => {
-  const result = await createStep(stepData);
+/**
+ * @params journeyId: number
+ * @returns Step[]
+ * @throws NotFoundException
+ * @description Retrieves all steps associated with a given journey ID.
+ */
+export const getStepsByJourneyID = async (
+  journeyId: number
+): Promise<Step[]> => {
+  const steps = await readStepsByJourneyId(journeyId);
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  if (!steps || steps.length === 0)
+    throw new NotFoundException("Steps not found");
 
-  return result;
+  return steps;
 };
 
-export const getStepById = async (id: number): Promise<Step | null> => {
-  const step = await getStep(id);
+/**
+ * @params id: number | null
+ * @params step: Step
+ * @returns Step | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Creates or updates a step based on the id value.
+ */
+export const registerOrModifyStep = async (
+  id: number | null,
+  step: Step
+): Promise<Step | null> => {
+  // Check arguments
+  if (id !== null && !Number.isFinite(id)) {
+    throw new BadRequestException("Invalid id");
+  }
 
+  if (!step) throw new BadRequestException("Invalid step");
+
+  // Check if journey exists and stepNumber is unique
+  const journey = await readJourneyWithSteps(step.journeyId);
+
+  if (!journey) throw new NotFoundException("Journey not found");
+
+  // Check if stepNumber is unique and sequential
+  const lastStep = journey.steps[journey.steps.length - 1];
+  if (lastStep && step.stepNumber !== lastStep.stepNumber + 1) {
+    throw new BadRequestException("Invalid step number");
+  }
+
+  let upsertedStep: Step | null;
+
+  // Check if register or modify
+  if (id === null) {
+    upsertedStep = await createStep(step);
+    if (!upsertedStep)
+      throw new InternalServerErrorException("Internal server error");
+  } else {
+    const stepToUpdate = await readStep(id);
+    if (!stepToUpdate) throw new NotFoundException("Step not found");
+
+    upsertedStep = await updateStep(id, step);
+    if (!upsertedStep)
+      throw new InternalServerErrorException("Internal server error");
+  }
+
+  return upsertedStep;
+};
+
+/**
+ * @params id: number
+ * @returns Step | null
+ * @throws NotFoundException
+ * @description Retrieves a step by its id.
+ */
+export const getStepById = async (id: number): Promise<Step | null> => {
+  const step = await readStep(id);
   if (!step) throw new NotFoundException("Step not found");
 
   return step;
 };
 
-export const getAllSteps = async (): Promise<Step[]> => {
-  const steps = await getSteps();
-
-  if (steps.length === 0) throw new NotFoundException("No steps found");
-
-  return steps;
-};
-
-export const modifyStep = async (
-  id: number,
-  stepData: Step,
-): Promise<Step | null> => {
-  const step = await getStep(id);
-
-  if (!step) throw new NotFoundException("Step not found");
-
-  const result = await updateStep(id, stepData);
-
-  if (!result) throw new InternalServerErrorException("Internal server error");
-
-  return result;
-};
-
+/**
+ * @params id: number
+ * @returns Step | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Deletes a step by its id and updates subsequent steps' numbers.
+ */
 export const removeStep = async (id: number): Promise<Step | null> => {
-  const step = await getStep(id);
-
+  const step = await readStep(id);
   if (!step) throw new NotFoundException("Step not found");
 
-  const result = await deleteStep(id);
+  const journey = await readJourneyWithSteps(step.journeyId);
+  if (!journey)
+    throw new NotFoundException("Journey not found for the given step");
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  const deletedStep = await deleteStep(id);
+  if (!deletedStep)
+    throw new InternalServerErrorException("Internal server error");
 
-  return result;
+  // Update step numbers of subsequent steps
+  if (journey) {
+    const stepsToUpdate = journey.steps
+      .filter((s) => s.stepNumber > step.stepNumber)
+      .sort((a, b) => a.stepNumber - b.stepNumber); // Sort stepsToUpdate in ascending order based on stepNumber
+    for (const s of stepsToUpdate) {
+      s.stepNumber -= 1;
+      const updatedStep = await updateStep(s.id, s);
+      if (!updatedStep)
+        throw new InternalServerErrorException("Internal server error");
+    }
+  }
+
+  return deletedStep;
 };

@@ -1,23 +1,38 @@
 import prisma from "@/lib/prisma";
+import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 import { Comment } from "@prisma/client";
 
-export const createComment = async (data: Comment): Promise<Comment> => {
+/**
+ * @params data: CommentWithoutDates
+ * @returns Comment
+ * @description Creates a new comment with the provided data.
+ */
+export const createComment = async (
+  data: CommentWithoutDates
+): Promise<Comment> => {
   return await prisma.comment.create({
     data,
   });
 };
 
-export const getComment = async (id: number): Promise<Comment | null> => {
+/**
+ * @params id: number
+ * @returns Comment | null
+ * @description Retrieves a comment by its id.
+ */
+export const readComment = async (id: number): Promise<Comment | null> => {
   return await prisma.comment.findUnique({ where: { id } });
 };
 
-export const getComments = async (): Promise<Comment[]> => {
-  return await prisma.comment.findMany();
-};
-
+/**
+ * @params id: number
+ * @params data: CommentWithoutDates
+ * @returns Comment | null
+ * @description Updates a comment with the provided data.
+ */
 export const updateComment = async (
   id: number,
-  data: Comment,
+  data: CommentWithoutDates
 ): Promise<Comment | null> => {
   return await prisma.comment.update({
     where: { id },
@@ -25,6 +40,11 @@ export const updateComment = async (
   });
 };
 
+/**
+ * @params id: number
+ * @returns Comment | null
+ * @description Deletes a comment by its id.
+ */
 export const deleteComment = async (id: number): Promise<Comment | null> => {
   return await prisma.comment.delete({ where: { id } });
 };

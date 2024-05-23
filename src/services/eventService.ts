@@ -1,107 +1,170 @@
 import {
+  BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from "@/types/exceptions";
 import {
   createEvent,
-  getEvent,
-  getEvents,
+  readEvent,
+  readEvents,
   updateEvent,
   deleteEvent,
-} from "@/repositories/eventRepository";
+} from "../repositories/eventRepository";
+import { Event, UserEvent } from "@prisma/client";
+import { eventWithUserEvents } from "@/types/eventWithUserEvents";
 import {
   createUserEvent,
-  getUserEvent,
-  updateUserEvent,
+  deleteUserEvent,
+  readUserEventByUserIdAndEventId,
 } from "@/repositories/userEventRepository";
-import { Event, UserEvent } from "@prisma/client";
 
-export const registerEvent = async (eventData: Event): Promise<Event> => {
-  const result = await createEvent(eventData);
+/**
+ * @params id: number
+ * @returns eventWithUserEvents | null
+ * @throws NotFoundException
+ * @description Retrieves an event with its associated user events by its id.
+ */
+export const getEventByIdWithUserEvents = async (
+  id: number
+): Promise<eventWithUserEvents | null> => {
+  const eventWithUserEvents: eventWithUserEvents | null = await readEvent(id);
+  if (!eventWithUserEvents) throw new NotFoundException("Event not found");
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
-
-  return result;
+  return eventWithUserEvents;
 };
 
-export const getEventById = async (id: number): Promise<Event | null> => {
-  const event = await getEvent(id);
+/**
+ * @returns Event[] | null
+ * @throws NotFoundException
+ * @description Retrieves all events without details.
+ */
+export const getAllEvents = async (): Promise<Event[] | null> => {
+  const events = await readEvents();
 
-  if (!event) throw new NotFoundException("Event not found");
-
-  return event;
-};
-
-export const getAllEvents = async (): Promise<Event[]> => {
-  const events = await getEvents();
-
-  if (events.length === 0) throw new NotFoundException("No events found");
+  if (!events || events.length === 0)
+    throw new NotFoundException("No events found");
 
   return events;
 };
 
-export const modifyEvent = async (
-  id: number,
-  eventData: Event,
+/**
+ * @params id: number | null
+ * @params event: Event
+ * @returns Event | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Creates or updates an event based on the id value.
+ */
+export const registerOrModifyEvent = async (
+  id: number | null,
+  event: Event
 ): Promise<Event | null> => {
-  const event = await getEvent(id);
+  // Check arguments
+  if (id !== null && !Number.isFinite(id)) {
+    throw new BadRequestException("Invalid id");
+  }
+  if (!event) throw new BadRequestException("Invalid event");
 
-  if (!event) throw new NotFoundException("Event not found");
+  let upsertedEvent: Event | null;
 
-  const result = await updateEvent(id, eventData);
+  // Check if register or modify
+  if (id === null) {
+    upsertedEvent = await createEvent(event);
+    if (!upsertedEvent)
+      throw new InternalServerErrorException("Internal server error");
+  } else {
+    const eventToUpdate = await readEvent(id);
+    if (!eventToUpdate) throw new NotFoundException("Event not found");
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+    upsertedEvent = await updateEvent(id, event);
+    if (!upsertedEvent)
+      throw new InternalServerErrorException("Internal server error");
+  }
 
-  return result;
+  return upsertedEvent;
 };
 
+/**
+ * @params id: number
+ * @returns Event | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Deletes an event by its id.
+ */
 export const removeEvent = async (id: number): Promise<Event | null> => {
-  const event = await getEvent(id);
-
+  const event = await readEvent(id);
   if (!event) throw new NotFoundException("Event not found");
 
-  const result = await deleteEvent(id);
+  const deletedEvent = await deleteEvent(id);
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
+  if (!deletedEvent)
+    throw new InternalServerErrorException("Internal server error");
 
-  return result;
+  return deletedEvent;
 };
 
+/**
+ * @params eventId: number
+ * @params userId: number
+ * @returns UserEvent | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Allows a user to join an event.
+ */
 export const joinEvent = async (
-  userId: number,
   eventId: number,
-): Promise<UserEvent> => {
-  const event = await getEvent(eventId);
+  userId: number
+): Promise<UserEvent | null> => {
+  // Validate arguments
+  if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {
+    throw new BadRequestException("Invalid userId or eventId");
+  }
 
-  if (!event) throw new NotFoundException("Event not found");
+  if (await readUserEventByUserIdAndEventId(userId, eventId)) {
+    throw new NotFoundException("User already joined event");
+  }
 
-  const userEventData: UserEvent = {
-    userId,
-    eventId,
-    lastStepId: null,
-    id: 0,
-  };
+  const userEvent: UserEventWithoutId = { userId: userId, eventId: eventId };
+  const createdUserEvent = await createUserEvent(userEvent);
 
-  const result = await createUserEvent(userEventData);
+  if (!createdUserEvent) {
+    throw new InternalServerErrorException("Unable to join event");
+  }
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
-
-  return result;
+  return createdUserEvent;
 };
 
-export const updateLastStepId = async (
-  userEventId: number,
-  lastStepId: number,
+/**
+ * @params userId: number
+ * @params eventId: number
+ * @returns UserEvent | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Allows a user to leave an event.
+ */
+export const leaveEvent = async (
+  userId: number,
+  eventId: number
 ): Promise<UserEvent | null> => {
-  const userEvent = await getUserEvent(userEventId);
+  // Validate arguments
+  if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {
+    throw new BadRequestException("Invalid userId or eventId");
+  }
 
-  if (!userEvent) throw new NotFoundException("UserEvent not found");
+  const userEvent = await readUserEventByUserIdAndEventId(userId, eventId);
+  if (!userEvent) {
+    throw new NotFoundException("User not found in event");
+  }
 
-  userEvent.lastStepId = lastStepId;
+  // Delete the UserEvent
+  const deletedUserEvent = await deleteUserEvent(userEvent.id);
 
-  const result = await updateUserEvent(userEventId, userEvent);
+  if (!deletedUserEvent) {
+    throw new InternalServerErrorException("Unable to leave event");
+  }
 
-  if (!result) throw new InternalServerErrorException("Internal server error");
-
-  return result;
+  return deletedUserEvent;
 };

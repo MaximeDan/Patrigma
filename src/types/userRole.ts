@@ -1,4 +1,4 @@
 ﻿export type UserRoleData = {
-  userId?: number;
+  userId: number;
   roleId: number;
 };
