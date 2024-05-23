@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createJourney, readJourney, readJourneys, updateJourney, deleteJourney } from '../repositories/journeyRepository';
+import { createJourney, getJourney, getJourneys, updateJourney, deleteJourney } from '../repositories/journeyRepository';
 import { Journey } from '@prisma/client';
 
 export const registerJourney = async (journeyData: Journey): Promise<Journey> => {
@@ -12,7 +12,7 @@ export const registerJourney = async (journeyData: Journey): Promise<Journey> =>
 };
 
 export const getJourneyById = async (id: number): Promise<Journey | null> => {
-    const journey = await readJourney(id);
+    const journey = await getJourney(id);
 
     if (!journey) 
         throw new NotFoundException('Journey not found');
@@ -21,7 +21,7 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
 };
 
 export const getAllJourneys = async (): Promise<Journey[]> => {
-    const journeys = await readJourneys();
+    const journeys = await getJourneys();
 
     if(journeys.length === 0) 
         throw new NotFoundException('No journeys found');
@@ -30,7 +30,7 @@ export const getAllJourneys = async (): Promise<Journey[]> => {
 };
 
 export const modifyJourney = async (id: number, journeyData: Journey): Promise<Journey | null> => {
-    const journey = await readJourney(id);
+    const journey = await getJourney(id);
 
     if (!journey) 
         throw new NotFoundException('Journey not found');
@@ -43,7 +43,7 @@ export const modifyJourney = async (id: number, journeyData: Journey): Promise<J
 };
 
 export const removeJourney = async (id: number): Promise<Journey | null> => {
-    const journey = await readJourney(id);
+    const journey = await getJourney(id);
 
     if (!journey) 
         throw new NotFoundException('Journey not found');

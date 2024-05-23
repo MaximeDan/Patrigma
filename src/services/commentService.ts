@@ -1,5 +1,5 @@
 import { InternalServerErrorException, NotFoundException } from '@/types/exceptions';
-import { createComment, readComment, readComments, updateComment, deleteComment } from '../repositories/commentRepository';
+import { createComment, getComment, getComments, updateComment, deleteComment } from '../repositories/commentRepository';
 import { Comment } from '@prisma/client';
 
 export const registerComment = async (commentData: Comment): Promise<Comment> => {
@@ -12,7 +12,7 @@ export const registerComment = async (commentData: Comment): Promise<Comment> =>
 };
 
 export const getCommentById = async (id: number): Promise<Comment | null> => {
-    const comment = await readComment(id);
+    const comment = await getComment(id);
 
     if (!comment) 
         throw new NotFoundException('Comment not found');
@@ -21,7 +21,7 @@ export const getCommentById = async (id: number): Promise<Comment | null> => {
 };
 
 export const getAllComments = async (): Promise<Comment[]> => {
-    const comments = await readComments();
+    const comments = await getComments();
 
     if(comments.length === 0) 
         throw new NotFoundException('No comments found');
@@ -30,7 +30,7 @@ export const getAllComments = async (): Promise<Comment[]> => {
 };
 
 export const modifyComment = async (id: number, commentData: Comment): Promise<Comment | null> => {
-    const comment = await readComment(id);
+    const comment = await getComment(id);
 
     if (!comment) 
         throw new NotFoundException('Comment not found');
@@ -43,7 +43,7 @@ export const modifyComment = async (id: number, commentData: Comment): Promise<C
 };
 
 export const removeComment = async (id: number): Promise<Comment | null> => {
-    const comment = await readComment(id);
+    const comment = await getComment(id);
 
     if (!comment) 
         throw new NotFoundException('Comment not found');

@@ -7,11 +7,11 @@ export const createStep = async (data: Step): Promise<Step> => {
     });
 };
 
-export const readStep = async (id: number): Promise<Step | null> => {
+export const getStep = async (id: number): Promise<Step | null> => {
     return await prisma.step.findUnique({ where: { id } });
 };
 
-export const readSteps = async (): Promise<Step[]> => {
+export const getSteps = async (): Promise<Step[]> => {
     return await prisma.step.findMany();
 };
 

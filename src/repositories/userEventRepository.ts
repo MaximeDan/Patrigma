@@ -7,11 +7,11 @@ export const createUserEvent = async (data: UserEvent): Promise<UserEvent> => {
     });
 };
 
-export const readUserEvent = async (id: number): Promise<UserEvent | null> => {
+export const getUserEvent = async (id: number): Promise<UserEvent | null> => {
     return await prisma.userEvent.findUnique({ where: { id } });
 };
 
-export const readUserEvents = async (): Promise<UserEvent[]> => {
+export const getUserEvents = async (): Promise<UserEvent[]> => {
     return await prisma.userEvent.findMany();
 };
 

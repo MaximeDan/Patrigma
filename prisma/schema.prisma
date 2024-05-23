@@ -22,15 +22,15 @@ model Role {
 
 model User {
   id          Int         @id @default(autoincrement())
-  name        String
-  lastName    String
+  name        String?
+  lastName    String?
   email       String      @unique
   username    String
   password    String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   isVerified  Boolean     @default(false)
-  dateOfBirth DateTime
+  dateOfBirth DateTime?
   avatar      String?
   experience  Int         @default(0)
   userRoles   UserRole[] // liste des rôles de l'utilisateur

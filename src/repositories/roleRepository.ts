@@ -7,11 +7,11 @@ export const createRole = async (data: Role): Promise<Role> => {
     });
 };
 
-export const readRole = async (id: number): Promise<Role | null> => {
+export const getRole = async (id: number): Promise<Role | null> => {
     return await prisma.role.findUnique({ where: { id } });
 };
 
-export const readRoles = async (): Promise<Role[]> => {
+export const getRoles = async (): Promise<Role[]> => {
     return await prisma.role.findMany();
 };
 
