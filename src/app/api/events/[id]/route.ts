@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/events/[id] : get an event by id with user events
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

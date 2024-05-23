@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/journeys/[id]/withComments : get a journey by id with associated comments
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

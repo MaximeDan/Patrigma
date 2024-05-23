@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/journeys/[id]/withSteps : get a journey by id with associated steps
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

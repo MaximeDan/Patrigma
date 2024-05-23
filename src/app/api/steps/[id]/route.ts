@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/steps/[id] : get a step by id
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
