@@ -2,9 +2,7 @@ import { handleException } from "@/app/utils/errorHandlerUtils";
 import { registerOrModifyComment } from "@/services/commentService";
 import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 import { commentBodySchema } from "@/validators/api/commentSchema";
-import { Comment } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
 
 // POST /api/comments : create a new comment
 export async function POST(request: NextRequest) {
