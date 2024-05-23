@@ -4,12 +4,13 @@ import {
   registerOrModifyComment,
   removeComment,
 } from "@/services/commentService";
+import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 import { Comment } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/comments/[id] : get a comment by id
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -29,7 +30,9 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
-    const comment: Comment = body.comment;
+    const comment: CommentWithoutDates = body.comment;
+
+    console.log("COMMENT : " + comment);
 
     const result = await registerOrModifyComment(id, comment);
     return NextResponse.json({ data: result }, { status: 200 });
