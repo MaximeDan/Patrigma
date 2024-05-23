@@ -1,26 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { register } from "@/services/userService";
-import {RegisterUser} from "@/types/register";
+import { RegisterUser } from "@/types/register";
+import { handleException } from "@/app/utils/errorHandlerUtils";
 
-async function handler(req: NextRequest): Promise<NextResponse> {
-    const data = await req.json();
+/**
+ * @params request: NextRequest
+ * @returns NextResponse
+ * @description Handles POST request to register a new user.
+ */
+async function handler(request: NextRequest): Promise<NextResponse> {
+  const data = await request.json();
 
-    try {
-        const userData: RegisterUser = {
-            email: data.email,
-            password: data.password,
-            username: data.username,
-            name: data.name,
-            lastName: data.lastName,
-            dateOfBirth: data.dateOfBirth,
-        };
+  try {
+    const userData: RegisterUser = {
+      email: data.email,
+      password: data.password,
+      username: data.username,
+      name: data.name,
+      lastName: data.lastName,
+      dateOfBirth: data.dateOfBirth,
+    };
 
-        const newUser = await register(userData);
-        return NextResponse.json({ user: newUser }, { status: 201 });
-    } catch (error: any) {
-        console.log(error.message)
-        return NextResponse.json({ message: error.message }, { status: 500 });
-    }
+    const newUser = await register(userData);
+    return NextResponse.json({ user: newUser }, { status: 201 });
+  } catch (error: any) {
+    return handleException(error);
+  }
 }
 
 export { handler as POST };

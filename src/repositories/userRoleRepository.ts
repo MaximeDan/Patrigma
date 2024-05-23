@@ -28,6 +28,11 @@ export const updateUserRole = async (
   });
 };
 
+/**
+ * @params id: number
+ * @returns UserRole | null
+ * @description Deletes a user role by its id.
+ */
 export const deleteUserRole = async (id: number): Promise<UserRole | null> => {
   return await prisma.userRole.delete({ where: { id } });
 };

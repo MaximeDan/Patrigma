@@ -759,8 +759,8 @@ async function main() {
       description:
         "Join us for an exciting race filled with challenges and puzzles!",
       accessCode: "1234",
-      startTime: new Date("2024-05-01"),
-      endTime: new Date("2024-05-01"),
+      startAt: new Date("2024-05-01"),
+      endAt: new Date("2024-05-01"),
     },
   });
 
@@ -776,8 +776,8 @@ async function main() {
       numberPlayerMin: 1,
       description: "Can you solve the puzzles and escape the room in time?",
       accessCode: "5678",
-      startTime: new Date("2024-06-01"),
-      endTime: new Date("2024-06-01"),
+      startAt: new Date("2024-06-01"),
+      endAt: new Date("2024-06-01"),
     },
   });
 
@@ -794,8 +794,8 @@ async function main() {
       description:
         "Embark on a thrilling treasure hunt and uncover hidden secrets!",
       accessCode: "abcd",
-      startTime: new Date("2024-07-01"),
-      endTime: new Date("2024-07-01"),
+      startAt: new Date("2024-07-01"),
+      endAt: new Date("2024-07-01"),
     },
   });
 
@@ -812,8 +812,8 @@ async function main() {
       description:
         "Explore the haunted mansion and solve the mystery that lies within!",
       accessCode: "efgh",
-      startTime: new Date("2024-08-01"),
-      endTime: new Date("2024-08-01"),
+      startAt: new Date("2024-08-01"),
+      endAt: new Date("2024-08-01"),
     },
   });
 
@@ -830,8 +830,8 @@ async function main() {
       description:
         "Test your puzzle-solving skills in this challenging adventure!",
       accessCode: "ijkl",
-      startTime: new Date("2024-09-01"),
-      endTime: new Date("2024-09-01"),
+      startAt: new Date("2024-09-01"),
+      endAt: new Date("2024-09-01"),
     },
   });
 
@@ -848,8 +848,8 @@ async function main() {
       description:
         "Embark on an exciting outdoor expedition and conquer nature's challenges!",
       accessCode: "mnop",
-      startTime: new Date("2024-10-01"),
-      endTime: new Date("2024-10-01"),
+      startAt: new Date("2024-10-01"),
+      endAt: new Date("2024-10-01"),
     },
   });
 
@@ -866,8 +866,8 @@ async function main() {
       description:
         "Explore the city and solve clues to complete the ultimate scavenger hunt!",
       accessCode: "qrst",
-      startTime: new Date("2024-11-01"),
-      endTime: new Date("2024-11-01"),
+      startAt: new Date("2024-11-01"),
+      endAt: new Date("2024-11-01"),
     },
   });
 
@@ -884,8 +884,8 @@ async function main() {
       description:
         "Enhance teamwork and communication skills in this thrilling team building challenge!",
       accessCode: "uvwx",
-      startTime: new Date("2024-12-01"),
-      endTime: new Date("2024-12-01"),
+      startAt: new Date("2024-12-01"),
+      endAt: new Date("2024-12-01"),
     },
   });
 
@@ -902,8 +902,8 @@ async function main() {
       description:
         "Escape the ordinary and immerse yourself in an unforgettable outdoor adventure!",
       accessCode: "yzab",
-      startTime: new Date("2024-05-01"),
-      endTime: new Date("2024-05-01"),
+      startAt: new Date("2024-05-01"),
+      endAt: new Date("2024-05-01"),
     },
   });
 
@@ -920,8 +920,8 @@ async function main() {
       description:
         "Unravel the secrets of a mysterious island in this thrilling adventure!",
       accessCode: "cdef",
-      startTime: new Date("2024-06-01"),
-      endTime: new Date("2024-06-01"),
+      startAt: new Date("2024-06-01"),
+      endAt: new Date("2024-06-01"),
     },
   });
 
@@ -938,8 +938,8 @@ async function main() {
       description:
         "Step into the enchanted forest and embark on a magical journey like no other!",
       accessCode: "ghij",
-      startTime: new Date("2024-07-01"),
-      endTime: new Date("2024-07-01"),
+      startAt: new Date("2024-07-01"),
+      endAt: new Date("2024-07-01"),
     },
   });
 
@@ -956,8 +956,8 @@ async function main() {
       description:
         "Embark on an epic quest filled with challenges, puzzles, and adventure!",
       accessCode: "klmn",
-      startTime: new Date("2024-08-01"),
-      endTime: new Date("2024-08-01"),
+      startAt: new Date("2024-08-01"),
+      endAt: new Date("2024-08-01"),
     },
   });
 
@@ -974,8 +974,8 @@ async function main() {
       description:
         "Enter the mystic temple and solve ancient riddles to unlock its secrets!",
       accessCode: "opqr",
-      startTime: new Date("2024-09-01"),
-      endTime: new Date("2024-09-01"),
+      startAt: new Date("2024-09-01"),
+      endAt: new Date("2024-09-01"),
     },
   });
 
@@ -992,8 +992,8 @@ async function main() {
       description:
         "Immerse yourself in a thrilling virtual reality adventure like never before!",
       accessCode: "stuv",
-      startTime: new Date("2024-10-01"),
-      endTime: new Date("2024-10-01"),
+      startAt: new Date("2024-10-01"),
+      endAt: new Date("2024-10-01"),
     },
   });
 
@@ -1029,7 +1029,15 @@ async function main() {
     const userEvents: number[] = []; // Array to store the event IDs the user is already registered for
 
     // Generate a random number of events for the user between 0 and 6
-    const numEvents = Math.floor(Math.random() * 7);
+    let numEvents = Math.floor(Math.random() * 7);
+
+    // Ensure that Bob, Henry, and Grace are registered for at least one event because we create userStep for this users
+    if (
+      users[i].id === bob.id ||
+      users[i].id === henry.id ||
+      users[i].id === grace.id
+    )
+      numEvents++;
 
     for (let j = 0; j < numEvents; j++) {
       let randomEventIndex = Math.floor(Math.random() * events.length);
