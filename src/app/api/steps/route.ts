@@ -3,7 +3,11 @@ import { registerOrModifyStep } from "@/services/stepService";
 import { Step } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// POST /api/steps : create a new step
+/**
+ * @params request: NextRequest
+ * @returns NextResponse
+ * @description Handles POST request to create a new step.
+ */
 export async function POST(request: NextRequest) {
   try {
     const stepData: Step = await request.json();

@@ -7,7 +7,12 @@ import {
 import { Step } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/steps/[id] : get a step by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles GET request to retrieve a step by its id.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -21,7 +26,12 @@ export async function GET(
   }
 }
 
-// PUT /api/steps/[id] : update a step by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles PUT request to update a step by its id.
+ */
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -38,7 +48,12 @@ export async function PUT(
   }
 }
 
-// DELETE /api/steps/[id] : delete a step by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns Response
+ * @description Handles DELETE request to delete a step by its id.
+ */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }

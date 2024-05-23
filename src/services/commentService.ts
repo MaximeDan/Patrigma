@@ -12,7 +12,12 @@ import {
 import { Comment } from "@prisma/client";
 import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 
-// Return a comment
+/**
+ * @params id: number
+ * @returns Comment | null
+ * @throws NotFoundException
+ * @description This function retrieves a comment based on its id.
+ */
 export const getCommentById = async (id: number): Promise<Comment | null> => {
   const comment: Comment | null = await readComment(id);
   if (!comment) throw new NotFoundException("Comment not found");
@@ -20,7 +25,15 @@ export const getCommentById = async (id: number): Promise<Comment | null> => {
   return comment;
 };
 
-// Create or update a comment based on the id value in parameter
+/**
+ * @params id: number | null
+ * @params comment: CommentWithoutDates
+ * @returns Comment | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description This function is used to create or update a comment based on the id value in parameter.
+ */
 export const registerOrModifyComment = async (
   id: number | null,
   comment: CommentWithoutDates
@@ -50,6 +63,13 @@ export const registerOrModifyComment = async (
   return result;
 };
 
+/**
+ * @params id: number
+ * @returns Comment | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description This function is used to delete a comment based on its id.
+ */
 export const removeComment = async (id: number): Promise<Comment | null> => {
   const comment = await readComment(id);
   if (!comment) throw new NotFoundException("Comment not found");

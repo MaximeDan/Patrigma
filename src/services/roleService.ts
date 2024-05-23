@@ -12,7 +12,12 @@ import {
 } from "../repositories/roleRepository";
 import { Role } from "@prisma/client";
 
-// Return a role
+/**
+ * @params id: number
+ * @returns Role | null
+ * @throws NotFoundException
+ * @description Retrieves a role by its id.
+ */
 export const getRoleById = async (id: number): Promise<Role | null> => {
   const role: Role | null = await readRole(id);
   if (!role) throw new NotFoundException("Role not found");
@@ -20,12 +25,23 @@ export const getRoleById = async (id: number): Promise<Role | null> => {
   return role;
 };
 
-// Return all roles
+/**
+ * @returns Role[] | null
+ * @description Retrieves all roles.
+ */
 export const getAllRoles = async (): Promise<Role[] | null> => {
   return await readRoles();
 };
 
-// Create or update a role
+/**
+ * @params id: number | null
+ * @params role: Role
+ * @returns Role | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Creates or updates a role based on the id value.
+ */
 export const registerOrModifyRole = async (
   id: number | null,
   role: Role
@@ -55,6 +71,13 @@ export const registerOrModifyRole = async (
   return upsertedRole;
 };
 
+/**
+ * @params id: number
+ * @returns Role | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Deletes a role by its id.
+ */
 export const removeRole = async (id: number): Promise<Role | null> => {
   const role = await readRole(id);
   if (!role) throw new NotFoundException("Role not found");

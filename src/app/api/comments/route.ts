@@ -4,12 +4,15 @@ import { CommentWithoutDates } from "@/types/CommentWithoutDates";
 import { commentBodySchema } from "@/validators/api/commentSchema";
 import { NextRequest, NextResponse } from "next/server";
 
-// POST /api/comments : create a new comment
+/**
+ * @params request: NextRequest
+ * @returns NextResponse
+ * @description Handles POST request to create a new comment.
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    // const comment: Comment = body.comment;
-    const commentParsed = commentBodySchema.parse(request.body);
+    const commentParsed = commentBodySchema.parse(body);
 
     const comment: CommentWithoutDates = commentParsed.comment;
 

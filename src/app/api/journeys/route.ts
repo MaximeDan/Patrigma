@@ -6,7 +6,10 @@ import {
 import { Journey, Step } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/journeys : get all journeys
+/**
+ * @returns NextResponse
+ * @description Handles GET request to retrieve all journeys.
+ */
 export async function GET() {
   try {
     const result = await getAllJourneys();
@@ -16,7 +19,11 @@ export async function GET() {
   }
 }
 
-// POST /api/journeys : create a new journey
+/**
+ * @params request: NextRequest
+ * @returns NextResponse
+ * @description Handles POST request to create a new journey.
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

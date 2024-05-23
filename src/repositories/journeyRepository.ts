@@ -3,6 +3,12 @@ import { Journey, Step } from "@prisma/client";
 import { journeyWithSteps } from "@/types/journeyWithSteps";
 import { journeyWithComments } from "@/types/journeyWithComments";
 
+/**
+ * @params journey: Journey
+ * @params steps: Step[]
+ * @returns journeyWithSteps | null
+ * @description Creates a new journey with the provided data and associated steps.
+ */
 export const createJourney = async (
   journey: Journey,
   steps: Step[]
@@ -53,10 +59,20 @@ export const createJourney = async (
   });
 };
 
+/**
+ * @params id: number
+ * @returns Journey | null
+ * @description Retrieves a journey by its id.
+ */
 export const readJourney = async (id: number): Promise<Journey | null> => {
   return await prisma.journey.findUnique({ where: { id } });
 };
 
+/**
+ * @params id: number
+ * @returns journeyWithSteps | null
+ * @description Retrieves a journey by its id along with associated steps.
+ */
 export const readJourneyWithSteps = async (
   id: number
 ): Promise<journeyWithSteps | null> => {
@@ -72,6 +88,11 @@ export const readJourneyWithSteps = async (
   });
 };
 
+/**
+ * @params id: number
+ * @returns journeyWithComments | null
+ * @description Retrieves a journey by its id along with associated comments.
+ */
 export const readJourneyWithComments = async (
   id: number
 ): Promise<journeyWithComments | null> => {
@@ -87,10 +108,21 @@ export const readJourneyWithComments = async (
   });
 };
 
+/**
+ * @returns Journey[]
+ * @description Retrieves all journeys.
+ */
 export const readJourneys = async (): Promise<Journey[]> => {
   return await prisma.journey.findMany();
 };
 
+/**
+ * @params id: number
+ * @params journey: Journey
+ * @params steps: Step[]
+ * @returns journeyWithSteps | null
+ * @description Updates a journey with the provided data and associated steps.
+ */
 export const updateJourney = async (
   id: number,
   journey: Journey,
@@ -145,6 +177,11 @@ export const updateJourney = async (
   });
 };
 
+/**
+ * @params id: number
+ * @returns Journey | null
+ * @description Deletes a journey by its id.
+ */
 export const deleteJourney = async (id: number): Promise<Journey | null> => {
   return await prisma.journey.delete({ where: { id } });
 };

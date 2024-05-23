@@ -2,7 +2,12 @@ import { handleException } from "@/app/utils/errorHandlerUtils";
 import { joinEvent } from "@/services/eventService";
 import { NextRequest, NextResponse } from "next/server";
 
-// POST /api/events/[id]/join/[userId] : join an event
+/**
+ * @params request: NextRequest
+ * @params params: { id: string; userId: string }
+ * @returns NextResponse
+ * @description Handles POST request to join an event.
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string; userId: string } }

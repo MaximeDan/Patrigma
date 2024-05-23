@@ -7,7 +7,12 @@ import {
 import { Event } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/events/[id] : get an event by id with user events
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles GET request to retrieve an event by its id along with user events.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -21,7 +26,12 @@ export async function GET(
   }
 }
 
-// PUT /api/events/[id] : update an event by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles PUT request to update an event by its id.
+ */
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -38,7 +48,12 @@ export async function PUT(
   }
 }
 
-// DELETE /api/events/[id] : delete an event by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns Response
+ * @description Handles DELETE request to delete an event by its id.
+ */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }

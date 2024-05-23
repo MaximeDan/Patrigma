@@ -5,10 +5,14 @@ import {
   removeComment,
 } from "@/services/commentService";
 import { CommentWithoutDates } from "@/types/CommentWithoutDates";
-import { Comment } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/comments/[id] : get a comment by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles GET request to retrieve a comment by its id.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -22,7 +26,12 @@ export async function GET(
   }
 }
 
-// PUT /api/comments/[id] : update a comment by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles PUT request to update a comment by its id.
+ */
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -41,7 +50,12 @@ export async function PUT(
   }
 }
 
-// DELETE /api/comments/[id] : delete a comment by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns Response
+ * @description Handles DELETE request to delete a comment by its id.
+ */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }

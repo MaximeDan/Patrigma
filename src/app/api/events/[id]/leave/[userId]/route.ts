@@ -2,7 +2,12 @@ import { handleException } from "@/app/utils/errorHandlerUtils";
 import { leaveEvent } from "@/services/eventService";
 import { NextRequest, NextResponse } from "next/server";
 
-// DELETE /api/events/[id]/leave/[userId] : join an event
+/**
+ * @params request: NextRequest
+ * @params params: { id: string; userId: string }
+ * @returns Response
+ * @description Handles DELETE request to leave an event.
+ */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string; userId: string } }

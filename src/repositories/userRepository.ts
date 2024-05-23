@@ -1,17 +1,6 @@
 import prisma from "@/lib/prisma";
 import { User } from "@prisma/client";
 import { RegisterUser } from "@/types/register";
-import { UserRoleData } from "@/types/userRole";
-
-export const createUser = async (data: RegisterUser): Promise<User> => {
-  try {
-    return await prisma.user.create({
-      data,
-    });
-  } catch (error) {
-    throw new Error("User not saved in the db");
-  }
-};
 
 export const readUser = async (id: number): Promise<User | null> => {
   return prisma.user.findUnique({ where: { id } });

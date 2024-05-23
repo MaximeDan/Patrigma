@@ -13,6 +13,12 @@ import {
 import { Step } from "@prisma/client";
 import { readJourneyWithSteps } from "@/repositories/journeyRepository";
 
+/**
+ * @params journeyId: number
+ * @returns Step[]
+ * @throws NotFoundException
+ * @description Retrieves all steps associated with a given journey ID.
+ */
 export const getStepsByJourneyID = async (
   journeyId: number
 ): Promise<Step[]> => {
@@ -24,7 +30,15 @@ export const getStepsByJourneyID = async (
   return steps;
 };
 
-// Create or update a step
+/**
+ * @params id: number | null
+ * @params step: Step
+ * @returns Step | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Creates or updates a step based on the id value.
+ */
 export const registerOrModifyStep = async (
   id: number | null,
   step: Step
@@ -66,6 +80,12 @@ export const registerOrModifyStep = async (
   return upsertedStep;
 };
 
+/**
+ * @params id: number
+ * @returns Step | null
+ * @throws NotFoundException
+ * @description Retrieves a step by its id.
+ */
 export const getStepById = async (id: number): Promise<Step | null> => {
   const step = await readStep(id);
   if (!step) throw new NotFoundException("Step not found");
@@ -73,6 +93,13 @@ export const getStepById = async (id: number): Promise<Step | null> => {
   return step;
 };
 
+/**
+ * @params id: number
+ * @returns Step | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Deletes a step by its id and updates subsequent steps' numbers.
+ */
 export const removeStep = async (id: number): Promise<Step | null> => {
   const step = await readStep(id);
   if (!step) throw new NotFoundException("Step not found");

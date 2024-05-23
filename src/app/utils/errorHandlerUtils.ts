@@ -8,6 +8,11 @@ import {
 } from "@/types/exceptions";
 import { ZodError } from "zod";
 
+/**
+ * @params error: any
+ * @returns NextResponse
+ * @description Handles exceptions and returns appropriate HTTP response based on the error type.
+ */
 export function handleException(error: any) {
   console.error("An error occurred:", error);
 

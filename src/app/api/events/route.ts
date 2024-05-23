@@ -3,7 +3,10 @@ import { getAllEvents, registerOrModifyEvent } from "@/services/eventService";
 import { Event } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/events : get all events
+/**
+ * @returns NextResponse
+ * @description Handles GET request to retrieve all events.
+ */
 export async function GET() {
   try {
     const result = await getAllEvents();
@@ -13,7 +16,11 @@ export async function GET() {
   }
 }
 
-// POST /api/events : create an event
+/**
+ * @params request: NextRequest
+ * @returns NextResponse
+ * @description Handles POST request to create a new event.
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

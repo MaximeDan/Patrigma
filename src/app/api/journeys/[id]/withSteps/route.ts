@@ -2,7 +2,12 @@ import { handleException } from "@/app/utils/errorHandlerUtils";
 import { getJourneyByIdWithSteps } from "@/services/journeyService";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/journeys/[id]/withSteps : get a journey by id with associated steps
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles GET request to retrieve a journey by its id along with associated steps.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }

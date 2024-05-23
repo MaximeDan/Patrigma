@@ -10,16 +10,20 @@ import {
   updateEvent,
   deleteEvent,
 } from "../repositories/eventRepository";
-import { Event, User, UserEvent } from "@prisma/client";
+import { Event, UserEvent } from "@prisma/client";
 import { eventWithUserEvents } from "@/types/eventWithUserEvents";
 import {
   createUserEvent,
   deleteUserEvent,
   readUserEventByUserIdAndEventId,
 } from "@/repositories/userEventRepository";
-import { UserEventWithoutId } from "@/types/userEventNullableId";
 
-// Return an event with user events
+/**
+ * @params id: number
+ * @returns eventWithUserEvents | null
+ * @throws NotFoundException
+ * @description Retrieves an event with its associated user events by its id.
+ */
 export const getEventByIdWithUserEvents = async (
   id: number
 ): Promise<eventWithUserEvents | null> => {
@@ -29,7 +33,11 @@ export const getEventByIdWithUserEvents = async (
   return eventWithUserEvents;
 };
 
-// Return all events without details
+/**
+ * @returns Event[] | null
+ * @throws NotFoundException
+ * @description Retrieves all events without details.
+ */
 export const getAllEvents = async (): Promise<Event[] | null> => {
   const events = await readEvents();
 
@@ -39,7 +47,15 @@ export const getAllEvents = async (): Promise<Event[] | null> => {
   return events;
 };
 
-// Create or update an event
+/**
+ * @params id: number | null
+ * @params event: Event
+ * @returns Event | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Creates or updates an event based on the id value.
+ */
 export const registerOrModifyEvent = async (
   id: number | null,
   event: Event
@@ -69,6 +85,13 @@ export const registerOrModifyEvent = async (
   return upsertedEvent;
 };
 
+/**
+ * @params id: number
+ * @returns Event | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Deletes an event by its id.
+ */
 export const removeEvent = async (id: number): Promise<Event | null> => {
   const event = await readEvent(id);
   if (!event) throw new NotFoundException("Event not found");
@@ -81,7 +104,15 @@ export const removeEvent = async (id: number): Promise<Event | null> => {
   return deletedEvent;
 };
 
-// Join an event
+/**
+ * @params eventId: number
+ * @params userId: number
+ * @returns UserEvent | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Allows a user to join an event.
+ */
 export const joinEvent = async (
   eventId: number,
   userId: number
@@ -105,7 +136,15 @@ export const joinEvent = async (
   return createdUserEvent;
 };
 
-// Leave an event
+/**
+ * @params userId: number
+ * @params eventId: number
+ * @returns UserEvent | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Allows a user to leave an event.
+ */
 export const leaveEvent = async (
   userId: number,
   eventId: number

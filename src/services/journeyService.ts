@@ -16,7 +16,12 @@ import { Journey, Step } from "@prisma/client";
 import { journeyWithSteps } from "@/types/journeyWithSteps";
 import { journeyWithComments } from "@/types/journeyWithComments";
 
-// Return a journey without steps
+/**
+ * @params id: number
+ * @returns Journey | null
+ * @throws NotFoundException
+ * @description Retrieves a journey by its id without steps.
+ */
 export const getJourneyById = async (id: number): Promise<Journey | null> => {
   const journey: Journey | null = await readJourney(id);
   if (!journey) throw new NotFoundException("Journey not found");
@@ -24,7 +29,12 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
   return journey;
 };
 
-// Return a journey with steps
+/**
+ * @params id: number
+ * @returns journeyWithSteps | null
+ * @throws NotFoundException
+ * @description Retrieves a journey by its id with its steps.
+ */
 export const getJourneyByIdWithSteps = async (
   id: number
 ): Promise<journeyWithSteps | null> => {
@@ -36,7 +46,12 @@ export const getJourneyByIdWithSteps = async (
   return journeyWithSteps;
 };
 
-// Return a journey with comments
+/**
+ * @params id: number
+ * @returns journeyWithComments | null
+ * @throws NotFoundException
+ * @description Retrieves a journey by its id with its comments.
+ */
 export const getJourneyByIdWithComments = async (
   id: number
 ): Promise<journeyWithComments | null> => {
@@ -47,7 +62,11 @@ export const getJourneyByIdWithComments = async (
   return journeyWithComments;
 };
 
-// Return all journeys without steps
+/**
+ * @returns Journey[]
+ * @throws NotFoundException
+ * @description Retrieves all journeys without steps.
+ */
 export const getAllJourneys = async (): Promise<Journey[]> => {
   const journeys = await readJourneys();
 
@@ -57,7 +76,16 @@ export const getAllJourneys = async (): Promise<Journey[]> => {
   return journeys;
 };
 
-// Create or update a journey
+/**
+ * @params id: number | null
+ * @params journey: Journey
+ * @params steps: Step[]
+ * @returns Journey | null
+ * @throws BadRequestException
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Creates or updates a journey based on the id value and associates it with steps.
+ */
 export const registerOrModifyJourney = async (
   id: number | null,
   journey: Journey,
@@ -103,6 +131,13 @@ export const registerOrModifyJourney = async (
   return upsertedJourneyWithSteps;
 };
 
+/**
+ * @params id: number
+ * @returns Journey | null
+ * @throws NotFoundException
+ * @throws InternalServerErrorException
+ * @description Deletes a journey by its id.
+ */
 export const removeJourney = async (id: number): Promise<Journey | null> => {
   const journey = await readJourney(id);
   if (!journey) throw new NotFoundException("Journey not found");

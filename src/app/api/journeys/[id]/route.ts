@@ -6,7 +6,12 @@ import {
 import { Journey, Step } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// PUT /api/journeys/[id] : update a journey by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles PUT request to update a journey by its id.
+ */
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -24,7 +29,12 @@ export async function PUT(
   }
 }
 
-// DELETE /api/journeys/[id] : delete a journey by id
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns Response
+ * @description Handles DELETE request to delete a journey by its id.
+ */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }

@@ -3,6 +3,11 @@ import { register } from "@/services/userService";
 import { RegisterUser } from "@/types/register";
 import { handleException } from "@/app/utils/errorHandlerUtils";
 
+/**
+ * @params request: NextRequest
+ * @returns NextResponse
+ * @description Handles POST request to register a new user.
+ */
 async function handler(request: NextRequest): Promise<NextResponse> {
   const data = await request.json();
 
