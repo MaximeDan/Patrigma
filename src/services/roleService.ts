@@ -5,10 +5,10 @@ import {
 } from "@/types/exceptions";
 import {
   createRole,
-  readRole,
-  readRoles,
   updateRole,
   deleteRole,
+  readRole,
+  readRoles,
 } from "../repositories/roleRepository";
 import { Role } from "@prisma/client";
 

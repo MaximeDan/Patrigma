@@ -41,7 +41,7 @@ export const deleteUser = async (id: number): Promise<User | null> => {
 
 export const registerUser = async (
   userData: RegisterUser,
-  userRoleData: UserRoleData
+  userRoleId: number
 ): Promise<User> => {
   return prisma.$transaction(async (prisma) => {
     const newUser = await prisma.user.create({
@@ -52,7 +52,7 @@ export const registerUser = async (
 
     await prisma.userRole.create({
       data: {
-        ...userRoleData,
+        roleId: userRoleId,
         userId: newUser.id,
       },
     });

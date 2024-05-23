@@ -11,7 +11,7 @@ export const readUserRole = async (id: number): Promise<UserRole | null> => {
   return await prisma.userRole.findUnique({ where: { id } });
 };
 
-export const getUserRoles = async (): Promise<UserRole[]> => {
+export const readUserRoles = async (): Promise<UserRole[]> => {
   return await prisma.userRole.findMany();
 };
 

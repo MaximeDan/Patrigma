@@ -12,29 +12,24 @@ import bcrypt from "bcrypt";
 import { getRoleById } from "./roleService";
 import { RegisterUser } from "@/types/register";
 import { UserRoleData } from "@/types/userRole";
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  NotFoundException,
+} from "@/types/exceptions";
 
 export const register = async (userData: RegisterUser): Promise<User> => {
-  try {
-    const existingUser = await readUserByEmail(userData.email);
-    if (existingUser) {
-      throw new Error("Email already in use");
-    }
+  const existingUser = await readUserByEmail(userData.email);
+  if (existingUser) throw new BadRequestException("Email already in use");
 
-    userData.password = await bcrypt.hash(userData.password, 10);
+  userData.password = await bcrypt.hash(userData.password, 10);
+  if (!userData.password)
+    throw new InternalServerErrorException("Password not hashed");
 
-    const userRole = await getRoleById(1);
-    if (!userRole) {
-      throw new Error("Role not found");
-    }
+  const userRole = await getRoleById(1);
+  if (!userRole) throw new NotFoundException("Role not found");
 
-    const userRoleData: UserRoleData = {
-      roleId: userRole.id,
-    };
-
-    return await registerUser(userData, userRoleData);
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+  return await registerUser(userData, userRole.id);
 };
 
 export const signIn = async (
@@ -42,14 +37,10 @@ export const signIn = async (
   password: string
 ): Promise<{ user: User }> => {
   const user = await readUserByEmail(email);
-  if (!user) {
-    throw new Error("User not found");
-  }
+  if (!user) throw new NotFoundException("User not found");
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    throw new Error("Invalid password");
-  }
+  if (!isPasswordValid) throw new BadRequestException("Invalid password");
 
   return { user };
 };
@@ -67,9 +58,7 @@ export const assignRoleToUser = async (
 
 export const getUserById = async (id: number): Promise<User | null> => {
   const user = await readUser(id);
-  if (!user) {
-    throw new Error("User not found");
-  }
+  if (!user) throw new NotFoundException("User not found");
   return user;
 };
 
@@ -82,16 +71,14 @@ export const modifyUser = async (
   userData: User
 ): Promise<User | null> => {
   const user = await readUser(id);
-  if (!user) {
-    throw new Error("User not found");
-  }
+  if (!user) throw new NotFoundException("User not found");
+
   return await updateUser(id, userData);
 };
 
 export const removeUser = async (id: number): Promise<User | null> => {
   const user = await readUser(id);
-  if (!user) {
-    throw new Error("User not found");
-  }
+  if (!user) throw new NotFoundException("User not found");
+
   return await deleteUser(id);
 };

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { register } from "@/services/userService";
 import { RegisterUser } from "@/types/register";
+import { handleException } from "@/app/utils/errorHandlerUtils";
 
 async function handler(request: NextRequest): Promise<NextResponse> {
   const data = await request.json();
@@ -18,8 +19,7 @@ async function handler(request: NextRequest): Promise<NextResponse> {
     const newUser = await register(userData);
     return NextResponse.json({ user: newUser }, { status: 201 });
   } catch (error: any) {
-    console.log(error.message);
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return handleException(error);
   }
 }
 
