@@ -1,4 +1,7 @@
-﻿export type UserRoleData = {
-    userId?: number;
-    roleId: number;
-};
+export interface UserRoleData {
+  roleId: number;
+}
+
+export interface UserRoleDataWithUserId extends UserRoleData {
+  userId: number;
+}

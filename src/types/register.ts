@@ -1,8 +1,8 @@
-﻿export type RegisterUser = {
-    email: string;
-    password: string;
-    username: string;
-    name: string;
-    lastName: string;
-    dateOfBirth: Date;
+export type RegisterUser = {
+  email: string;
+  password: string;
+  username: string;
+  name: string;
+  lastName: string;
+  dateOfBirth: Date;
 };
