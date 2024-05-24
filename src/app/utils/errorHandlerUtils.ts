@@ -7,6 +7,7 @@ import {
   InternalServerErrorException,
 } from "@/types/exceptions";
 import { ZodError } from "zod";
+import { Prisma } from "@prisma/client";
 
 /**
  * @params error: any
@@ -14,7 +15,7 @@ import { ZodError } from "zod";
  * @description Handles exceptions and returns appropriate HTTP response based on the error type.
  */
 export function handleException(error: any) {
-  console.error("An error occurred:", error);
+  // console.error("An error occurred:", error);
 
   switch (true) {
     case error instanceof BadRequestException:
@@ -34,4 +35,38 @@ export function handleException(error: any) {
         { status: 500 }
       );
   }
+}
+
+export function handlePrismaException(
+  error:
+    | Prisma.PrismaClientKnownRequestError
+    | Prisma.PrismaClientUnknownRequestError
+    | Prisma.PrismaClientRustPanicError
+    | Prisma.PrismaClientInitializationError
+    | Prisma.PrismaClientValidationError
+) {
+  const message = error.message;
+  const status = 500;
+
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    return NextResponse.json({ message }, { status: 400 });
+  }
+
+  if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+    return NextResponse.json({ message }, { status: 400 });
+  }
+
+  if (error instanceof Prisma.PrismaClientRustPanicError) {
+    return NextResponse.json({ message }, { status: 500 });
+  }
+
+  if (error instanceof Prisma.PrismaClientInitializationError) {
+    return NextResponse.json({ message }, { status: 500 });
+  }
+
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    return NextResponse.json({ message }, { status: 400 });
+  }
+
+  return NextResponse.json({ message }, { status });
 }

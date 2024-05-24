@@ -42,7 +42,7 @@ export async function DELETE(
   const id: number = Number(params.id);
 
   try {
-    const result = await removeJourney(id);
+    await removeJourney(id);
 
     // Using Response instead of NextResponse because NextResponse doesn't handle status 204 actually
     return new Response(null, {

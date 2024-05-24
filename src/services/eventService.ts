@@ -17,6 +17,7 @@ import {
   deleteUserEvent,
   readUserEventByUserIdAndEventId,
 } from "@/repositories/userEventRepository";
+import { UserEventWithoutId } from "@/types/userEventWithoutId";
 
 /**
  * @params id: number
@@ -126,7 +127,7 @@ export const joinEvent = async (
     throw new NotFoundException("User already joined event");
   }
 
-  const userEvent: UserEventWithoutId = { userId: userId, eventId: eventId };
+  const userEvent: UserEventWithoutId = { userId, eventId };
   const createdUserEvent = await createUserEvent(userEvent);
 
   if (!createdUserEvent) {
