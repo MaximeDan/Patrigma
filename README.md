@@ -30,53 +30,58 @@ Patrigma is a Progressive Web Application (PWA) designed to enhance social inter
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-username/patrigma.git
    cd patrigma
    ```
 
 2. Install dependencies:
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 3. Set up the environment variables:
-    ```env
-    DATABASE_URL="your-database-url"
-    MAPBOX_KEY="your-mapbox-api-key"
-    NEXT_PUBLIC_MAPBOX_KEY="your-public-mapbox-api-key"
-    JWT_SECRET="mysecret"
-    ```
-4. Apply database migrations:  
+   ```env
+   DATABASE_URL="your-database-url"
+   MAPBOX_KEY="your-mapbox-api-key"
+   NEXT_PUBLIC_MAPBOX_KEY="your-public-mapbox-api-key"
+   JWT_SECRET="mysecret"
+   ```
+4. Apply database migrations:
 
-    Dev environment : 
-    ```bash
-    npx prisma migrate dev
-    ```
+   Dev environment :
 
-    Prod environment : 
-    ```bash
-    npx prisma migrate deploy
-    ```
+   ```bash
+   npx prisma migrate dev
+   ```
+
+   Prod environment :
+
+   ```bash
+   npx prisma migrate deploy
+   ```
 
 5. Seeding database (optionnal):
-    ```bash
-    npx prisma db seed
-    ```
+
+   ```bash
+   npx prisma db seed
+   ```
 
 6. Run the development server:
-    ```bash
-    npm run dev
-    ```
-Open http://localhost:3000 with your browser to see the result.
+   `bash
+npm run dev
+`
+   Open http://localhost:3000 with your browser to see the result.
 
 ### Deployment
+
 To deploy Patrigma, follow these steps:
 
 1. Build the application for production:
-    ```bash
-    npm run build
-    ```
+   ```bash
+   npm run build
+   ```
 2. Start the production server:
-    ```bash
-    npm run start
-    ```
+   ```bash
+   npm run start
+   ```

@@ -16,7 +16,7 @@ export const readUsers = async (): Promise<User[]> => {
 
 export const updateUser = async (
   id: number,
-  data: User
+  data: User,
 ): Promise<User | null> => {
   return prisma.user.update({
     where: { id },
@@ -30,7 +30,7 @@ export const deleteUser = async (id: number): Promise<User | null> => {
 
 export const registerUser = async (
   userData: RegisterUser,
-  userRoleId: number
+  userRoleId: number,
 ): Promise<User> => {
   return prisma.$transaction(async (prisma) => {
     const newUser = await prisma.user.create({

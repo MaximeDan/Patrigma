@@ -50,7 +50,7 @@ export const register = async (userData: RegisterUser): Promise<User> => {
  */
 export const signIn = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<{ user: User }> => {
   const user = await readUserByEmail(email);
   if (!user) throw new NotFoundException("User not found");
@@ -69,7 +69,7 @@ export const signIn = async (
  */
 export const assignRoleToUser = async (
   userId: number,
-  roleId: number
+  roleId: number,
 ): Promise<UserRole> => {
   const userRoleData: UserRoleDataWithUserId = {
     userId,
@@ -107,7 +107,7 @@ export const getAllUsers = async (): Promise<User[]> => {
  */
 export const modifyUser = async (
   id: number,
-  userData: User
+  userData: User,
 ): Promise<User | null> => {
   const user = await readUser(id);
   if (!user) throw new NotFoundException("User not found");

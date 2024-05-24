@@ -60,7 +60,7 @@ export const useJourneyFormStore = create<JourneyFormStore>((set) => ({
   editStep: (step, index) => {
     set((state) => ({
       steps: state.steps.map((currentStep, loopIndex) =>
-        loopIndex === index ? step : currentStep
+        loopIndex === index ? step : currentStep,
       ),
     }));
   },

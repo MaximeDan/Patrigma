@@ -8,7 +8,7 @@ import { UserEvent } from "@prisma/client";
  * @description Creates a new user event with the provided data.
  */
 export const createUserEvent = async (
-  data: UserEventWithoutId
+  data: UserEventWithoutId,
 ): Promise<UserEvent> => {
   return await prisma.userEvent.create({
     data,
@@ -32,7 +32,7 @@ export const readUserEvent = async (id: number): Promise<UserEvent | null> => {
  */
 export const readUserEventByUserIdAndEventId = async (
   userId: number,
-  eventId: number
+  eventId: number,
 ): Promise<UserEvent | null> => {
   return await prisma.userEvent.findFirst({
     where: { userId, eventId },
@@ -55,7 +55,7 @@ export const readUserEvents = async (): Promise<UserEvent[]> => {
  */
 export const updateUserEvent = async (
   id: number,
-  data: UserEvent
+  data: UserEvent,
 ): Promise<UserEvent | null> => {
   return await prisma.userEvent.update({
     where: { id },
@@ -69,7 +69,7 @@ export const updateUserEvent = async (
  * @description Deletes a user event by its id.
  */
 export const deleteUserEvent = async (
-  id: number
+  id: number,
 ): Promise<UserEvent | null> => {
   return await prisma.userEvent.delete({ where: { id } });
 };

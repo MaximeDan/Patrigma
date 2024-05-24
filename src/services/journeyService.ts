@@ -36,11 +36,10 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
  * @description Retrieves a journey by its id with its steps.
  */
 export const getJourneyByIdWithSteps = async (
-  id: number
+  id: number,
 ): Promise<journeyWithSteps | null> => {
-  const journeyWithSteps: journeyWithSteps | null = await readJourneyWithSteps(
-    id
-  );
+  const journeyWithSteps: journeyWithSteps | null =
+    await readJourneyWithSteps(id);
   if (!journeyWithSteps) throw new NotFoundException("Journey not found");
 
   return journeyWithSteps;
@@ -53,7 +52,7 @@ export const getJourneyByIdWithSteps = async (
  * @description Retrieves a journey by its id with its comments.
  */
 export const getJourneyByIdWithComments = async (
-  id: number
+  id: number,
 ): Promise<journeyWithComments | null> => {
   const journeyWithComments: journeyWithComments | null =
     await readJourneyWithComments(id);
@@ -89,7 +88,7 @@ export const getAllJourneys = async (): Promise<Journey[]> => {
 export const registerOrModifyJourney = async (
   id: number | null,
   journey: Journey,
-  steps: Step[]
+  steps: Step[],
 ): Promise<Journey | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {

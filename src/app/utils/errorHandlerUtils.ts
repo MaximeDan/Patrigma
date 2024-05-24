@@ -32,7 +32,7 @@ export function handleException(error: any) {
     default:
       return NextResponse.json(
         { message: "An unexpected error occurred" },
-        { status: 500 }
+        { status: 500 },
       );
   }
 }
@@ -43,7 +43,7 @@ export function handlePrismaException(
     | Prisma.PrismaClientUnknownRequestError
     | Prisma.PrismaClientRustPanicError
     | Prisma.PrismaClientInitializationError
-    | Prisma.PrismaClientValidationError
+    | Prisma.PrismaClientValidationError,
 ) {
   const message = error.message;
   const status = 500;

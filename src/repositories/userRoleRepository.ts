@@ -3,7 +3,7 @@ import { UserRole } from "@prisma/client";
 import { UserRoleDataWithUserId } from "@/types/userRole";
 
 export const createUserRole = async (
-  data: UserRoleDataWithUserId
+  data: UserRoleDataWithUserId,
 ): Promise<UserRole> => {
   return prisma.userRole.create({
     data,
@@ -20,7 +20,7 @@ export const getUserRoles = async (): Promise<UserRole[]> => {
 
 export const updateUserRole = async (
   id: number,
-  data: UserRole
+  data: UserRole,
 ): Promise<UserRole | null> => {
   return await prisma.userRole.update({
     where: { id },

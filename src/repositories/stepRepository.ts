@@ -27,7 +27,7 @@ export const readStep = async (id: number): Promise<Step | null> => {
  * @description Retrieves all steps associated with a given journey ID.
  */
 export const readStepsByJourneyId = async (
-  journeyId: number
+  journeyId: number,
 ): Promise<Step[] | null> => {
   return await prisma.step.findMany({ where: { journeyId } });
 };
@@ -40,7 +40,7 @@ export const readStepsByJourneyId = async (
  */
 export const updateStep = async (
   id: number,
-  data: Step
+  data: Step,
 ): Promise<Step | null> => {
   return await prisma.step.update({
     where: { id },

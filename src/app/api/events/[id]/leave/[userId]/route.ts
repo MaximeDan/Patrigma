@@ -10,7 +10,7 @@ import { NextRequest } from "next/server";
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; userId: string } }
+  { params }: { params: { id: string; userId: string } },
 ) {
   try {
     const id: number = Number(params.id);
