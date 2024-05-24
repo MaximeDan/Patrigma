@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { eventWithUserEvents } from "@/types/eventWithUserEvents";
+import { eventWithUserEvents, eventWithoutId } from "@/types/event";
 import { Event } from "@prisma/client";
 
 /**
@@ -7,7 +7,7 @@ import { Event } from "@prisma/client";
  * @returns Event
  * @description Creates a new event with the provided data.
  */
-export const createEvent = async (data: Event): Promise<Event> => {
+export const createEvent = async (data: eventWithoutId): Promise<Event> => {
   return await prisma.event.create({
     data,
   });
@@ -45,7 +45,7 @@ export const readEvents = async (): Promise<Event[] | null> => {
  */
 export const updateEvent = async (
   id: number,
-  data: Event
+  data: eventWithoutId
 ): Promise<Event | null> => {
   return await prisma.event.update({
     where: { id },

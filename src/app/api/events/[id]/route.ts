@@ -1,10 +1,12 @@
+import { afficherTypesDesAttributs } from "@/app/utils/afficherTypesDesAttributs";
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import {
   getEventByIdWithUserEvents,
   registerOrModifyEvent,
   removeEvent,
 } from "@/services/eventService";
-import { Event } from "@prisma/client";
+import { eventWithoutId } from "@/types/event";
+import { eventBodySchema } from "@/validators/api/eventSchema";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -38,8 +40,13 @@ export async function PUT(
 ) {
   try {
     const id: number = Number(params.id);
-    const body = await request.json();
-    const event: Event = body.event;
+    let body = await request.json();
+    let bodytarget: object;
+    afficherTypesDesAttributs<eventWithoutId>(body.event, EventWithoutId);
+
+    const eventParsed = eventBodySchema.parse(body);
+
+    const event: eventWithoutId = eventParsed.event;
 
     const result = await registerOrModifyEvent(id, event);
     return NextResponse.json({ data: result }, { status: 200 });

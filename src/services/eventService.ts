@@ -11,12 +11,13 @@ import {
   deleteEvent,
 } from "../repositories/eventRepository";
 import { Event, UserEvent } from "@prisma/client";
-import { eventWithUserEvents } from "@/types/eventWithUserEvents";
 import {
   createUserEvent,
   deleteUserEvent,
   readUserEventByUserIdAndEventId,
 } from "@/repositories/userEventRepository";
+import { eventWithUserEvents, eventWithoutId } from "@/types/event";
+import { UserEventWithoutId } from "@/types/userEventWithoutId";
 
 /**
  * @params id: number
@@ -58,7 +59,7 @@ export const getAllEvents = async (): Promise<Event[] | null> => {
  */
 export const registerOrModifyEvent = async (
   id: number | null,
-  event: Event
+  event: eventWithoutId
 ): Promise<Event | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {

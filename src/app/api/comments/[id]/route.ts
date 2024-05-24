@@ -5,6 +5,7 @@ import {
   removeComment,
 } from "@/services/commentService";
 import { CommentWithoutDates } from "@/types/CommentWithoutDates";
+import { commentBodySchema } from "@/validators/api/commentSchema";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -39,9 +40,9 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
-    const comment: CommentWithoutDates = body.comment;
+    const commentParsed = commentBodySchema.parse(body);
 
-    console.log("COMMENT : " + comment);
+    const comment: CommentWithoutDates = commentParsed.comment;
 
     const result = await registerOrModifyComment(id, comment);
     return NextResponse.json({ data: result }, { status: 200 });
