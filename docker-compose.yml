@@ -10,29 +10,21 @@ services:
       POSTGRES_DB: patrigma_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U patrigma"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   test_db:
     image: postgres:latest
     container_name: patrigma_test_db
     ports:
-      - "5433:5432"  # Different port to avoid conflict
+      - "5433:5432" 
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpassword
       POSTGRES_DB: testdb
-    volumes:
-      - postgres_test_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U testuser"]
+      test: ["CMD-SHELL", "pg_isready -U testuser -h localhost -p 5432"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
   postgres_data:
-  postgres_test_data:

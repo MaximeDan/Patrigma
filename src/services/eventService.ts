@@ -17,6 +17,7 @@ import {
   deleteUserEvent,
   readUserEventByUserIdAndEventId,
 } from "@/repositories/userEventRepository";
+import { UserEventWithoutId } from "@/types/userEventWithoutId";
 
 /**
  * @params id: number
@@ -25,7 +26,7 @@ import {
  * @description Retrieves an event with its associated user events by its id.
  */
 export const getEventByIdWithUserEvents = async (
-  id: number
+  id: number,
 ): Promise<eventWithUserEvents | null> => {
   const eventWithUserEvents: eventWithUserEvents | null = await readEvent(id);
   if (!eventWithUserEvents) throw new NotFoundException("Event not found");
@@ -58,7 +59,7 @@ export const getAllEvents = async (): Promise<Event[] | null> => {
  */
 export const registerOrModifyEvent = async (
   id: number | null,
-  event: Event
+  event: Event,
 ): Promise<Event | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
@@ -115,7 +116,7 @@ export const removeEvent = async (id: number): Promise<Event | null> => {
  */
 export const joinEvent = async (
   eventId: number,
-  userId: number
+  userId: number,
 ): Promise<UserEvent | null> => {
   // Validate arguments
   if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {
@@ -126,7 +127,7 @@ export const joinEvent = async (
     throw new NotFoundException("User already joined event");
   }
 
-  const userEvent: UserEventWithoutId = { userId: userId, eventId: eventId };
+  const userEvent: UserEventWithoutId = { userId, eventId };
   const createdUserEvent = await createUserEvent(userEvent);
 
   if (!createdUserEvent) {
@@ -147,7 +148,7 @@ export const joinEvent = async (
  */
 export const leaveEvent = async (
   userId: number,
-  eventId: number
+  eventId: number,
 ): Promise<UserEvent | null> => {
   // Validate arguments
   if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {

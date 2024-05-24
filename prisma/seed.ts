@@ -1,12 +1,4 @@
-import {
-  Journey,
-  Event,
-  PrismaClient,
-  Role,
-  User,
-  UserEvent,
-  Comment,
-} from "@prisma/client";
+import { Journey, Event, PrismaClient, Role, User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -1056,7 +1048,7 @@ async function main() {
       }
 
       // Register the user for the event and add the event ID to the userEvents array
-      const userEvent: UserEvent = await prisma.userEvent.upsert({
+      await prisma.userEvent.upsert({
         where: { id: i * numEvents + j + 1 },
         update: {},
         create: {
@@ -1068,180 +1060,179 @@ async function main() {
     }
   }
 
-  const comments: Comment[] = [
-    await prisma.comment.upsert({
-      where: { id: 2 },
-      update: {},
-      create: {
-        authorId: bob.id,
-        content: "Great experience! Loved every moment of it.",
-        rating: 4,
-        journeyId: journey1.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 3 },
-      update: {},
-      create: {
-        authorId: charlie.id,
-        content: "Highly recommended! The challenges were engaging and fun.",
-        rating: 5,
-        journeyId: journey1.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 4 },
-      update: {},
-      create: {
-        authorId: david.id,
-        content: "Amazing race! Can't wait to participate again.",
-        rating: 4,
-        journeyId: journey1.id,
-      },
-    }),
-  ];
+  await prisma.comment.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      authorId: bob.id,
+      content: "Great experience! Loved every moment of it.",
+      rating: 4,
+      journeyId: journey1.id,
+    },
+  });
 
-  const comments2: Comment[] = [
-    await prisma.comment.upsert({
-      where: { id: 5 },
-      update: {},
-      create: {
-        authorId: alice.id,
-        content:
-          "The treasure hunt was so much fun! We found the hidden treasure!",
-        rating: 5,
-        journeyId: journey2.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 6 },
-      update: {},
-      create: {
-        authorId: grace.id,
-        content:
-          "The puzzles were challenging but rewarding. Highly recommend!",
-        rating: 4,
-        journeyId: journey2.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 7 },
-      update: {},
-      create: {
-        authorId: emma.id,
-        content:
-          "The treasure hunt was a great team-building activity. Thumbs up!",
-        rating: 5,
-        journeyId: journey2.id,
-      },
-    }),
-  ];
+  await prisma.comment.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+      authorId: charlie.id,
+      content: "Highly recommended! The challenges were engaging and fun.",
+      rating: 5,
+      journeyId: journey1.id,
+    },
+  });
 
-  const comments3: Comment[] = [
-    await prisma.comment.upsert({
-      where: { id: 8 },
-      update: {},
-      create: {
-        authorId: david.id,
-        content:
-          "The outdoor expedition was an amazing adventure! Loved every moment.",
-        rating: 5,
-        journeyId: journey3.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 9 },
-      update: {},
-      create: {
-        authorId: frank.id,
-        content:
-          "The city scavenger hunt was so much fun! We explored hidden gems in the city.",
-        rating: 4,
-        journeyId: journey3.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 10 },
-      update: {},
-      create: {
-        authorId: charlie.id,
-        content:
-          "The team building challenge was a great way to bond with colleagues. Highly recommend!",
-        rating: 5,
-        journeyId: journey3.id,
-      },
-    }),
-  ];
+  await prisma.comment.upsert({
+    where: { id: 4 },
+    update: {},
+    create: {
+      authorId: david.id,
+      content: "Amazing race! Can't wait to participate again.",
+      rating: 4,
+      journeyId: journey1.id,
+    },
+  });
 
-  const comments4: Comment[] = [
-    await prisma.comment.upsert({
-      where: { id: 11 },
-      update: {},
-      create: {
-        authorId: grace.id,
-        content: "The outdoor escape was disappointing. Not worth the time.",
-        rating: 2,
-        journeyId: journey4.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 12 },
-      update: {},
-      create: {
-        authorId: isabella.id,
-        content:
-          "The mysterious island was underwhelming. Expected more excitement.",
-        rating: 3,
-        journeyId: journey4.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 13 },
-      update: {},
-      create: {
-        authorId: charlie.id,
-        content: "The enchanted forest was a letdown. Lackluster experience.",
-        rating: 2,
-        journeyId: journey4.id,
-      },
-    }),
-  ];
+  await prisma.comment.upsert({
+    where: { id: 5 },
+    update: {},
+    create: {
+      authorId: alice.id,
+      content:
+        "The treasure hunt was so much fun! We found the hidden treasure!",
+      rating: 5,
+      journeyId: journey2.id,
+    },
+  });
 
-  const comments5: Comment[] = [
-    await prisma.comment.upsert({
-      where: { id: 15 },
-      update: {},
-      create: {
-        authorId: isabella.id,
-        content:
-          "The epic quest was absolutely thrilling! The challenges were mind-bending.",
-        rating: 5,
-        journeyId: journey5.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 16 },
-      update: {},
-      create: {
-        authorId: henry.id,
-        content:
-          "The mystic temple was an incredible experience. The riddles were challenging but solvable.",
-        rating: 4,
-        journeyId: journey5.id,
-      },
-    }),
-    await prisma.comment.upsert({
-      where: { id: 17 },
-      update: {},
-      create: {
-        authorId: charlie.id,
-        content:
-          "The virtual reality adventure was mind-blowing! It felt like being in a different world.",
-        rating: 5,
-        journeyId: journey5.id,
-      },
-    }),
-  ];
+  await prisma.comment.upsert({
+    where: { id: 6 },
+    update: {},
+    create: {
+      authorId: grace.id,
+      content: "The puzzles were challenging but rewarding. Highly recommend!",
+      rating: 4,
+      journeyId: journey2.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 7 },
+    update: {},
+    create: {
+      authorId: emma.id,
+      content:
+        "The treasure hunt was a great team-building activity. Thumbs up!",
+      rating: 5,
+      journeyId: journey2.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 8 },
+    update: {},
+    create: {
+      authorId: david.id,
+      content:
+        "The outdoor expedition was an amazing adventure! Loved every moment.",
+      rating: 5,
+      journeyId: journey3.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 9 },
+    update: {},
+    create: {
+      authorId: frank.id,
+      content:
+        "The city scavenger hunt was so much fun! We explored hidden gems in the city.",
+      rating: 4,
+      journeyId: journey3.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 10 },
+    update: {},
+    create: {
+      authorId: charlie.id,
+      content:
+        "The team building challenge was a great way to bond with colleagues. Highly recommend!",
+      rating: 5,
+      journeyId: journey3.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 11 },
+    update: {},
+    create: {
+      authorId: grace.id,
+      content: "The outdoor escape was disappointing. Not worth the time.",
+      rating: 2,
+      journeyId: journey4.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 12 },
+    update: {},
+    create: {
+      authorId: isabella.id,
+      content:
+        "The mysterious island was underwhelming. Expected more excitement.",
+      rating: 3,
+      journeyId: journey4.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 13 },
+    update: {},
+    create: {
+      authorId: charlie.id,
+      content: "The enchanted forest was a letdown. Lackluster experience.",
+      rating: 2,
+      journeyId: journey4.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 15 },
+    update: {},
+    create: {
+      authorId: isabella.id,
+      content:
+        "The epic quest was absolutely thrilling! The challenges were mind-bending.",
+      rating: 5,
+      journeyId: journey5.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 16 },
+    update: {},
+    create: {
+      authorId: henry.id,
+      content:
+        "The mystic temple was an incredible experience. The riddles were challenging but solvable.",
+      rating: 4,
+      journeyId: journey5.id,
+    },
+  });
+
+  await prisma.comment.upsert({
+    where: { id: 17 },
+    update: {},
+    create: {
+      authorId: charlie.id,
+      content:
+        "The virtual reality adventure was mind-blowing! It felt like being in a different world.",
+      rating: 5,
+      journeyId: journey5.id,
+    },
+  });
 
   const bobEvents = await prisma.userEvent.findMany({
     where: { userId: bob.id },
@@ -1287,19 +1278,19 @@ async function main() {
         const endAt = new Date(
           startAt.getTime() +
             Math.floor(
-              Math.random() * (2 * 60 * 60 * 1000 - 30 * 60 * 1000 + 1)
+              Math.random() * (2 * 60 * 60 * 1000 - 30 * 60 * 1000 + 1),
             ) +
-            30 * 60 * 1000
+            30 * 60 * 1000,
         );
         const duration = endAt.getTime() - startAt.getTime();
 
         await prisma.userStep.create({
           data: {
-            userId: userId,
+            userId,
             stepId: step.id,
-            startAt: startAt,
-            endAt: endAt,
-            duration: duration,
+            startAt,
+            endAt,
+            duration,
           },
         });
       }
@@ -1308,15 +1299,15 @@ async function main() {
 
   await generateUserSteps(
     bob.id,
-    bobEvents.map((event) => event.eventId)
+    bobEvents.map((event) => event.eventId),
   );
   await generateUserSteps(
     henry.id,
-    henryEvents.map((event) => event.eventId)
+    henryEvents.map((event) => event.eventId),
   );
   await generateUserSteps(
     grace.id,
-    graceEvents.map((event) => event.eventId)
+    graceEvents.map((event) => event.eventId),
   );
 }
 

@@ -31,7 +31,7 @@ export function handleException(error: any) {
     default:
       return NextResponse.json(
         { message: "An unexpected error occurred" },
-        { status: 500 }
+        { status: 500 },
       );
   }
 }

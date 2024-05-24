@@ -20,7 +20,7 @@ describe("/api/auth/register", () => {
             username: "johndoe",
             name: "John",
             lastName: "Doe",
-            dateOfBirth: "1990-01-01T00:00:00.000Z",
+            dateOfBirth: new Date("1990-01-01"),
           }),
         });
         const data = await res.json();
@@ -48,12 +48,12 @@ describe("/api/auth/register", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: "used.email@example.com",
-            password: "Password@123",
-            username: "johndoe",
-            name: "John",
-            lastName: "Doe",
-            dateOfBirth: "1990-01-01T00:00:00.000Z",
+            name: "Alice",
+            lastName: "Prisma",
+            email: "alice@prisma.io",
+            username: "aliceUserName",
+            password: "alicePassword",
+            dateOfBirth: new Date("1990-01-01"),
           }),
         });
         const data = await res.json();

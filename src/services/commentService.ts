@@ -36,7 +36,7 @@ export const getCommentById = async (id: number): Promise<Comment | null> => {
  */
 export const registerOrModifyComment = async (
   id: number | null,
-  comment: CommentWithoutDates
+  comment: CommentWithoutDates,
 ): Promise<Comment | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {

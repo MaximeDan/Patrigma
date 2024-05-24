@@ -20,7 +20,7 @@ import { readJourneyWithSteps } from "@/repositories/journeyRepository";
  * @description Retrieves all steps associated with a given journey ID.
  */
 export const getStepsByJourneyID = async (
-  journeyId: number
+  journeyId: number,
 ): Promise<Step[]> => {
   const steps = await readStepsByJourneyId(journeyId);
 
@@ -41,7 +41,7 @@ export const getStepsByJourneyID = async (
  */
 export const registerOrModifyStep = async (
   id: number | null,
-  step: Step
+  step: Step,
 ): Promise<Step | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {

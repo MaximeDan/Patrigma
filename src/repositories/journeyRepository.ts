@@ -11,7 +11,7 @@ import { journeyWithComments } from "@/types/journeyWithComments";
  */
 export const createJourney = async (
   journey: Journey,
-  steps: Step[]
+  steps: Step[],
 ): Promise<journeyWithSteps | null> => {
   return await prisma.journey.create({
     include: {
@@ -74,7 +74,7 @@ export const readJourney = async (id: number): Promise<Journey | null> => {
  * @description Retrieves a journey by its id along with associated steps.
  */
 export const readJourneyWithSteps = async (
-  id: number
+  id: number,
 ): Promise<journeyWithSteps | null> => {
   return await prisma.journey.findUnique({
     where: { id },
@@ -94,7 +94,7 @@ export const readJourneyWithSteps = async (
  * @description Retrieves a journey by its id along with associated comments.
  */
 export const readJourneyWithComments = async (
-  id: number
+  id: number,
 ): Promise<journeyWithComments | null> => {
   return await prisma.journey.findUnique({
     where: { id },
@@ -126,11 +126,11 @@ export const readJourneys = async (): Promise<Journey[]> => {
 export const updateJourney = async (
   id: number,
   journey: Journey,
-  steps: Step[]
+  steps: Step[],
 ): Promise<journeyWithSteps | null> => {
   return await prisma.journey.update({
     where: {
-      id: id,
+      id,
     },
     include: {
       steps: {

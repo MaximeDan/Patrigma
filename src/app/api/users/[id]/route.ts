@@ -1,17 +1,17 @@
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import {
-  getStepById,
-  registerOrModifyStep,
-  removeStep,
-} from "@/services/stepService";
-import { Step } from "@prisma/client";
+  getUserById,
+  modifyUser,
+  removeUser,
+} from "@/services/userService";
+import { User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
  * @params request: NextRequest
  * @params params: { id: string }
  * @returns NextResponse
- * @description Handles GET request to retrieve a step by its id.
+ * @description Handles GET request to retrieve a user by its id.
  */
 export async function GET(
   request: NextRequest,
@@ -19,7 +19,7 @@ export async function GET(
 ) {
   try {
     const id: number = Number(params.id);
-    const result = await getStepById(id);
+    const result = await getUserById(id);
     return NextResponse.json({ data: result }, { status: 200 });
   } catch (error: any) {
     return handleException(error);
@@ -30,7 +30,7 @@ export async function GET(
  * @params request: NextRequest
  * @params params: { id: string }
  * @returns NextResponse
- * @description Handles PUT request to update a step by its id.
+ * @description Handles PUT request to update a user by its id.
  */
 export async function PUT(
   request: NextRequest,
@@ -39,9 +39,9 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
-    const step: Step = body.step;
+    const user: User = body.user;
 
-    const result = await registerOrModifyStep(id, step);
+    const result = await modifyUser(id, user);
     return NextResponse.json({ data: result }, { status: 200 });
   } catch (error: any) {
     return handleException(error);
@@ -52,7 +52,7 @@ export async function PUT(
  * @params request: NextRequest
  * @params params: { id: string }
  * @returns Response
- * @description Handles DELETE request to delete a step by its id.
+ * @description Handles DELETE request to delete a user by its id.
  */
 export async function DELETE(
   request: NextRequest,
@@ -61,7 +61,7 @@ export async function DELETE(
   const id: number = Number(params.id);
 
   try {
-    await removeStep(id);
+    await removeUser(id);
 
     return new Response(null, {
       status: 204,

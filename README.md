@@ -69,8 +69,8 @@ Patrigma is a Progressive Web Application (PWA) designed to enhance social inter
 
 6. Run the development server:
    `bash
- npm run dev
- `
+npm run dev
+`
    Open http://localhost:3000 with your browser to see the result.
 
 ### Deployment

@@ -38,7 +38,7 @@ export const readUserRoles = async (): Promise<UserRole[]> => {
  */
 export const updateUserRole = async (
   id: number,
-  data: UserRole
+  data: UserRole,
 ): Promise<UserRole | null> => {
   return await prisma.userRole.update({
     where: { id },
