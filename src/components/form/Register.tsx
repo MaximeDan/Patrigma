@@ -23,8 +23,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/tailwindUtils";
-
 import { signIn } from "next-auth/react";
+import { registerUserApi } from "@/app/apiClient/registerUser";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -44,27 +44,14 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      const registerResponse = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          username: data.username,
-          name: data.name,
-          lastName: data.lastName,
-          dateOfBirth: data.dateOfBirth,
-        }),
-        cache: "no-cache",
+      await registerUserApi({
+        email: data.email,
+        password: data.password,
+        username: data.username,
+        name: data.name,
+        lastName: data.lastName,
+        dateOfBirth: data.dateOfBirth,
       });
-
-      if (!registerResponse.ok) {
-        const errorResponse = await registerResponse.json();
-        console.log("Error response", errorResponse);
-        throw new Error(errorResponse.message);
-      }
 
       await signIn("credentials", {
         redirect: true,
