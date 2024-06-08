@@ -5,7 +5,7 @@ import { Icons } from "./Icons";
 const MobileNav = () => {
   return (
     <nav className="fixed bottom-0 flex w-full items-end justify-center bg-gray-400 px-6 py-2">
-      <Link href="/" className="flex flex-col items-center">
+      <Link href="/parcours" className="flex flex-col items-center">
         <Icons.flag className="size-[27px]" />
         <p>Parcours</p>
       </Link>

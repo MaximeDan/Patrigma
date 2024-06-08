@@ -6,8 +6,17 @@ export const readUser = async (id: number): Promise<User | null> => {
   return prisma.user.findUnique({ where: { id } });
 };
 
-export const readUserByEmail = async (email: string): Promise<User | null> => {
-  return prisma.user.findUnique({ where: { email } });
+export const readUserByEmail = async (
+  email: string,
+): Promise<User | null | undefined> => {
+  try {
+    console.log("readUserByEmail", email);
+    const user = await prisma.user.findUnique({ where: { email } });
+    return user;
+  } catch (error) {
+    console.error("Error reading user by email", error);
+    return null;
+  }
 };
 
 export const readUsers = async (): Promise<User[]> => {

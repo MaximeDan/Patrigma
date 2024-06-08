@@ -14,7 +14,7 @@ const AddButton = ({ action }: AddButtonProps) => {
       onClick={() => {
         action === "journey" ? showModal() : showModal();
       }}
-      className="fixed bottom-24 right-[20px] cursor-pointer rounded-lg bg-slate-500 p-4 shadow-lg"
+      className="fixed bottom-24 right-[20px] cursor-pointer rounded-lg bg-orange p-4 shadow-lg"
     >
       <Icons.plus color="#fff" />
     </div>
