@@ -6,6 +6,7 @@ declare module "next-auth" {
     id: number;
     dateOfBirth: Date;
   }
+  // eslint-disable-next-line no-unused-vars
   interface Session {
     user: User;
   }

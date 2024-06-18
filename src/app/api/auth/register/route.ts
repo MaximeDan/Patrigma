@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { register } from "@/services/userService";
 import { RegisterUser } from "@/types/register";
 import { handleException } from "@/app/utils/errorHandlerUtils";
+import { BadRequestException } from "@/types/exceptions";
 
 /**
  * @params request: NextRequest
@@ -12,6 +13,19 @@ async function handler(request: NextRequest): Promise<NextResponse> {
   const data = await request.json();
 
   try {
+    const requiredFields = [
+      "email",
+      "password",
+      "username",
+      "name",
+      "lastName",
+      "dateOfBirth",
+    ];
+    for (const field of requiredFields) {
+      if (!data[field]) {
+        throw new BadRequestException(`${field} is required`);
+      }
+    }
     const userData: RegisterUser = {
       email: data.email,
       password: data.password,

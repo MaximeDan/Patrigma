@@ -1,9 +1,5 @@
 import { handleException } from "@/app/utils/errorHandlerUtils";
-import {
-  getUserById,
-  modifyUser,
-  removeUser,
-} from "@/services/userService";
+import { getUserById, modifyUser, removeUser } from "@/services/userService";
 import { User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

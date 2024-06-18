@@ -29,7 +29,6 @@ describe("registerSchema", () => {
 
     expect(() => registerSchema.parse(invalidData)).toThrow();
   });
-
   it("should throw error for password mismatch", () => {
     const invalidData = {
       name: "John",
@@ -44,5 +43,4 @@ describe("registerSchema", () => {
     expect(() => registerSchema.parse(invalidData)).toThrow();
   });
 
-  // Add more tests for other invalid cases as needed
 });

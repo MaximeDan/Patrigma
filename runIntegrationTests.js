@@ -58,7 +58,7 @@ const seedDatabase = async () => {
 
 const runTests = async () => {
   console.log("Running tests...");
-  await execPromise("npx jest --runInBand");
+  await execPromise("npx jest");
 };
 
 const stopDocker = async () => {
