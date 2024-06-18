@@ -291,4 +291,14 @@ export const Icons = {
       </defs>
     </svg>
   ),
+  close: (props: LucideProps) => (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 14 14"
+      fill="none"
+    >
+      <path d="M1 13L13 1M13 13L1 1" stroke="#D8552B" stroke-width="2" />
+    </svg>
+  ),
 };

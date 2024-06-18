@@ -5,6 +5,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Icons } from "@/components/Icons";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type SecondStepProps = {
   prev: () => void;
@@ -48,7 +51,77 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
         )}
       />
 
-      {/* TO DO: radio fields on physical difficulty and clues difficulty */}
+      <FormField
+        control={form.control}
+        name="physicalDifficulty"
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="flex"
+              >
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="facile" />
+                  </FormControl>
+                  <FormLabel className="font-normal">Facile</FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="intermediaire" />
+                  </FormControl>
+                  <FormLabel className="font-normal">Intermédiaire</FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="difficile" />
+                  </FormControl>
+                  <FormLabel className="font-normal">Difficile</FormLabel>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="cluesDifficulty"
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="flex"
+              >
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="facile" />
+                  </FormControl>
+                  <FormLabel className="font-normal">Facile</FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="intermediaire" />
+                  </FormControl>
+                  <FormLabel className="font-normal">Intermédiaire</FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="difficile" />
+                  </FormControl>
+                  <FormLabel className="font-normal">Difficile</FormLabel>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
       <FormField
         control={form.control}
@@ -171,14 +244,18 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
         )}
       />
 
-      <div className="xs:mt-[60px] mt-11 flex justify-between">
-        <Button onClick={prev}>Retour</Button>
+      <div className="mt-11 flex justify-between xs:mt-[60px]">
+        <Button onClick={prev}>
+          <Icons.arrowLink className="mr-2 -scale-x-100" />
+          <span>Retour</span>
+        </Button>
         <Button
           onClick={async () => {
             await next();
           }}
         >
-          Continuer
+          <span>Continuer</span>
+          <Icons.arrowLink className="ml-2" />
         </Button>
       </div>
     </div>

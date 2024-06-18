@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useEffect } from "react";
+import { Icons } from "@/components/Icons";
 
 type ThirdStepProps = {
   prev: () => void;
@@ -57,18 +58,22 @@ const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
       />
 
       <Button className="flex items-center" onClick={showBottomSheet}>
-        <Plus size={24} />
+        <Plus size={24} stroke="var(--orange)" />
         <p>Ajouter une étape</p>
       </Button>
 
-      <div className="xs:mt-[60px] mt-11 flex justify-between">
-        <Button onClick={prev}>Retour</Button>
+      <div className="mt-11 flex justify-between xs:mt-[60px]">
+        <Button onClick={prev}>
+          <Icons.arrowLink className="mr-2 -scale-x-100" />
+          <span>Retour</span>
+        </Button>
         <Button
           onClick={async () => {
             await next();
           }}
         >
-          Continuer
+          <span>Continuer</span>
+          <Icons.arrowLink className="ml-2" />
         </Button>
       </div>
       <BottomSheetModal />

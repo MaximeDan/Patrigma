@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import StepCounter from "../StepCounter";
 import Steps from "./steps/Steps";
+import { Icons } from "@/components/Icons";
 
 export type JourneyFormValues = z.infer<typeof journeyFormSchema>;
 type FieldName = keyof JourneyFormValues;
@@ -98,8 +99,13 @@ const JourneyForm = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex size-full flex-col bg-white">
-      <Button onClick={dismissModal}>Quitter</Button>
+    <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll bg-background px-5  pb-12 pt-5">
+      <div className="flex justify-end">
+        <Button onClick={dismissModal}>
+          <span>Quitter</span>
+          <Icons.close width={14} height={14} className="ml-2" />
+        </Button>
+      </div>
       <Form {...form}>
         {!form.formState.isSubmitSuccessful && formStatus === "idle" && (
           <form onSubmit={form.handleSubmit(processForm)}>

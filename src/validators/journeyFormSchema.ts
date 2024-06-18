@@ -14,12 +14,12 @@ export const secondStepSchema = z.object({
   requirement: z.string({ required_error: "Ce champ est requis" }).min(1, {
     message: "Ce champ est requis",
   }),
-  // physicalDifficulty: z.enum(["easy", "medium", "hard"], {
-  //   required_error: "Vous devez sélectionner une option",
-  // }),
-  // cluesDifficulty: z.enum(["easy", "medium", "hard"], {
-  //   required_error: "Vous devez sélectionner une option",
-  // }),
+  physicalDifficulty: z.enum(["facile", "intermediaire", "difficile"], {
+    required_error: "Vous devez sélectionner une option",
+  }),
+  cluesDifficulty: z.enum(["facile", "intermediaire", "difficile"], {
+    required_error: "Vous devez sélectionner une option",
+  }),
   mobilityImpaired: z.enum(
     ["undefined", "unaccessible", "partiallyAccessible", "accessible"],
     {

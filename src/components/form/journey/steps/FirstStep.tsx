@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Icons } from "@/components/Icons";
 
 type FirstStepProps = {
   next: () => Promise<void>;
@@ -57,7 +58,10 @@ const FirstStep = ({ form, next }: FirstStepProps) => {
       />
 
       {/* TODO: add image file input */}
-      <Button onClick={next}>Suivant</Button>
+      <Button onClick={next}>
+        <span>Suivant</span>
+        <Icons.arrowLink className="ml-2" />
+      </Button>
     </div>
   );
 };
