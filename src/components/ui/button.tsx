@@ -11,6 +11,8 @@ const buttonVariants = cva(
       variant: {
         default: "rounded-full border border-beige text-foreground",
         link: "text-foreground underline-offset-4 hover:underline",
+        outline: "",
+        ghost: "",
       },
       size: {
         default: "px-[9px] py-[5px]",
