@@ -8,11 +8,15 @@
     --background: #0c0c0c;
     --foreground: 34.5deg 25.2% 74.3%;
     --orange: #d8552b;
+    --orange-600: #e89980;
     --green: #7f986d;
     --beige: #cec0ad;
     --beige-600: rgba(206, 192, 173, 60%);
     --camel: #a3987e;
+    --cadetblue: #65878e;
+    --cadetblue-600: #a3b7bb;
     --gray: #191919;
+    --light-gray: #534e48;
     --radius: 6px;
 
     --card-foreground: 222.2 84% 4.9%;

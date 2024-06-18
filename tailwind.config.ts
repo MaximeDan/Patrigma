@@ -35,6 +35,7 @@ const config = {
         foreground: "hsl(var(--foreground))",
         orange: {
           DEFAULT: "var(--orange)",
+          600: "var(--orange-600)",
         },
         green: {
           DEFAULT: "var(--green)",
@@ -48,6 +49,11 @@ const config = {
         },
         gray: {
           DEFAULT: "var(--gray)",
+          200: "var(--light-gray)",
+        },
+        cadetblue: {
+          DEFAULT: "var(--cadetblue)",
+          600: "var(--cadetblue-600)",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
