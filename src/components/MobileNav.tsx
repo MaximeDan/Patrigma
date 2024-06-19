@@ -8,7 +8,7 @@ const MobileNav = () => {
   const currentPath = usePathname();
   const isMainPage = currentPath === "/" || currentPath === "";
   return (
-    <nav className="fixed inset-x-5 bottom-5 flex  items-end justify-center rounded-xl bg-background p-2">
+    <nav className="fixed inset-x-5 bottom-5 flex  items-end justify-center rounded-xl border-2 border-orange bg-background p-2">
       <Link
         href="/parcours"
         className="flex h-10  flex-1 items-center justify-center "
