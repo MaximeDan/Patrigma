@@ -64,19 +64,19 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
               >
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="facile" />
+                    <RadioGroupItem value="1" />
                   </FormControl>
                   <FormLabel className="font-normal">Facile</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="intermediaire" />
+                    <RadioGroupItem value="2" />
                   </FormControl>
                   <FormLabel className="font-normal">Intermédiaire</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="difficile" />
+                    <RadioGroupItem value="3" />
                   </FormControl>
                   <FormLabel className="font-normal">Difficile</FormLabel>
                 </FormItem>
@@ -100,19 +100,19 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
               >
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="facile" />
+                    <RadioGroupItem value="1" />
                   </FormControl>
                   <FormLabel className="font-normal">Facile</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="intermediaire" />
+                    <RadioGroupItem value="2" />
                   </FormControl>
                   <FormLabel className="font-normal">Intermédiaire</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="difficile" />
+                    <RadioGroupItem value="3" />
                   </FormControl>
                   <FormLabel className="font-normal">Difficile</FormLabel>
                 </FormItem>

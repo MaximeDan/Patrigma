@@ -25,7 +25,10 @@ const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
     useJourneyFormStore();
 
   useEffect(() => {
-    form.setValue("steps", steps.length ? JSON.stringify(steps) : "");
+    form.setValue(
+      "steps",
+      steps.length ? JSON.stringify({ steps }) : JSON.stringify({ steps: [] }),
+    );
     form.trigger("steps");
   }, [steps]);
 

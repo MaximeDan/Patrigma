@@ -41,7 +41,7 @@ const steps = [
 ];
 
 const JourneyForm = () => {
-  const { isVisible, hideModal } = useJourneyFormStore();
+  const { isVisible, hideModal, clearSteps } = useJourneyFormStore();
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
   const [currentStep, setCurrentStep] = useState(2);
   const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
@@ -63,6 +63,7 @@ const JourneyForm = () => {
 
   const processForm: SubmitHandler<JourneyFormValues> = async (data) => {
     console.log(data);
+    clearSteps();
   };
 
   const next = async () => {
@@ -93,6 +94,7 @@ const JourneyForm = () => {
     hideModal();
     setCurrentStep(0);
     form.reset();
+    clearSteps();
     setFormStatus("idle");
   };
 
