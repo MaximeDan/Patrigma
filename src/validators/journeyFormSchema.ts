@@ -52,8 +52,17 @@ export const thirdStepSchema = z.object({
     .min(1, { message: "Vous devez ajouter au moins deux étapes" })
     .refine(
       (val) => {
-        const steps = JSON.parse(val).steps;
-        return steps.length >= 2;
+        if (val.includes("<!DOCTYPE>")) {
+          // at build time, it seems that a redirection happens, val output is the hmtl page
+          // todo: fix
+          return false;
+        }
+        const steps = JSON.parse(val);
+        if (steps.steps) {
+          return steps.length >= 2;
+        } else {
+          return false;
+        }
       },
       {
         message: "Vous devez ajouter au moins deux étapes",

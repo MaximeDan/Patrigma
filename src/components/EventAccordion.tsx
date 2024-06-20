@@ -15,7 +15,10 @@ interface EventAccordionProps {
 }
 
 const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
-  const groupedEvents = events.reduce(
+  const [openItem, setOpenItem] = useState<string>();
+  if (!events) return;
+
+  const groupedEvents = events?.reduce(
     (groups: Record<string, Event[]>, event) => {
       const date = new Date(event.startAt).toISOString().split("T")[0];
       if (!groups[date]) {
@@ -38,8 +41,7 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
       day: "numeric",
     }),
   }));
-
-  const [openItem, setOpenItem] = useState<string>(formattedDates[0].formatted);
+  setOpenItem(formattedDates[0].formatted);
 
   const handleToggle = (date: string) => {
     setOpenItem((prev) => (prev === date ? "" : date));
