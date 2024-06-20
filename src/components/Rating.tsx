@@ -15,15 +15,15 @@ const Rating = ({ rating, ratingCount }: RatingProps) => {
   const stars = [];
 
   for (let i = 0; i < fullStars; i++) {
-    stars.push(<Icons.fullStar className="size-4" />);
+    stars.push(<Icons.fullStar className="size-4" key={i} />);
   }
 
   for (let i = 0; i < halfStars; i++) {
-    stars.push(<Icons.halfStar className="size-4" />);
+    stars.push(<Icons.halfStar className="size-4" key={i} />);
   }
 
   for (let i = 0; i < emptyStars; i++) {
-    stars.push(<Icons.emptyStar className="size-4" />);
+    stars.push(<Icons.emptyStar className="size-4" key={i} />);
   }
   return (
     <div className="mb-3 mt-1 flex items-start">
