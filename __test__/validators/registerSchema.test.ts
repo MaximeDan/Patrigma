@@ -7,7 +7,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -15,12 +15,13 @@ describe("registerSchema", () => {
 
     expect(() => registerSchema.parse(input)).not.toThrow();
   });
+
   it("fails validation with invalid email format", () => {
     const input = {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: "1990-01-01",
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "invalid-email",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -34,7 +35,7 @@ describe("registerSchema", () => {
       name: "J".repeat(256),
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -50,7 +51,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "password@123",
       confirmPassword: "password@123",
@@ -66,7 +67,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password@",
       confirmPassword: "Password@",
@@ -82,7 +83,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password123",
       confirmPassword: "Password123",
@@ -98,7 +99,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Pass@1",
       confirmPassword: "Pass@1",
@@ -114,7 +115,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@124",
@@ -140,15 +141,13 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: "invalid-date", // This should be a string to trigger the invalid date error
+      dateOfBirth: "invalid-date",
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@123",
     };
 
-    expect(() => registerSchema.parse(input)).toThrow(
-      "Expected date, received string",
-    );
+    expect(() => registerSchema.parse(input)).toThrow("Date invalide");
   });
 
   it("fails validation with date of birth in the future", () => {
@@ -156,7 +155,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date(Date.now() + 86400000), // Future date
+      dateOfBirth: new Date(Date.now() + 86400000).toISOString(),
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -172,7 +171,7 @@ describe("registerSchema", () => {
       name: "   ",
       lastName: "   ",
       username: "   ",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -186,7 +185,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Abc12345",
       confirmPassword: "Abc12345",
@@ -202,7 +201,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password 123",
       confirmPassword: "Password 123",
@@ -218,7 +217,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "JohnDoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "john.doe@example.com",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -232,7 +231,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: "JOHN.DOE@EXAMPLE.COM",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -246,7 +245,7 @@ describe("registerSchema", () => {
       name: "John",
       lastName: "Doe",
       username: "johndoe",
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: " john.doe@example.com ",
       password: "Password@123",
       confirmPassword: "Password@123",
@@ -262,7 +261,7 @@ describe("registerSchema", () => {
       name: 123,
       lastName: {},
       username: [],
-      dateOfBirth: new Date("1990-01-01"),
+      dateOfBirth: new Date("1990-01-01").toISOString(),
       email: 456,
       password: true,
       confirmPassword: false,

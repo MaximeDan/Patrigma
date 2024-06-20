@@ -91,6 +91,14 @@ it("returns error for bad request", async () => {
           errors: expect.arrayContaining([
             expect.objectContaining({
               message: "Ce champ est requis",
+              path: "username",
+            }),
+            expect.objectContaining({
+              message: "Ce champ est requis",
+              path: "dateOfBirth",
+            }),
+            expect.objectContaining({
+              message: "Email invalide",
               path: "email",
             }),
           ]),
@@ -99,6 +107,7 @@ it("returns error for bad request", async () => {
     },
   });
 });
+
 
 it("returns error for invalid date of birth", async () => {
   await testApiHandler({
