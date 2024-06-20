@@ -18,8 +18,14 @@ export function handleException(error: any) {
 
   switch (true) {
     case error instanceof BadRequestException:
-    case error instanceof ZodError:
       return NextResponse.json({ message: error.message }, { status: 400 });
+    case error instanceof ZodError: {
+      const formattedErrors = error.errors.map((err) => ({
+        path: err.path.join("."),
+        message: err.message,
+      }));
+      return NextResponse.json({ errors: formattedErrors }, { status: 400 });
+    }
     case error instanceof UnauthorizedException:
       return NextResponse.json({ message: error.message }, { status: 401 });
     case error instanceof ForbiddenException:
