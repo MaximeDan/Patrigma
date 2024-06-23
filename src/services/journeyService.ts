@@ -19,8 +19,6 @@ import {
   JourneyWithSteps,
 } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
-import next from "next";
-import { number } from "zod";
 
 /**
  * @params id: number

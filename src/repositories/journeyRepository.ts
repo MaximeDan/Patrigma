@@ -5,7 +5,7 @@ import {
   JourneyWithSteps,
 } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
-import { Journey, Step } from "@prisma/client";
+import { Journey } from "@prisma/client";
 
 /**
  * @params journey: Journey

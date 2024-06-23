@@ -27,7 +27,7 @@ import {
   readEventUserStepByIds,
   readEventUserStepsByUserIdAndEventId,
   updateEventUserStep,
-} from "@/repositories/eventUserStepuserStepRepository";
+} from "@/repositories/eventUserStepRepository";
 
 /**
  * @params id: number
