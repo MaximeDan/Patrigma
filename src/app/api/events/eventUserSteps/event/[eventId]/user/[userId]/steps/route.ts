@@ -16,9 +16,6 @@ export async function GET(
     const eventId: number = Number(params.eventId);
     const userId: number = Number(params.userId);
 
-    console.log("eventId", eventId);
-    console.log("userId", userId);
-
     const result = await getEventUserStepsByUserIdAndEventId(userId, eventId);
     return NextResponse.json({ data: result }, { status: 200 });
   } catch (error: any) {
