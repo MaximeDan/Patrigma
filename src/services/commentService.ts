@@ -10,7 +10,7 @@ import {
   deleteComment,
 } from "../repositories/commentRepository";
 import { Comment } from "@prisma/client";
-import { CommentWithoutDates } from "@/types/CommentWithoutDates";
+import { CommentWithoutDates } from "@/types/comment";
 
 /**
  * @params id: number

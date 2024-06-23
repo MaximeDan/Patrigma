@@ -12,9 +12,15 @@ import {
   readJourneyWithSteps,
   readJourneyWithComments,
 } from "../repositories/journeyRepository";
-import { Journey, Step } from "@prisma/client";
-import { journeyWithSteps } from "@/types/journeyWithSteps";
-import { journeyWithComments } from "@/types/journeyWithComments";
+import { Journey } from "@prisma/client";
+import {
+  JourneyWithoutDates,
+  JourneyWithComments,
+  JourneyWithSteps,
+} from "@/types/journey";
+import { StepWithoutDates } from "@/types/step";
+import next from "next";
+import { number } from "zod";
 
 /**
  * @params id: number
@@ -31,35 +37,35 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
 
 /**
  * @params id: number
- * @returns journeyWithSteps | null
+ * @returns JourneyWithSteps | null
  * @throws NotFoundException
  * @description Retrieves a journey by its id with its steps.
  */
 export const getJourneyByIdWithSteps = async (
   id: number
-): Promise<journeyWithSteps | null> => {
-  const journeyWithSteps: journeyWithSteps | null = await readJourneyWithSteps(
+): Promise<JourneyWithSteps | null> => {
+  const JourneyWithSteps: JourneyWithSteps | null = await readJourneyWithSteps(
     id
   );
-  if (!journeyWithSteps) throw new NotFoundException("Journey not found");
+  if (!JourneyWithSteps) throw new NotFoundException("Journey not found");
 
-  return journeyWithSteps;
+  return JourneyWithSteps;
 };
 
 /**
  * @params id: number
- * @returns journeyWithComments | null
+ * @returns JourneyWithComments | null
  * @throws NotFoundException
  * @description Retrieves a journey by its id with its comments.
  */
 export const getJourneyByIdWithComments = async (
   id: number
-): Promise<journeyWithComments | null> => {
-  const journeyWithComments: journeyWithComments | null =
+): Promise<JourneyWithComments | null> => {
+  const JourneyWithComments: JourneyWithComments | null =
     await readJourneyWithComments(id);
-  if (!journeyWithComments) throw new NotFoundException("Journey not found");
+  if (!JourneyWithComments) throw new NotFoundException("Journey not found");
 
-  return journeyWithComments;
+  return JourneyWithComments;
 };
 
 /**
@@ -88,8 +94,8 @@ export const getAllJourneys = async (): Promise<Journey[]> => {
  */
 export const registerOrModifyJourney = async (
   id: number | null,
-  journey: Journey,
-  steps: Step[]
+  journey: JourneyWithoutDates,
+  steps: StepWithoutDates[]
 ): Promise<Journey | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
@@ -98,32 +104,52 @@ export const registerOrModifyJourney = async (
   if (!journey) throw new BadRequestException("Invalid journey");
   if (!steps) throw new BadRequestException("Invalid steps");
 
-  // Check if steps are valid (unique and sequential)
-  for (let i = 0; i < steps.length; i++) {
-    const currentStep = steps[i];
-    const nextStep = steps[i + 1];
-
-    if (currentStep.stepNumber !== i + 1) {
-      throw new BadRequestException("Invalid stepNumber");
-    }
-
-    if (nextStep && currentStep.stepNumber >= nextStep.stepNumber) {
-      throw new BadRequestException("Duplicate or non-sequential stepNumber");
-    }
-  }
-
-  let upsertedJourneyWithSteps: journeyWithSteps | null;
+  let upsertedJourneyWithSteps: JourneyWithSteps | null;
 
   // Check if register or modify
   if (id === null) {
+    steps = SortAndValidatetSteps(steps);
+
     upsertedJourneyWithSteps = await createJourney(journey, steps);
     if (!upsertedJourneyWithSteps)
       throw new InternalServerErrorException("Internal server error");
   } else {
-    const journeyToUpdate = await readJourney(id);
+    const journeyToUpdate = await readJourneyWithSteps(id);
     if (!journeyToUpdate) throw new NotFoundException("Journey not found");
 
-    upsertedJourneyWithSteps = await updateJourney(id, journey, steps);
+    // Check if the provided step ids exist for the journey
+    const existingStepIds = journeyToUpdate.steps.map((step) => step.id);
+
+    const providedStepIds = steps
+      .filter((step) => Number.isFinite(step.id))
+      .map((step) => step.id as number);
+
+    for (const stepId of providedStepIds) {
+      if (!existingStepIds.includes(stepId)) {
+        throw new BadRequestException(
+          `Step with id ${stepId} does not exist for the journey`
+        );
+      }
+    }
+
+    // Combine existing steps and provided steps
+    const combinedSteps = journeyToUpdate.steps.map((existingStep) => {
+      const updatedStep = steps.find((step) => step.id === existingStep.id);
+      return updatedStep ? updatedStep : existingStep;
+    });
+
+    // Add new steps that do not have an id
+    const newSteps = steps.filter((step) => !step.id);
+    combinedSteps.push(...newSteps);
+
+    // Validate and sort the combined steps
+    const sortedAndValidatedSteps = SortAndValidatetSteps(combinedSteps);
+
+    upsertedJourneyWithSteps = await updateJourney(
+      id,
+      journey,
+      sortedAndValidatedSteps
+    );
     if (!upsertedJourneyWithSteps)
       throw new InternalServerErrorException("Internal server error");
   }
@@ -148,4 +174,24 @@ export const removeJourney = async (id: number): Promise<Journey | null> => {
     throw new InternalServerErrorException("Internal server error");
 
   return deletedJourney;
+};
+
+export const SortAndValidatetSteps = (
+  steps: StepWithoutDates[]
+): StepWithoutDates[] => {
+  // Sort steps by stepNumber
+  steps.sort((a, b) => a.stepNumber - b.stepNumber);
+
+  // Check if stepNumbers are unique and sequential
+  for (let i = 0; i < steps.length; i++) {
+    if (steps[i].stepNumber !== i + 1) {
+      let errStr: String = "Sorted list Steps : ";
+      for (const step of steps) {
+        errStr += " id:" + step.id + "-stepNumber:" + step.stepNumber + " ||";
+      }
+      throw new BadRequestException("Invalid stepNumber sequence. " + errStr);
+    }
+  }
+
+  return steps;
 };

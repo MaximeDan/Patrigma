@@ -4,7 +4,7 @@ import {
   registerOrModifyComment,
   removeComment,
 } from "@/services/commentService";
-import { CommentWithoutDates } from "@/types/CommentWithoutDates";
+import { CommentWithoutDates } from "@/types/comment";
 import { commentBodySchema } from "@/validators/api/commentSchema";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -40,9 +40,8 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
-    const commentParsed = commentBodySchema.parse(body);
-
-    const comment: CommentWithoutDates = commentParsed.comment;
+    // Parse the body with zod to get the comment
+    const comment: CommentWithoutDates = commentBodySchema.parse(body).comment;
 
     const result = await registerOrModifyComment(id, comment);
     return NextResponse.json({ data: result }, { status: 200 });

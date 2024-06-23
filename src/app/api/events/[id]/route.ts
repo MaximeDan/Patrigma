@@ -1,11 +1,10 @@
-import { afficherTypesDesAttributs } from "@/app/utils/afficherTypesDesAttributs";
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import {
   getEventByIdWithUserEvents,
   registerOrModifyEvent,
   removeEvent,
 } from "@/services/eventService";
-import { eventWithoutId } from "@/types/event";
+import { EventWithoutId } from "@/types/event";
 import { eventBodySchema } from "@/validators/api/eventSchema";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -40,13 +39,10 @@ export async function PUT(
 ) {
   try {
     const id: number = Number(params.id);
-    let body = await request.json();
-    let bodytarget: object;
-    afficherTypesDesAttributs<eventWithoutId>(body.event, EventWithoutId);
+    const body = await request.json();
 
-    const eventParsed = eventBodySchema.parse(body);
-
-    const event: eventWithoutId = eventParsed.event;
+    // Parse the body with zod to get the event
+    const event: EventWithoutId = eventBodySchema.parse(body).event;
 
     const result = await registerOrModifyEvent(id, event);
     return NextResponse.json({ data: result }, { status: 200 });

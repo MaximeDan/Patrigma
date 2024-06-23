@@ -1,10 +1,10 @@
 import { Prisma } from "@prisma/client";
 
-export type eventWithUserEvents = Prisma.EventGetPayload<{
+export type EventWithUserEvents = Prisma.EventGetPayload<{
   include: { userEvents: true };
 }>;
 
-export type eventWithoutId = {
+export type EventWithoutId = {
   authorId: number;
   journeyId: number;
   title: string;

@@ -3,7 +3,9 @@ import {
   registerOrModifyJourney,
   removeJourney,
 } from "@/services/journeyService";
-import { Journey, Step } from "@prisma/client";
+import { JourneyWithoutDates } from "@/types/journey";
+import { StepWithoutDates } from "@/types/step";
+import { journeyBodySchema } from "@/validators/api/journeySchema";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -19,8 +21,10 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
-    const journey: Journey = body.journey;
-    const steps: Step[] = body.steps;
+    // Parse the body with zod to get the journey and steps
+    const parsedBody = journeyBodySchema.parse(body);
+    const journey: JourneyWithoutDates = parsedBody.journey;
+    const steps: StepWithoutDates[] = parsedBody.steps;
 
     const result = await registerOrModifyJourney(id, journey, steps);
     return NextResponse.json({ data: result }, { status: 200 });

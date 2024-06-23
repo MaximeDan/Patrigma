@@ -21,24 +21,24 @@ model Role {
 }
 
 model User {
-  id          Int         @id @default(autoincrement())
-  name        String?
-  lastName    String?
-  email       String      @unique
-  username    String
-  password    String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  isVerified  Boolean     @default(false)
-  dateOfBirth DateTime?
-  avatar      String?
-  experience  Int         @default(0)
-  userRoles   UserRole[] // liste des rôles de l'utilisateur
-  userEvents  UserEvent[] // liste des events auxquels l'utilisateur participe
-  userSteps   UserStep[] // liste des étapes réalisées par l'utilisateur
-  comments    Comment[] // liste des commentaires créés par l'utilisateur
-  journey     Journey[] // liste des parcours créés par l'utilisateur
-  events      Event[] // liste des events créés par l'utilisateur
+  id             Int             @id @default(autoincrement())
+  name           String?
+  lastName       String?
+  email          String          @unique
+  username       String
+  password       String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  isVerified     Boolean         @default(false)
+  dateOfBirth    DateTime?
+  avatar         String?
+  experience     Int             @default(0)
+  userRoles      UserRole[] // liste des rôles de l'utilisateur
+  userEvents     UserEvent[] // liste des events auxquels l'utilisateur participe
+  EventUserSteps EventUserStep[] // liste des étapes réalisées par l'utilisateur
+  comments       Comment[] // liste des commentaires créés par l'utilisateur
+  journey        Journey[] // liste des parcours créés par l'utilisateur
+  events         Event[] // liste des events créés par l'utilisateur
 }
 
 model UserRole {
@@ -50,7 +50,7 @@ model UserRole {
 }
 
 model Event {
-  id              Int         @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   authorId        Int
   journeyId       Int
   title           String
@@ -58,15 +58,16 @@ model Event {
   numberPlayerMin Int
   numberPlayerMax Int
   description     String
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  isPrivate       Boolean     @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  isPrivate       Boolean         @default(false)
   accessCode      String?
   startAt         DateTime
   endAt           DateTime
   userEvents      UserEvent[]
-  author          User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  journey         Journey     @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  author          User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  journey         Journey         @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  EventUserStep   EventUserStep[]
 }
 
 model UserEvent {
@@ -102,35 +103,37 @@ model Journey {
 }
 
 model Step {
-  id            Int        @id @default(autoincrement())
-  journeyId     Int
-  puzzle        String
-  answer        String
-  hint          String
-  picturePuzzle String?
-  pictureHint   String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  latitude      Float
-  longitude     Float
-  address       String?
-  city          String?
-  postalCode    String?
-  country       String?
-  stepNumber    Int
-  journey       Journey    @relation(fields: [journeyId], references: [id], onDelete: Cascade)
-  userSteps     UserStep[]
+  id             Int             @id @default(autoincrement())
+  journeyId      Int
+  puzzle         String
+  answer         String
+  hint           String
+  picturePuzzle  String?
+  pictureHint    String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  latitude       Float
+  longitude      Float
+  address        String?
+  city           String?
+  postalCode     String?
+  country        String?
+  stepNumber     Int
+  journey        Journey         @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  EventUserSteps EventUserStep[]
 }
 
-model UserStep {
-  id       Int      @id @default(autoincrement())
-  userId   Int
-  stepId   Int
-  startAt  DateTime
-  endAt    DateTime
-  duration Int
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  step     Step     @relation(fields: [stepId], references: [id], onDelete: Cascade)
+model EventUserStep {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  stepId     Int
+  eventId    Int
+  startAt    DateTime  @default(now())
+  endAt      DateTime?
+  durationMs Int?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  step       Step      @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  event      Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
 model Comment {

@@ -58,11 +58,10 @@ function formatZodErrors(error: ZodError): string {
       switch (e.code) {
         case ZodIssueCode.invalid_type:
           const invalidTypeIssue = e as ZodInvalidTypeIssue;
-          message += ` (expected ${invalidTypeIssue.expected}, received ${invalidTypeIssue.received})`;
           break;
         case ZodIssueCode.invalid_literal:
           const invalidLiteralIssue = e as ZodInvalidLiteralIssue;
-          message += ` (expected ${invalidLiteralIssue.expected}, received ${invalidLiteralIssue.received})`;
+          message += ` (expected ${invalidLiteralIssue.expected}, received** ${invalidLiteralIssue.received})`;
           break;
         case ZodIssueCode.too_small:
           const tooSmallIssue = e as ZodTooSmallIssue;
@@ -76,7 +75,7 @@ function formatZodErrors(error: ZodError): string {
           const enumIssue = e as ZodInvalidEnumValueIssue;
           message += ` (expected one of: ${enumIssue.options.join(
             ", "
-          )}, received: ${enumIssue.received})`;
+          )}, received**: ${enumIssue.received})`;
           break;
         case ZodIssueCode.unrecognized_keys:
           const keysIssue = e as ZodUnrecognizedKeysIssue;
