@@ -5,7 +5,7 @@
     "description": "Patrigma : Découvre ton partimoine en jouant !",
     "icons": [
         {
-            "src": "./Iconarchive-Seaside-Treasure-Map.128.png",
+            "src": "./Iconarchive-Seaside-Treasure-Map.16.png",
             "sizes": "16x16",
             "type": "image/png"
         },
@@ -30,7 +30,7 @@
             "type": "image/png"
         },
         {
-            "src": "./Iconarchive-Seaside-Treasure-Map.128.png",
+            "src": "/Iconarchive-Seaside-Treasure-Map.128.png",
             "sizes": "128x128",
             "type": "image/png"
         },
