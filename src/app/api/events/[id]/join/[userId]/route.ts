@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string; userId: string } }
+  { params }: { params: { id: string; userId: string } },
 ) {
   try {
     const eventId: number = Number(params.id);

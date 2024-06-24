@@ -8,7 +8,7 @@ import { Comment } from "@prisma/client";
  * @description Creates a new comment with the provided data.
  */
 export const createComment = async (
-  data: CommentWithoutDates
+  data: CommentWithoutDates,
 ): Promise<Comment> => {
   return await prisma.comment.create({
     data,
@@ -32,7 +32,7 @@ export const readComment = async (id: number): Promise<Comment | null> => {
  */
 export const updateComment = async (
   id: number,
-  data: CommentWithoutDates
+  data: CommentWithoutDates,
 ): Promise<Comment | null> => {
   return await prisma.comment.update({
     where: { id },

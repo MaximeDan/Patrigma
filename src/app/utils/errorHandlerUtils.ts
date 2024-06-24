@@ -32,6 +32,7 @@ export function handleException(error: any) {
       return NextResponse.json({ message: formattedMessage }, { status: 400 });
     case error instanceof BadRequestException:
       return NextResponse.json({ message: error.message }, { status: 400 });
+
     case error instanceof UnauthorizedException:
       return NextResponse.json({ message: error.message }, { status: 401 });
     case error instanceof ForbiddenException:
@@ -43,7 +44,7 @@ export function handleException(error: any) {
     default:
       return NextResponse.json(
         { message: "An unexpected error occurred" },
-        { status: 500 }
+        { status: 500 },
       );
   }
 }

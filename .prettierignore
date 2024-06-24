@@ -1,0 +1,23 @@
+# Generated files
+.next/
+dist/
+out/
+
+# Dependency directories
+node_modules/
+
+# Configuration and lock files
+package-lock.json
+
+# Environment files
+.env
+
+# Docker-related files
+docker-compose.yml
+
+# GitHub Actions workflows
+.github/
+
+# Others
+tsconfig.json
+jest.config.ts

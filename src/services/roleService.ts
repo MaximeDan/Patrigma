@@ -44,7 +44,7 @@ export const getAllRoles = async (): Promise<Role[] | null> => {
  */
 export const registerOrModifyRole = async (
   id: number | null,
-  role: Role
+  role: Role,
 ): Promise<Role | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {

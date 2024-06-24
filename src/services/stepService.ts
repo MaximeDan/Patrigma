@@ -21,7 +21,7 @@ import { StepWithoutDates } from "@/types/step";
  * @description Retrieves all steps associated with a given journey ID.
  */
 export const getStepsByJourneyID = async (
-  journeyId: number
+  journeyId: number,
 ): Promise<Step[]> => {
   const steps = await readStepsByJourneyId(journeyId);
 

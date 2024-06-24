@@ -40,7 +40,7 @@ const BottomSheetModal = () => {
       form.setValue("hint", editedStep.hint);
       form.setValue(
         "coordinates",
-        `${editedStep.coordinates.latitude};${editedStep.coordinates.longitude}`
+        `${editedStep.coordinates.latitude};${editedStep.coordinates.longitude}`,
       );
     }
   }, [editedStep]);
@@ -71,7 +71,7 @@ const BottomSheetModal = () => {
             longitude,
           },
         },
-        editedStep.index
+        editedStep.index,
       );
     } else {
       addStep({

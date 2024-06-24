@@ -12,11 +12,7 @@ import bcrypt from "bcrypt";
 import { getRoleById } from "./roleService";
 import { RegisterUser } from "@/types/register";
 import { UserRoleData } from "@/types/userRole";
-import {
-  BadRequestException,
-  InternalServerErrorException,
-  NotFoundException,
-} from "@/types/exceptions";
+import { BadRequestException, NotFoundException } from "@/types/exceptions";
 
 /**
  * @params userData: RegisterUser
@@ -31,8 +27,6 @@ export const register = async (userData: RegisterUser): Promise<User> => {
   if (existingUser) throw new BadRequestException("Email already in use");
 
   userData.password = await bcrypt.hash(userData.password, 10);
-  if (!userData.password)
-    throw new InternalServerErrorException("Password not hashed");
 
   const userRole = await getRoleById(1);
   if (!userRole) throw new NotFoundException("Role not found");
@@ -50,7 +44,7 @@ export const register = async (userData: RegisterUser): Promise<User> => {
  */
 export const signIn = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<{ user: User }> => {
   const user = await readUserByEmail(email);
   if (!user) throw new NotFoundException("User not found");
@@ -69,7 +63,7 @@ export const signIn = async (
  */
 export const assignRoleToUser = async (
   userId: number,
-  roleId: number
+  roleId: number,
 ): Promise<UserRole> => {
   const userRoleData: UserRoleData = {
     userId,
@@ -107,7 +101,7 @@ export const getAllUsers = async (): Promise<User[]> => {
  */
 export const modifyUser = async (
   id: number,
-  userData: User
+  userData: User,
 ): Promise<User | null> => {
   const user = await readUser(id);
   if (!user) throw new NotFoundException("User not found");

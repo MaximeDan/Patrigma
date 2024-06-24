@@ -126,7 +126,7 @@ export const removeEvent = async (id: number): Promise<Event | null> => {
  */
 export const joinEvent = async (
   eventId: number,
-  userId: number
+  userId: number,
 ): Promise<UserEvent | null> => {
   // Validate arguments
   if (!Number.isFinite(userId) || !Number.isFinite(eventId))
@@ -140,7 +140,7 @@ export const joinEvent = async (
   if (await readUserEventByUserIdAndEventId(userId, eventId))
     throw new BadRequestException("User already joined event");
 
-  const userEvent: UserEventWithoutId = { userId: userId, eventId: eventId };
+  const userEvent: UserEventWithoutId = { userId, eventId };
   const createdUserEvent = await createUserEvent(userEvent);
 
   if (!createdUserEvent)
@@ -159,8 +159,8 @@ export const joinEvent = async (
  * @description Allows a user to leave an event.
  */
 export const leaveEvent = async (
+  userId: number,
   eventId: number,
-  userId: number
 ): Promise<UserEvent | null> => {
   // Validate arguments
   if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {
