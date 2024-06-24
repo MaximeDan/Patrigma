@@ -27,6 +27,7 @@ interface JourneyFormStore {
   editStep: (step: AddStepFormValues, index: number) => void;
   editedStep: EditedStep | null;
   setEditedStep: (step: EditedStep | null) => void;
+  clearSteps: () => void;
 }
 
 export const useJourneyFormStore = create<JourneyFormStore>((set) => ({
@@ -67,5 +68,8 @@ export const useJourneyFormStore = create<JourneyFormStore>((set) => ({
   editedStep: null,
   setEditedStep: (step) => {
     set({ editedStep: step });
+  },
+  clearSteps: () => {
+    set({ steps: [] });
   },
 }));

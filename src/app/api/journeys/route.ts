@@ -1,4 +1,7 @@
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import {
+  handleException,
+  handlePrismaException,
+} from "@/app/utils/errorHandlerUtils";
 import {
   getAllJourneys,
   registerOrModifyJourney,
@@ -6,6 +9,7 @@ import {
 import { JourneyWithoutDates } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
 import { journeyBodySchema } from "@/validators/api/journeySchema";
+import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -37,6 +41,15 @@ export async function POST(request: NextRequest) {
     const result = await registerOrModifyJourney(null, journey, steps);
     return NextResponse.json({ data: result }, { status: 201 });
   } catch (error: any) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError ||
+      error instanceof Prisma.PrismaClientUnknownRequestError ||
+      error instanceof Prisma.PrismaClientRustPanicError ||
+      error instanceof Prisma.PrismaClientInitializationError ||
+      error instanceof Prisma.PrismaClientValidationError
+    ) {
+      return handlePrismaException(error);
+    }
     return handleException(error);
   }
 }

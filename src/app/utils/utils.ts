@@ -1,3 +1,5 @@
+import { TimeSeparator } from "@/types/enums/timeSeparator";
+
 /**
  * @param milliseconds: number
  * @param separator: TimeSeparator
@@ -5,13 +7,13 @@
  * @description Converts a duration from milliseconds to a formatted string with the specified separator.
  * @example convertMillisecondsToHoursMinutes(7384000, TimeSeparator.HourMin) // "2h03min"
  */
-function convertMillisecondsToHoursMinutes(
+export function convertMillisecondsToHoursMinutes(
   milliseconds: number,
-  separator: TimeSeparator = TimeSeparator.HourMin
+  separator: TimeSeparator = TimeSeparator.HourMin,
 ): string {
   if (typeof milliseconds !== "number" || milliseconds < 0)
     throw new Error(
-      "Invalid input: milliseconds must be a non-negative number."
+      "Invalid input: milliseconds must be a non-negative number.",
     );
 
   const totalMinutes = Math.floor(milliseconds / 60000);
@@ -33,7 +35,7 @@ function convertMillisecondsToHoursMinutes(
       break;
     default:
       throw new Error(
-        "Invalid separator: Use TimeSeparator.HourMin, TimeSeparator.Hour, or TimeSeparator.Colon"
+        "Invalid separator: Use TimeSeparator.HourMin, TimeSeparator.Hour, or TimeSeparator.Colon",
       );
   }
 

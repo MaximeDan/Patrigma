@@ -32,7 +32,7 @@ const baseJourneySchema = z.object({
     .int({ message: "Must be an integer" }),
   lastCompletion: z.preprocess(
     (arg) => (typeof arg === "string" ? new Date(arg) : arg),
-    z.date({ required_error: "Required field" })
+    z.date({ required_error: "Required field" }),
   ),
   mobilityImpaired: z
     .string({ required_error: "Required field" })

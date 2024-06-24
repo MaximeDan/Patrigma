@@ -41,7 +41,7 @@ export const readStepsByJourneyId = async (
  */
 export const updateStep = async (
   id: number,
-  data: StepWithoutDates
+  data: StepWithoutDates,
 ): Promise<Step | null> => {
   return await prisma.step.update({
     where: { id },

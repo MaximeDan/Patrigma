@@ -11,7 +11,7 @@ import { User, UserRole } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { getRoleById } from "./roleService";
 import { RegisterUser } from "@/types/register";
-import { UserRoleData } from "@/types/userRole";
+import { UserRoleDataWithUserId } from "@/types/userRole";
 import { BadRequestException, NotFoundException } from "@/types/exceptions";
 
 /**
@@ -65,7 +65,7 @@ export const assignRoleToUser = async (
   userId: number,
   roleId: number,
 ): Promise<UserRole> => {
-  const userRoleData: UserRoleData = {
+  const userRoleData: UserRoleDataWithUserId = {
     userId,
     roleId,
   };

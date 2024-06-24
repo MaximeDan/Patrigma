@@ -12,11 +12,11 @@ const StepCounter = ({ step, totalSteps }: StepCounterProps) => {
         <div
           key={index}
           className={`size-[11px] rounded-[10px] ${
-            index <= step ? "bg-slate-700" : "bg-slate-400"
+            index <= step ? "bg-orange" : "bg-gray-200"
           }`}
         />
       ))}
-      <p className="ml-1 text-[15px] font-semibold text-slate-700">
+      <p className="ml-1 text-[15px] font-semibold text-orange">
         Étape {step + 1}/{totalSteps}
       </p>
     </div>

@@ -40,11 +40,10 @@ export const getJourneyById = async (id: number): Promise<Journey | null> => {
  * @description Retrieves a journey by its id with its steps.
  */
 export const getJourneyByIdWithSteps = async (
-  id: number
+  id: number,
 ): Promise<JourneyWithSteps | null> => {
-  const JourneyWithSteps: JourneyWithSteps | null = await readJourneyWithSteps(
-    id
-  );
+  const JourneyWithSteps: JourneyWithSteps | null =
+    await readJourneyWithSteps(id);
   if (!JourneyWithSteps) throw new NotFoundException("Journey not found");
 
   return JourneyWithSteps;
@@ -57,7 +56,7 @@ export const getJourneyByIdWithSteps = async (
  * @description Retrieves a journey by its id with its comments.
  */
 export const getJourneyByIdWithComments = async (
-  id: number
+  id: number,
 ): Promise<JourneyWithComments | null> => {
   const JourneyWithComments: JourneyWithComments | null =
     await readJourneyWithComments(id);
@@ -93,7 +92,7 @@ export const getAllJourneys = async (): Promise<Journey[]> => {
 export const registerOrModifyJourney = async (
   id: number | null,
   journey: JourneyWithoutDates,
-  steps: StepWithoutDates[]
+  steps: StepWithoutDates[],
 ): Promise<Journey | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
@@ -125,7 +124,7 @@ export const registerOrModifyJourney = async (
     for (const stepId of providedStepIds) {
       if (!existingStepIds.includes(stepId)) {
         throw new BadRequestException(
-          `Step with id ${stepId} does not exist for the journey`
+          `Step with id ${stepId} does not exist for the journey`,
         );
       }
     }
@@ -133,7 +132,7 @@ export const registerOrModifyJourney = async (
     // Combine existing steps and provided steps
     const combinedSteps = journeyToUpdate.steps.map((existingStep) => {
       const updatedStep = steps.find((step) => step.id === existingStep.id);
-      return updatedStep ? updatedStep : existingStep;
+      return updatedStep || existingStep;
     });
 
     // Add new steps that do not have an id
@@ -146,7 +145,7 @@ export const registerOrModifyJourney = async (
     upsertedJourneyWithSteps = await updateJourney(
       id,
       journey,
-      sortedAndValidatedSteps
+      sortedAndValidatedSteps,
     );
     if (!upsertedJourneyWithSteps)
       throw new InternalServerErrorException("Internal server error");
@@ -175,7 +174,7 @@ export const removeJourney = async (id: number): Promise<Journey | null> => {
 };
 
 export const SortAndValidatetSteps = (
-  steps: StepWithoutDates[]
+  steps: StepWithoutDates[],
 ): StepWithoutDates[] => {
   // Sort steps by stepNumber
   steps.sort((a, b) => a.stepNumber - b.stepNumber);

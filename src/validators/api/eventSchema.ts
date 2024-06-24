@@ -23,11 +23,11 @@ const baseEventSchema = z.object({
   accessCode: z.string().optional(),
   startAt: z.preprocess(
     (arg) => (typeof arg === "string" ? new Date(arg) : arg),
-    z.date({ required_error: "Required field" })
+    z.date({ required_error: "Required field" }),
   ),
   endAt: z.preprocess(
     (arg) => (typeof arg === "string" ? new Date(arg) : arg),
-    z.date({ required_error: "Required field" })
+    z.date({ required_error: "Required field" }),
   ),
 });
 

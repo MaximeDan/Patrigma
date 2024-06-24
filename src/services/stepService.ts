@@ -42,7 +42,7 @@ export const getStepsByJourneyID = async (
  */
 export const registerOrModifyStep = async (
   id: number | null,
-  step: StepWithoutDates
+  step: StepWithoutDates,
 ): Promise<Step | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
@@ -73,7 +73,7 @@ export const registerOrModifyStep = async (
     // Check if stepNumber is being modified
     if (step.stepNumber !== stepToUpdate.stepNumber) {
       throw new BadRequestException(
-        "Modification of stepNumber is not allowed."
+        "Modification of stepNumber is not allowed.",
       );
     }
 
@@ -136,7 +136,7 @@ export const removeStep = async (id: number): Promise<Step | null> => {
 
 async function validateStepNumberForCreation(
   steps: Step[],
-  newStep: StepWithoutDates
+  newStep: StepWithoutDates,
 ) {
   const stepCount = steps.length;
 
@@ -148,7 +148,7 @@ async function validateStepNumberForCreation(
     const lastStep = steps[stepCount - 1];
     if (newStep.stepNumber !== lastStep.stepNumber + 1) {
       throw new BadRequestException(
-        `Invalid step number. Must be sequential. Previous step number: ${lastStep.stepNumber}`
+        `Invalid step number. Must be sequential. Previous step number: ${lastStep.stepNumber}`,
       );
     }
   }

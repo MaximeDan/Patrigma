@@ -41,7 +41,7 @@ const TreasureStep = ({ form, next, prev }: TreasureStepProps) => {
         )}
       />
 
-      <div className="xs:mt-[60px] mt-11 flex justify-between">
+      <div className="mt-11 flex justify-between xs:mt-[60px]">
         <Button onClick={prev}>Retour</Button>
         <Button
           onClick={async () => {

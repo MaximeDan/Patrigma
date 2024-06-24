@@ -10,6 +10,15 @@ const config = {
   ],
   prefix: "",
   theme: {
+    screens: {
+      xxs: "380px",
+      xs: "480px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -22,27 +31,29 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "var(--background)",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        orange: {
+          DEFAULT: "var(--orange)",
+          600: "var(--orange-600)",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        green: {
+          DEFAULT: "var(--green)",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        beige: {
+          DEFAULT: "var(--beige)",
+          600: "var(--beige-600)",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        camel: {
+          DEFAULT: "var(--camel)",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+        gray: {
+          DEFAULT: "var(--gray)",
+          200: "var(--light-gray)",
+        },
+        cadetblue: {
+          DEFAULT: "var(--cadetblue)",
+          600: "var(--cadetblue-600)",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

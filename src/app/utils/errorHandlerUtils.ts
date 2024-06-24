@@ -6,17 +6,8 @@ import {
   NotFoundException,
   InternalServerErrorException,
 } from "@/types/exceptions";
-import {
-  ZodError,
-  ZodInvalidEnumValueIssue,
-  ZodInvalidLiteralIssue,
-  ZodInvalidStringIssue,
-  ZodInvalidTypeIssue,
-  ZodIssueCode,
-  ZodTooBigIssue,
-  ZodTooSmallIssue,
-  ZodUnrecognizedKeysIssue,
-} from "zod";
+import { ZodError, ZodIssueCode } from "zod";
+import { Prisma } from "@prisma/client";
 
 /**
  * @params error: any
@@ -24,12 +15,12 @@ import {
  * @description Handles exceptions and returns appropriate HTTP response based on the error type.
  */
 export function handleException(error: any) {
-  console.error("An error occurred:", error);
-
   switch (true) {
     case error instanceof ZodError:
-      const formattedMessage = formatZodErrors(error);
-      return NextResponse.json({ message: formattedMessage }, { status: 400 });
+      return NextResponse.json(
+        { message: formatZodErrors(error) },
+        { status: 400 },
+      );
     case error instanceof BadRequestException:
       return NextResponse.json({ message: error.message }, { status: 400 });
 
@@ -49,6 +40,40 @@ export function handleException(error: any) {
   }
 }
 
+export function handlePrismaException(
+  error:
+    | Prisma.PrismaClientKnownRequestError
+    | Prisma.PrismaClientUnknownRequestError
+    | Prisma.PrismaClientRustPanicError
+    | Prisma.PrismaClientInitializationError
+    | Prisma.PrismaClientValidationError,
+) {
+  const message = error.message;
+  const status = 500;
+
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    return NextResponse.json({ message }, { status: 400 });
+  }
+
+  if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+    return NextResponse.json({ message }, { status: 400 });
+  }
+
+  if (error instanceof Prisma.PrismaClientRustPanicError) {
+    return NextResponse.json({ message }, { status: 500 });
+  }
+
+  if (error instanceof Prisma.PrismaClientInitializationError) {
+    return NextResponse.json({ message }, { status: 500 });
+  }
+
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    return NextResponse.json({ message }, { status: 400 });
+  }
+
+  return NextResponse.json({ message }, { status });
+}
+
 function formatZodErrors(error: ZodError): string {
   return error.errors
     .map((e) => {
@@ -58,33 +83,27 @@ function formatZodErrors(error: ZodError): string {
       // Handle specific issue types
       switch (e.code) {
         case ZodIssueCode.invalid_type:
-          const invalidTypeIssue = e as ZodInvalidTypeIssue;
+          message += ` (expected ${e.expected}, received** ${e.received})`;
           break;
         case ZodIssueCode.invalid_literal:
-          const invalidLiteralIssue = e as ZodInvalidLiteralIssue;
-          message += ` (expected ${invalidLiteralIssue.expected}, received** ${invalidLiteralIssue.received})`;
+          message += ` (expected ${e.expected}, received** ${e.received})`;
           break;
         case ZodIssueCode.too_small:
-          const tooSmallIssue = e as ZodTooSmallIssue;
-          message += ` (minimum ${tooSmallIssue.minimum}, inclusive: ${tooSmallIssue.inclusive})`;
+          message += ` (minimum ${e.minimum}, inclusive: ${e.inclusive})`;
           break;
         case ZodIssueCode.too_big:
-          const tooBigIssue = e as ZodTooBigIssue;
-          message += ` (maximum ${tooBigIssue.maximum}, inclusive: ${tooBigIssue.inclusive})`;
+          message += ` (maximum ${e.maximum}, inclusive: ${e.inclusive})`;
           break;
         case ZodIssueCode.invalid_enum_value:
-          const enumIssue = e as ZodInvalidEnumValueIssue;
-          message += ` (expected one of: ${enumIssue.options.join(
-            ", "
-          )}, received**: ${enumIssue.received})`;
+          message += ` (expected one of: ${e.options.join(
+            ", ",
+          )}, received**: ${e.received})`;
           break;
         case ZodIssueCode.unrecognized_keys:
-          const keysIssue = e as ZodUnrecognizedKeysIssue;
-          message += ` (unrecognized keys: ${keysIssue.keys.join(", ")})`;
+          message += ` (unrecognized keys: ${e.keys.join(", ")})`;
           break;
         case ZodIssueCode.invalid_string:
-          const stringIssue = e as ZodInvalidStringIssue;
-          message += ` (validation: ${stringIssue.validation})`;
+          message += ` (validation: ${e.validation})`;
           break;
       }
 

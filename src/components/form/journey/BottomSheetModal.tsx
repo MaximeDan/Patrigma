@@ -18,6 +18,7 @@ import { Sheet } from "react-modal-sheet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import LeafletMap from "@/components/map/LeafletMap";
+import { Icons } from "@/components/Icons";
 
 type AddStepFormValues = z.infer<typeof addStepSchema>;
 
@@ -102,8 +103,8 @@ const BottomSheetModal = () => {
       disableDrag={dragDisabled}
     >
       <Sheet.Container>
-        <Sheet.Header />
-        <Sheet.Content>
+        <Sheet.Header className="bg-gray" />
+        <Sheet.Content className="bg-gray px-5">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(processForm)}>
               <div className="flex">
@@ -188,7 +189,10 @@ const BottomSheetModal = () => {
               />
 
               <Button>
-                {editedStep ? "Modifier l'étape" : "Ajouter une étape"}
+                <span>
+                  {editedStep ? "Modifier l'étape" : "Ajouter une étape"}
+                </span>
+                <Icons.arrowLink width={14} height={14} className="ml-2" />
               </Button>
             </form>
           </Form>

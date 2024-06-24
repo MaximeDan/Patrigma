@@ -480,8 +480,8 @@ async function main() {
             hint: "This church is dedicated to Joan of Arc and is located on the site where she was burned at the stake.",
             picturePuzzle: "https://picsum.photos/",
             pictureHint: "https://picsum.photos/",
-            latitude: 1.0939,
-            longitude: 49.4421,
+            latitude: 49.4421,
+            longitude: 1.0939,
             address: "Place du Vieux-Marché",
             city: "Rouen",
             postalCode: "76000",
@@ -1266,7 +1266,7 @@ async function main() {
 
       // Randomize the number of steps completed by the user for this event
       const numberOfStepsToComplete = Math.floor(
-        Math.random() * journey.steps.length
+        Math.random() * journey.steps.length,
       );
 
       for (let i = 0; i < numberOfStepsToComplete; i++) {
@@ -1286,9 +1286,9 @@ async function main() {
           data: {
             userId,
             stepId: step.id,
-            eventId: eventId,
-            startAt: startAt,
-            endAt: endAt,
+            eventId,
+            startAt,
+            endAt,
             durationMs: duration,
           },
         });

@@ -36,7 +36,7 @@ import {
  * @description Retrieves an event with its associated user events by its id.
  */
 export const getEventByIdWithUserEvents = async (
-  id: number
+  id: number,
 ): Promise<EventWithUserEvents | null> => {
   const EventWithUserEvents: EventWithUserEvents | null = await readEvent(id);
   if (!EventWithUserEvents) throw new NotFoundException("Event not found");
@@ -69,7 +69,7 @@ export const getAllEvents = async (): Promise<Event[] | null> => {
  */
 export const registerOrModifyEvent = async (
   id: number | null,
-  event: EventWithoutId
+  event: EventWithoutId,
 ): Promise<Event | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
@@ -192,7 +192,7 @@ export const leaveEvent = async (
 export const registerEventUserStep = async (
   userId: number,
   eventId: number,
-  stepId: number
+  stepId: number,
 ): Promise<EventUserStep | null> => {
   if (
     !Number.isFinite(userId) ||
@@ -207,12 +207,12 @@ export const registerEventUserStep = async (
   if (!event) throw new NotFoundException("Event not found");
 
   const journey: JourneyWithSteps | null = await readJourneyWithSteps(
-    event.journeyId
+    event.journeyId,
   );
 
   if (!journey || !journey.steps.some((step) => step.id === stepId))
     throw new BadRequestException(
-      "Invalid stepId for the given event's journey"
+      "Invalid stepId for the given event's journey",
     );
 
   const currentStep = journey.steps.find((step) => step.id === stepId);
@@ -222,7 +222,7 @@ export const registerEventUserStep = async (
   if (currentStep.stepNumber !== 1) {
     // Check if the previous step is completed
     const previousStep = journey.steps.find(
-      (step) => step.stepNumber === currentStep.stepNumber - 1
+      (step) => step.stepNumber === currentStep.stepNumber - 1,
     );
     if (!previousStep)
       throw new InternalServerErrorException("Internal server error");
@@ -230,11 +230,11 @@ export const registerEventUserStep = async (
     const previousEventUserStep = await readEventUserStepByIds(
       userId,
       eventId,
-      previousStep.id
+      previousStep.id,
     );
     if (!previousEventUserStep || previousEventUserStep.endAt === null) {
       throw new BadRequestException(
-        "Previous step is not completed, cannot proceed to the next step"
+        "Previous step is not completed, cannot proceed to the next step",
       );
     }
   }
@@ -272,7 +272,7 @@ export const registerEventUserStep = async (
 export const completeEventUserStep = async (
   userId: number,
   eventId: number,
-  stepId: number
+  stepId: number,
 ): Promise<EventUserStep | null> => {
   // Validate arguments
   if (
@@ -300,12 +300,12 @@ export const completeEventUserStep = async (
   // Update the EventUserStep with endAt and duration
   const updatedEventUserStep = await updateEventUserStep(
     eventUserStep.id,
-    eventUserStep
+    eventUserStep,
   );
 
   if (!updatedEventUserStep) {
     throw new InternalServerErrorException(
-      "Unable to complete user step event"
+      "Unable to complete user step event",
     );
   }
 
@@ -323,7 +323,7 @@ export const completeEventUserStep = async (
  */
 export const getEventUserStepsByUserIdAndEventId = async (
   userId: number,
-  eventId: number
+  eventId: number,
 ): Promise<EventUserStep[]> => {
   // Validate arguments
   if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {
@@ -340,12 +340,12 @@ export const getEventUserStepsByUserIdAndEventId = async (
 
   const EventUserSteps = await readEventUserStepsByUserIdAndEventId(
     userId,
-    eventId
+    eventId,
   );
 
   if (!EventUserSteps || EventUserSteps.length === 0) {
     throw new NotFoundException(
-      "EventUserSteps not found for the given user and event"
+      "EventUserSteps not found for the given user and event",
     );
   }
 

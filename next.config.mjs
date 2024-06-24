@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "via.assets.so",
+        hostname: "picsum.photos",
       },
     ],
   },

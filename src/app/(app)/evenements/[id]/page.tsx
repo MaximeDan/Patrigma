@@ -5,7 +5,7 @@ import { Icons } from "@/components/Icons";
 
 type Params = { id: string };
 
-const JourneyDetail = ({ params }: { params: Params }) => {
+const EventDetail = ({ params }: { params: Params }) => {
   // get journey by id
   return (
     <main className="flex min-h-screen flex-col bg-gray">
@@ -79,4 +79,4 @@ const JourneyDetail = ({ params }: { params: Params }) => {
   );
 };
 
-export default JourneyDetail;
+export default EventDetail;

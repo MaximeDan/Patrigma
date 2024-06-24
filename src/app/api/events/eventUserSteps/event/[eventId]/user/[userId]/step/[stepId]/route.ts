@@ -13,7 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { eventId: string; userId: string; stepId: string } }
+  { params }: { params: { eventId: string; userId: string; stepId: string } },
 ) {
   try {
     const eventId: number = Number(params.eventId);
@@ -35,7 +35,7 @@ export async function POST(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { eventId: string; userId: string; stepId: string } }
+  { params }: { params: { eventId: string; userId: string; stepId: string } },
 ) {
   try {
     const eventId: number = Number(params.eventId);

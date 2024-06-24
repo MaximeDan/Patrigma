@@ -108,7 +108,6 @@ it("returns error for bad request", async () => {
   });
 });
 
-
 it("returns error for invalid date of birth", async () => {
   await testApiHandler({
     appHandler: registerHandler,
