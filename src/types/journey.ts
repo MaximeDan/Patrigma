@@ -8,6 +8,10 @@ export type JourneyWithSteps = Prisma.JourneyGetPayload<{
   include: { steps: true };
 }>;
 
+export type JourneyWithStepsAndComments = Prisma.JourneyGetPayload<{
+  include: { steps: true; comments: true };
+}>;
+
 export type JourneyWithoutDates = {
   id?: number;
   authorId: number;

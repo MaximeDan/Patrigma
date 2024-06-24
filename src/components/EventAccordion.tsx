@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -16,8 +16,6 @@ interface EventAccordionProps {
 
 const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
   const [openItem, setOpenItem] = useState<string>();
-  if (!events) return;
-
   const groupedEvents = events?.reduce(
     (groups: Record<string, Event[]>, event) => {
       const date = new Date(event.startAt).toISOString().split("T")[0];
@@ -41,7 +39,10 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
       day: "numeric",
     }),
   }));
-  setOpenItem(formattedDates[0].formatted);
+  useEffect(() => {
+    setOpenItem(formattedDates[0].formatted);
+  }, []);
+  if (!events) return;
 
   const handleToggle = (date: string) => {
     setOpenItem((prev) => (prev === date ? "" : date));

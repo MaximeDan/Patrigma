@@ -1,23 +1,22 @@
 import { getAllEvents } from "@/services/eventService";
+import { handleException } from "@/app/utils/errorHandlerUtils";
 import EventAccordion from "./EventAccordion";
-import { Suspense } from "react";
 
 async function getData() {
   try {
     const result = await getAllEvents();
     return result;
   } catch (error: any) {
-    console.log(error);
+    console.log(error, "error");
+    handleException(error);
   }
 }
 
 const EventsFeed = async () => {
   const events = await getData();
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {events && <EventAccordion events={events} />}
-    </Suspense>
-  );
+  if (!events) return;
+
+  return <EventAccordion events={events} />;
 };
 
 export default EventsFeed;

@@ -17,6 +17,7 @@ import {
   JourneyWithoutDates,
   JourneyWithComments,
   JourneyWithSteps,
+  JourneyWithStepsAndComments,
 } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
 
@@ -66,11 +67,13 @@ export const getJourneyByIdWithComments = async (
 };
 
 /**
- * @returns Journey[]
+ * @returns JourneyWithStepsAndComments[]
  * @throws NotFoundException
  * @description Retrieves all journeys without steps.
  */
-export const getAllJourneys = async (): Promise<Journey[]> => {
+export const getAllJourneys = async (): Promise<
+  JourneyWithStepsAndComments[]
+> => {
   const journeys = await readJourneys();
 
   if (!journeys || journeys.length === 0)
