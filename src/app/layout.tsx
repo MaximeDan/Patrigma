@@ -5,10 +5,10 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const APP_NAME = "PWA App";
-const APP_DEFAULT_TITLE = "My Awesome PWA App";
-const APP_TITLE_TEMPLATE = "%s - PWA App";
-const APP_DESCRIPTION = "Best PWA app in the world!";
+const APP_NAME = "Patrigma";
+const APP_DEFAULT_TITLE = "Patrigma";
+const APP_TITLE_TEMPLATE = "%s - Patrigma";
+const APP_DESCRIPTION = "Découvre ton patrimoine en jouant !";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
