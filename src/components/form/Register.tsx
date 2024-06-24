@@ -47,6 +47,7 @@ const Register = () => {
       await registerUserApi({
         email: data.email,
         password: data.password,
+        confirmPassword: data.confirmPassword,
         username: data.username,
         name: data.name,
         lastName: data.lastName,

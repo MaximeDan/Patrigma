@@ -12,7 +12,7 @@ import registerSchema from "@/validators/registerSchema";
 async function handler(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.json();
-
+    console.log(data);
     const validatedData = registerSchema.parse(data);
 
     const userData: RegisterUser = {
@@ -25,6 +25,7 @@ async function handler(request: NextRequest): Promise<NextResponse> {
     };
 
     const newUser = await register(userData);
+    console.log("response:", newUser);
     return NextResponse.json({ user: newUser }, { status: 201 });
   } catch (error) {
     return handleException(error);
