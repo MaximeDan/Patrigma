@@ -1,6 +1,6 @@
 export type StepWithoutDates = {
   id?: number;
-  journeyId: number;
+  journeyId: number | undefined;
   puzzle: string;
   answer: string;
   hint: string;

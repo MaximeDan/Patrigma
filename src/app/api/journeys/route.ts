@@ -6,9 +6,10 @@ import {
   getAllJourneys,
   registerOrModifyJourney,
 } from "@/services/journeyService";
+import { HttpOperation } from "@/types/enums/httpOperation";
 import { JourneyWithoutDates } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
-import { journeyBodySchema } from "@/validators/api/journeySchema";
+import { createJourneyBodySchema } from "@/validators/api/journeySchema";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     // Parse the body with zod to get the journey and steps
+    const journeyBodySchema = createJourneyBodySchema(HttpOperation.POST);
     const parsedBody = journeyBodySchema.parse(body);
     const journey: JourneyWithoutDates = parsedBody.journey;
     const steps: StepWithoutDates[] = parsedBody.steps;

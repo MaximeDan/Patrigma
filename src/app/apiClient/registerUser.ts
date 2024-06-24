@@ -1,6 +1,7 @@
 export const registerUserApi = async (data: {
   email: string;
   password: string;
+  confirmPassword: string;
   username: string;
   name: string;
   lastName: string;

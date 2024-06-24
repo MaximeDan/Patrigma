@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { baseStepSchema } from "./stepSchema";
+import { createStepSchema } from "./stepSchema";
+import { HttpOperation } from "@/types/enums/httpOperation";
 
 // Journey schema with custom error messages
 const baseJourneySchema = z.object({
@@ -49,19 +50,20 @@ const baseJourneySchema = z.object({
 });
 
 // Schéma combiné pour le corps de la requête avec transformation des steps pour inclure journeyId
-export const journeyBodySchema = z
-  .object({
-    journey: baseJourneySchema,
-    steps: z.array(baseStepSchema),
-  })
-  .transform((data) => {
-    const { journey, steps } = data;
+export const createJourneyBodySchema = (httpOperation: HttpOperation) =>
+  z
+    .object({
+      journey: baseJourneySchema,
+      steps: z.array(createStepSchema(httpOperation)),
+    })
+    .transform((data) => {
+      const { journey, steps } = data;
 
-    // Ajouter journeyId à chaque étape avant validation
-    const stepsWithJourneyId = steps.map((step) => ({
-      ...step,
-      journeyId: journey.authorId,
-    }));
+      // Ajouter journeyId à chaque étape avant validation
+      const stepsWithJourneyId = steps.map((step) => ({
+        ...step,
+        journeyId: journey.authorId,
+      }));
 
-    return { journey, steps: stepsWithJourneyId };
-  });
+      return { journey, steps: stepsWithJourneyId };
+    });
