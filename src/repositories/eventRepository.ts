@@ -20,7 +20,7 @@ export const createEvent = async (data: EventWithoutId): Promise<Event> => {
  */
 export const readEvent = async (
   id: number,
-): Promise<eventWithUserEvents | null> => {
+): Promise<EventWithUserEvents | null> => {
   return await prisma.event.findUnique({
     where: { id },
     include: {
@@ -45,7 +45,7 @@ export const readEvents = async (): Promise<Event[] | null> => {
  */
 export const updateEvent = async (
   id: number,
-  data: Event,
+  data: EventWithoutId,
 ): Promise<Event | null> => {
   return await prisma.event.update({
     where: { id },
