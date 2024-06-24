@@ -4,7 +4,7 @@ export const registerUserApi = async (data: {
   username: string;
   name: string;
   lastName: string;
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
 }) => {
   const response = await fetch("/api/auth/register", {
     method: "POST",
