@@ -1,0 +1,54 @@
+{
+    "id": "any_id",
+    "name": "Patrigma",
+    "short_name": "Patrigma",
+    "description": "Patrigma : Découvre ton partimoine en jouant !",
+    "icons": [
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.128.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "./Iconarchive-Seaside-Treasure-Map.512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "start_url": "/",
+    "scope": ".",
+    "display": "standalone",
+    "orientation": "portrait"
+}
