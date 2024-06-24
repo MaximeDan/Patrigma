@@ -39,3 +39,8 @@ next-env.d.ts
 
 # tests
 test-report.html
+
+# PWA files
+sw.*
+workbox-*
+swe-worker-*
