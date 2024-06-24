@@ -9,4 +9,8 @@ const handler = async (req, res) => {
   return response;
 };
 
+// TODO
+// @ts-ignore
+const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };

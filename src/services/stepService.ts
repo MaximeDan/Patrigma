@@ -12,6 +12,7 @@ import {
 } from "../repositories/stepRepository";
 import { Step } from "@prisma/client";
 import { readJourneyWithSteps } from "@/repositories/journeyRepository";
+import { StepWithoutDates } from "@/types/step";
 
 /**
  * @params journeyId: number
@@ -32,7 +33,7 @@ export const getStepsByJourneyID = async (
 
 /**
  * @params id: number | null
- * @params step: Step
+ * @params step: StepWithoutDates
  * @returns Step | null
  * @throws BadRequestException
  * @throws NotFoundException
@@ -41,7 +42,7 @@ export const getStepsByJourneyID = async (
  */
 export const registerOrModifyStep = async (
   id: number | null,
-  step: Step,
+  step: StepWithoutDates
 ): Promise<Step | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
@@ -50,36 +51,41 @@ export const registerOrModifyStep = async (
 
   if (!step) throw new BadRequestException("Invalid step");
 
-  // Check if journey exists and stepNumber is unique
   const journey = await readJourneyWithSteps(step.journeyId);
-
   if (!journey) throw new NotFoundException("Journey not found");
-
-  // Check if stepNumber is unique and sequential
-  const lastStep = journey.steps[journey.steps.length - 1];
-  if (lastStep && step.stepNumber !== lastStep.stepNumber + 1) {
-    throw new BadRequestException("Invalid step number");
-  }
 
   let upsertedStep: Step | null;
 
-  // Check if register or modify
   if (id === null) {
+    // Creating a new step
+    await validateStepNumberForCreation(journey.steps, step);
+
     upsertedStep = await createStep(step);
-    if (!upsertedStep)
+    if (!upsertedStep) {
       throw new InternalServerErrorException("Internal server error");
+    }
   } else {
-    const stepToUpdate = await readStep(id);
+    // Updating an existing step
+    const stepToUpdate = journey.steps.find((s) => s.id === id);
+
     if (!stepToUpdate) throw new NotFoundException("Step not found");
 
+    // Check if stepNumber is being modified
+    if (step.stepNumber !== stepToUpdate.stepNumber) {
+      throw new BadRequestException(
+        "Modification of stepNumber is not allowed."
+      );
+    }
+
+    // Proceed with the update if stepNumber is not modified
     upsertedStep = await updateStep(id, step);
-    if (!upsertedStep)
+    if (!upsertedStep) {
       throw new InternalServerErrorException("Internal server error");
+    }
   }
 
   return upsertedStep;
 };
-
 /**
  * @params id: number
  * @returns Step | null
@@ -115,8 +121,8 @@ export const removeStep = async (id: number): Promise<Step | null> => {
   // Update step numbers of subsequent steps
   if (journey) {
     const stepsToUpdate = journey.steps
-      .filter((s) => s.stepNumber > step.stepNumber)
-      .sort((a, b) => a.stepNumber - b.stepNumber); // Sort stepsToUpdate in ascending order based on stepNumber
+      .filter((s: Step) => s.stepNumber > step.stepNumber)
+      .sort((a: Step, b: Step) => a.stepNumber - b.stepNumber); // Sort stepsToUpdate in ascending order based on stepNumber
     for (const s of stepsToUpdate) {
       s.stepNumber -= 1;
       const updatedStep = await updateStep(s.id, s);
@@ -127,3 +133,23 @@ export const removeStep = async (id: number): Promise<Step | null> => {
 
   return deletedStep;
 };
+
+async function validateStepNumberForCreation(
+  steps: Step[],
+  newStep: StepWithoutDates
+) {
+  const stepCount = steps.length;
+
+  if (stepCount === 0 && newStep.stepNumber !== 1) {
+    throw new BadRequestException("The first step must have step number 1.");
+  }
+
+  if (stepCount > 0) {
+    const lastStep = steps[stepCount - 1];
+    if (newStep.stepNumber !== lastStep.stepNumber + 1) {
+      throw new BadRequestException(
+        `Invalid step number. Must be sequential. Previous step number: ${lastStep.stepNumber}`
+      );
+    }
+  }
+}

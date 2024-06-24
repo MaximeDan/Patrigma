@@ -13,10 +13,10 @@ export async function POST(
   { params }: { params: { id: string; userId: string } },
 ) {
   try {
-    const id: number = Number(params.id);
+    const eventId: number = Number(params.id);
     const userId: number = Number(params.userId);
 
-    const result = await joinEvent(id, userId);
+    const result = await joinEvent(eventId, userId);
     return NextResponse.json({ data: result }, { status: 200 });
   } catch (error: any) {
     return handleException(error);

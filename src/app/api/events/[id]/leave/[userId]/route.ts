@@ -13,7 +13,7 @@ export async function DELETE(
   { params }: { params: { id: string; userId: string } },
 ) {
   try {
-    const id: number = Number(params.id);
+    const eventId: number = Number(params.id);
     const userId: number = Number(params.userId);
 
     await leaveEvent(id, userId);
