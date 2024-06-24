@@ -3,6 +3,7 @@ import {
   JourneyWithoutDates,
   JourneyWithComments,
   JourneyWithSteps,
+  JourneyWithStepsAndComments,
 } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
 import { Journey } from "@prisma/client";
@@ -113,11 +114,26 @@ export const readJourneyWithComments = async (
 };
 
 /**
- * @returns Journey[]
+ * @returns JourneyWithStepsAndComments[]
  * @description Retrieves all journeys.
  */
-export const readJourneys = async (): Promise<Journey[]> => {
-  return await prisma.journey.findMany();
+export const readJourneys = async (): Promise<
+  JourneyWithStepsAndComments[]
+> => {
+  return await prisma.journey.findMany({
+    include: {
+      steps: {
+        orderBy: {
+          stepNumber: "asc",
+        },
+      },
+      comments: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+  });
 };
 
 /**

@@ -1,4 +1,5 @@
 import { TimeSeparator } from "@/types/enums/timeSeparator";
+import { Comment } from "@prisma/client";
 
 /**
  * @param milliseconds: number
@@ -41,3 +42,18 @@ export function convertMillisecondsToHoursMinutes(
 
   return formattedDuration;
 }
+
+export const calculateAverageRating = (comments: Comment[]) => {
+  if (!comments.length) return 0;
+  let totalRating = 0;
+  let count = 0;
+
+  comments.forEach((comment) => {
+    if (comment.rating !== undefined && comment.rating !== null) {
+      totalRating += comment.rating;
+      count++;
+    }
+  });
+
+  return count === 0 ? 0 : totalRating / count;
+};
