@@ -19,29 +19,33 @@ const registerSchema = z
       .refine((value) => value.trim().length > 0, {
         message: "Ce champ est requis",
       }),
-    dateOfBirth: z
-      .string({ required_error: "Ce champ est requis" })
-      .refine(
-        (val) => {
-          const date = new Date(val);
-          if (isNaN(date.getTime())) {
-            return false;
-          }
-          return true;
-        },
-        {
-          message: "Date invalide",
-        },
-      )
-      .refine(
-        (val) => {
-          const date = new Date(val);
-          return date <= new Date();
-        },
-        {
-          message: "La date ne peut pas être dans le futur",
-        },
-      ),
+    dateOfBirth: z.preprocess(
+      (val) => {
+        if (typeof val === "string") return val;
+        if (val instanceof Date) return val.toISOString();
+        return "";
+      },
+      z
+        .string({ required_error: "Ce champ est requis" })
+        .refine(
+          (val) => {
+            const date = new Date(val);
+            return !isNaN(date.getTime());
+          },
+          {
+            message: "Date invalide",
+          },
+        )
+        .refine(
+          (val) => {
+            const date = new Date(val);
+            return date <= new Date();
+          },
+          {
+            message: "La date ne peut pas être dans le futur",
+          },
+        ),
+    ),
     email: z
       .string({ required_error: "Ce champ est requis" })
       .email({ message: "Email invalide" })

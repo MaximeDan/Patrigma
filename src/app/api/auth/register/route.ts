@@ -12,7 +12,6 @@ import registerSchema from "@/validators/registerSchema";
 async function handler(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.json();
-
     const validatedData = registerSchema.parse(data);
 
     const userData: RegisterUser = {
