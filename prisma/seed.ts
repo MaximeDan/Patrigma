@@ -1031,7 +1031,7 @@ async function main() {
     // Generate a random number of events for the user between 0 and 6
     let numEvents = Math.floor(Math.random() * 7);
 
-    // Ensure that Bob, Henry, and Grace are registered for at least one event because we create userStep for this users
+    // Ensure that Bob, Henry, and Grace are registered for at least one event because we create EventUserStep for these users
     if (
       users[i].id === bob.id ||
       users[i].id === henry.id ||
@@ -1223,6 +1223,81 @@ async function main() {
       journeyId: journey5.id,
     },
   });
+
+  const bobEvents = await prisma.userEvent.findMany({
+    where: { userId: bob.id },
+    select: { eventId: true },
+  });
+
+  const henryEvents = await prisma.userEvent.findMany({
+    where: { userId: henry.id },
+    select: { eventId: true },
+  });
+
+  const graceEvents = await prisma.userEvent.findMany({
+    where: { userId: grace.id },
+    select: { eventId: true },
+  });
+
+  const generateEventUserStep = async (userId: number, eventIds: number[]) => {
+    for (const eventId of eventIds) {
+      const event = await prisma.event.findUnique({
+        where: { id: eventId },
+        select: { journeyId: true },
+      });
+      if (!event) continue;
+
+      const journey = await prisma.journey.findUnique({
+        where: { id: event.journeyId },
+        select: { id: true, steps: true },
+      });
+
+      if (!journey) continue;
+
+      // Randomize the number of steps completed by the user for this event
+      const numberOfStepsToComplete = Math.floor(
+        Math.random() * journey.steps.length,
+      );
+
+      for (let i = 0; i < numberOfStepsToComplete; i++) {
+        const step = journey.steps[i];
+        const startAt = new Date();
+        // Randomly generate a duration between 30 minutes and 2 hours for each step
+        const endAt = new Date(
+          startAt.getTime() +
+            Math.floor(
+              Math.random() * (2 * 60 * 60 * 1000 - 30 * 60 * 1000 + 1),
+            ) +
+            30 * 60 * 1000,
+        );
+        const duration = endAt.getTime() - startAt.getTime();
+
+        await prisma.eventUserStep.create({
+          data: {
+            userId,
+            stepId: step.id,
+            eventId,
+            startAt,
+            endAt,
+            durationMs: duration,
+          },
+        });
+      }
+    }
+  };
+
+  await generateEventUserStep(
+    bob.id,
+    bobEvents.map((event) => event.eventId),
+  );
+  await generateEventUserStep(
+    henry.id,
+    henryEvents.map((event) => event.eventId),
+  );
+  await generateEventUserStep(
+    grace.id,
+    graceEvents.map((event) => event.eventId),
+  );
 }
 
 main()

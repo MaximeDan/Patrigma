@@ -1,6 +1,6 @@
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import { registerOrModifyComment } from "@/services/commentService";
-import { CommentWithoutDates } from "@/types/CommentWithoutDates";
+import { CommentWithoutDates } from "@/types/comment";
 import { commentBodySchema } from "@/validators/api/commentSchema";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,9 +12,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const commentParsed = commentBodySchema.parse(body);
-
-    const comment: CommentWithoutDates = commentParsed.comment;
+    // Parse the body with zod to get the comment
+    const comment: CommentWithoutDates = commentBodySchema.parse(body).comment;
 
     const result = await registerOrModifyComment(null, comment);
     return NextResponse.json({ data: result }, { status: 201 });

@@ -1,17 +1,21 @@
+import { getAllEvents } from "@/services/eventService";
 import EventAccordion from "./EventAccordion";
 import { Suspense } from "react";
 
+async function getData() {
+  try {
+    const result = await getAllEvents();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 const EventsFeed = async () => {
-  const res = await fetch(
-    `${process.env.BASE_URL || "http://localhost:3000"}/api/events`,
-    {
-      cache: "no-cache",
-    },
-  );
-  const events = await res.json();
+  const events = await getData();
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <EventAccordion events={events.data} />
+      {events && <EventAccordion events={events} />}
     </Suspense>
   );
 };

@@ -1,6 +1,7 @@
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import { registerOrModifyStep } from "@/services/stepService";
-import { Step } from "@prisma/client";
+import { StepWithoutDates } from "@/types/step";
+import { stepBodySchema } from "@/validators/api/stepSchema";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -10,8 +11,11 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function POST(request: NextRequest) {
   try {
-    const stepData: Step = await request.json();
-    const result = await registerOrModifyStep(null, stepData);
+    const body = await request.json();
+    // Parse the body with zod to get the step
+    const step: StepWithoutDates = stepBodySchema.parse(body).step;
+
+    const result = await registerOrModifyStep(null, step);
     return NextResponse.json({ data: result }, { status: 201 });
   } catch (error: any) {
     return handleException(error);

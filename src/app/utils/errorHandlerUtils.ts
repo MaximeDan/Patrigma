@@ -6,7 +6,7 @@ import {
   NotFoundException,
   InternalServerErrorException,
 } from "@/types/exceptions";
-import { ZodError } from "zod";
+import { ZodError, ZodIssueCode } from "zod";
 import { Prisma } from "@prisma/client";
 
 /**
@@ -15,11 +15,13 @@ import { Prisma } from "@prisma/client";
  * @description Handles exceptions and returns appropriate HTTP response based on the error type.
  */
 export function handleException(error: any) {
-  // console.error("An error occurred:", error);
-
   switch (true) {
-    case error instanceof BadRequestException:
     case error instanceof ZodError:
+      return NextResponse.json(
+        { message: formatZodErrors(error) },
+        { status: 400 },
+      );
+    case error instanceof BadRequestException:
       return NextResponse.json({ message: error.message }, { status: 400 });
     case error instanceof UnauthorizedException:
       return NextResponse.json({ message: error.message }, { status: 401 });
@@ -69,4 +71,42 @@ export function handlePrismaException(
   }
 
   return NextResponse.json({ message }, { status });
+}
+
+function formatZodErrors(error: ZodError): string {
+  return error.errors
+    .map((e) => {
+      const path = e.path.join(" -> ");
+      let message = `Error at ${path}: ${e.message}`;
+
+      // Handle specific issue types
+      switch (e.code) {
+        case ZodIssueCode.invalid_type:
+          message += ` (expected ${e.expected}, received** ${e.received})`;
+          break;
+        case ZodIssueCode.invalid_literal:
+          message += ` (expected ${e.expected}, received** ${e.received})`;
+          break;
+        case ZodIssueCode.too_small:
+          message += ` (minimum ${e.minimum}, inclusive: ${e.inclusive})`;
+          break;
+        case ZodIssueCode.too_big:
+          message += ` (maximum ${e.maximum}, inclusive: ${e.inclusive})`;
+          break;
+        case ZodIssueCode.invalid_enum_value:
+          message += ` (expected one of: ${e.options.join(
+            ", ",
+          )}, received**: ${e.received})`;
+          break;
+        case ZodIssueCode.unrecognized_keys:
+          message += ` (unrecognized keys: ${e.keys.join(", ")})`;
+          break;
+        case ZodIssueCode.invalid_string:
+          message += ` (validation: ${e.validation})`;
+          break;
+      }
+
+      return message;
+    })
+    .join("; ");
 }

@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+
+// TODO
 // @ts-ignore
 const handler = NextAuth(authOptions);
 

@@ -109,15 +109,16 @@ CREATE TABLE "Step" (
 );
 
 -- CreateTable
-CREATE TABLE "UserStep" (
+CREATE TABLE "EventUserStep" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "stepId" INTEGER NOT NULL,
-    "startAt" TIMESTAMP(3) NOT NULL,
-    "endAt" TIMESTAMP(3) NOT NULL,
-    "duration" INTEGER NOT NULL,
+    "eventId" INTEGER NOT NULL,
+    "startAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "endAt" TIMESTAMP(3),
+    "durationMs" INTEGER,
 
-    CONSTRAINT "UserStep_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "EventUserStep_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -161,10 +162,13 @@ ALTER TABLE "Journey" ADD CONSTRAINT "Journey_authorId_fkey" FOREIGN KEY ("autho
 ALTER TABLE "Step" ADD CONSTRAINT "Step_journeyId_fkey" FOREIGN KEY ("journeyId") REFERENCES "Journey"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserStep" ADD CONSTRAINT "UserStep_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "EventUserStep" ADD CONSTRAINT "EventUserStep_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserStep" ADD CONSTRAINT "UserStep_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "EventUserStep" ADD CONSTRAINT "EventUserStep_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventUserStep" ADD CONSTRAINT "EventUserStep_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
