@@ -1,6 +1,6 @@
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import { leaveEvent } from "@/services/eventService";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 /**
  * @params request: NextRequest
@@ -13,10 +13,11 @@ export async function DELETE(
   { params }: { params: { id: string; userId: string } }
 ) {
   try {
-    const id: number = Number(params.id);
+    const eventId: number = Number(params.id);
     const userId: number = Number(params.userId);
 
-    const result = await leaveEvent(id, userId);
+    const result = await leaveEvent(eventId, userId);
+
     // Using Response instead of NextResponse because NextResponse doesn't handle status 204 actually
     return new Response(null, {
       status: 204,

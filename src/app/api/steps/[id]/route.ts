@@ -4,7 +4,8 @@ import {
   registerOrModifyStep,
   removeStep,
 } from "@/services/stepService";
-import { Step } from "@prisma/client";
+import { StepWithoutDates } from "@/types/step";
+import { stepBodySchema } from "@/validators/api/stepSchema";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -39,7 +40,8 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
-    const step: Step = body.step;
+    // Parse the body with zod to get the step
+    const step: StepWithoutDates = stepBodySchema.parse(body).step;
 
     const result = await registerOrModifyStep(id, step);
     return NextResponse.json({ data: result }, { status: 200 });

@@ -1,14 +1,18 @@
 import { z } from "zod";
 
-// Comment schema
-export const commentSchema = z.object({
-  authorId: z.number().int(),
-  content: z.string(),
-  rating: z.number().int().nullable(),
-  journeyId: z.number().int(),
+// Comment schema with custom error messages
+const baseCommentSchema = z.object({
+  authorId: z.number({ required_error: "Required field" }).int(),
+  content: z
+    .string({ required_error: "Required field" })
+    .max(500, { message: "Please enter less than 500 characters" }),
+  rating: z
+    .number({ required_error: "Required field" })
+    .int({ message: "Please provide an integer" }),
+  journeyId: z.number({ required_error: "Required field" }).int(),
 });
 
 // Combined schema for the body
 export const commentBodySchema = z.object({
-  comment: commentSchema,
+  comment: baseCommentSchema,
 });

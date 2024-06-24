@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { UserEventWithoutId } from "@/types/userEventNullableId";
+import { UserEventWithoutId } from "@/types/userEvent";
 import { UserEvent } from "@prisma/client";
 
 /**

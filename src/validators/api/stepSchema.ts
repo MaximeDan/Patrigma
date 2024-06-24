@@ -1,23 +1,49 @@
 import { z } from "zod";
 
-// Step schema
-export const stepSchema = z.object({
-  puzzle: z.string(),
-  answer: z.string(),
-  hint: z.string(),
-  picturePuzzle: z.string().nullable().optional(),
-  pictureHint: z.string().nullable().optional(),
-  latitude: z.number(),
-  longitude: z.number(),
-  address: z.string(),
-  city: z.string(),
-  postalCode: z.string(),
-  country: z.string(),
-  stepNumber: z.number().int(),
-  journeyId: z.number().int(),
+// Step schema with custom error messages
+export const baseStepSchema = z.object({
+  id: z
+    .string()
+    .optional()
+    .transform((val) => (val ? Number(val) : undefined)),
+  puzzle: z
+    .string({ required_error: "Required field" })
+    .max(1000, { message: "Please enter less than 1000 characters" }),
+  answer: z
+    .string({ required_error: "Required field" })
+    .max(255, { message: "Please enter less than 255 characters" }),
+  hint: z
+    .string({ required_error: "Required field" })
+    .max(1000, { message: "Please enter less than 1000 characters" }),
+  picturePuzzle: z
+    .string({ required_error: "Required field" })
+    .url({ message: "Please provide a valid URL" }),
+  pictureHint: z
+    .string({ required_error: "Required field" })
+    .url({ message: "Please provide a valid URL" }),
+  latitude: z.number({ required_error: "Required field" }),
+  longitude: z.number({ required_error: "Required field" }),
+  address: z
+    .string()
+    .max(255, { message: "Please enter less than 255 characters" })
+    .optional(),
+  city: z
+    .string()
+    .max(50, { message: "Please enter less than 50 characters" })
+    .optional(),
+  postalCode: z
+    .string()
+    .regex(/^\d{5}$/, { message: "Postal code must be exactly 5 digits" })
+    .optional(),
+  country: z
+    .string()
+    .max(50, { message: "Please enter less than 50 characters" })
+    .optional(),
+  stepNumber: z.number({ required_error: "Required field" }).int(),
+  journeyId: z.number({ required_error: "Required field" }).int(),
 });
 
 // Combined schema for the body
 export const stepBodySchema = z.object({
-  step: stepSchema,
+  step: baseStepSchema,
 });

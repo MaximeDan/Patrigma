@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { CommentWithoutDates } from "@/types/CommentWithoutDates";
+import { CommentWithoutDates } from "@/types/comment";
 import { Comment } from "@prisma/client";
 
 /**

@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { StepWithoutDates } from "@/types/step";
 import { Step } from "@prisma/client";
 
 /**
@@ -6,7 +7,7 @@ import { Step } from "@prisma/client";
  * @returns Step
  * @description Creates a new step with the provided data.
  */
-export const createStep = async (data: Step): Promise<Step> => {
+export const createStep = async (data: StepWithoutDates): Promise<Step> => {
   return await prisma.step.create({
     data,
   });
@@ -40,7 +41,7 @@ export const readStepsByJourneyId = async (
  */
 export const updateStep = async (
   id: number,
-  data: Step
+  data: StepWithoutDates
 ): Promise<Step | null> => {
   return await prisma.step.update({
     where: { id },
