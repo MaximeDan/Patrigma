@@ -12,11 +12,7 @@ import bcrypt from "bcrypt";
 import { getRoleById } from "./roleService";
 import { RegisterUser } from "@/types/register";
 import { UserRoleDataWithUserId } from "@/types/userRole";
-import {
-  BadRequestException,
-  InternalServerErrorException,
-  NotFoundException,
-} from "@/types/exceptions";
+import { BadRequestException, NotFoundException } from "@/types/exceptions";
 
 /**
  * @params userData: RegisterUser
@@ -31,8 +27,6 @@ export const register = async (userData: RegisterUser): Promise<User> => {
   if (existingUser) throw new BadRequestException("Email already in use");
 
   userData.password = await bcrypt.hash(userData.password, 10);
-  if (!userData.password)
-    throw new InternalServerErrorException("Password not hashed");
 
   const userRole = await getRoleById(1);
   if (!userRole) throw new NotFoundException("Role not found");

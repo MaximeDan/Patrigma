@@ -1070,6 +1070,7 @@ async function main() {
       journeyId: journey1.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 3 },
     update: {},
@@ -1080,6 +1081,7 @@ async function main() {
       journeyId: journey1.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 4 },
     update: {},
@@ -1102,6 +1104,7 @@ async function main() {
       journeyId: journey2.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 6 },
     update: {},
@@ -1112,6 +1115,7 @@ async function main() {
       journeyId: journey2.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 7 },
     update: {},
@@ -1135,6 +1139,7 @@ async function main() {
       journeyId: journey3.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 9 },
     update: {},
@@ -1146,6 +1151,7 @@ async function main() {
       journeyId: journey3.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 10 },
     update: {},
@@ -1168,6 +1174,7 @@ async function main() {
       journeyId: journey4.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 12 },
     update: {},
@@ -1179,6 +1186,7 @@ async function main() {
       journeyId: journey4.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 13 },
     update: {},
@@ -1201,6 +1209,7 @@ async function main() {
       journeyId: journey5.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 16 },
     update: {},
@@ -1212,6 +1221,7 @@ async function main() {
       journeyId: journey5.id,
     },
   });
+
   await prisma.comment.upsert({
     where: { id: 17 },
     update: {},

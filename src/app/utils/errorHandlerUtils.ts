@@ -23,6 +23,7 @@ export function handleException(error: any) {
       );
     case error instanceof BadRequestException:
       return NextResponse.json({ message: error.message }, { status: 400 });
+
     case error instanceof UnauthorizedException:
       return NextResponse.json({ message: error.message }, { status: 401 });
     case error instanceof ForbiddenException:

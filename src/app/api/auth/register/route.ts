@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { register } from "@/services/userService";
 import { RegisterUser } from "@/types/register";
 import { handleException } from "@/app/utils/errorHandlerUtils";
+import registerSchema from "@/validators/registerSchema";
 
 /**
  * @params request: NextRequest
@@ -9,21 +10,23 @@ import { handleException } from "@/app/utils/errorHandlerUtils";
  * @description Handles POST request to register a new user.
  */
 async function handler(request: NextRequest): Promise<NextResponse> {
-  const data = await request.json();
-
   try {
+    const data = await request.json();
+
+    const validatedData = registerSchema.parse(data);
+
     const userData: RegisterUser = {
-      email: data.email,
-      password: data.password,
-      username: data.username,
-      name: data.name,
-      lastName: data.lastName,
-      dateOfBirth: data.dateOfBirth,
+      email: validatedData.email,
+      password: validatedData.password,
+      username: validatedData.username,
+      name: validatedData.name,
+      lastName: validatedData.lastName,
+      dateOfBirth: validatedData.dateOfBirth,
     };
 
     const newUser = await register(userData);
     return NextResponse.json({ user: newUser }, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     return handleException(error);
   }
 }

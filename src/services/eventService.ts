@@ -159,8 +159,8 @@ export const joinEvent = async (
  * @description Allows a user to leave an event.
  */
 export const leaveEvent = async (
-  eventId: number,
   userId: number,
+  eventId: number,
 ): Promise<UserEvent | null> => {
   // Validate arguments
   if (!Number.isFinite(userId) || !Number.isFinite(eventId)) {
