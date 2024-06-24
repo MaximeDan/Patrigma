@@ -4,5 +4,5 @@ export type RegisterUser = {
   username: string;
   name: string;
   lastName: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
 };
