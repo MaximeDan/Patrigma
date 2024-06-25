@@ -1,10 +1,22 @@
-import { withAuth } from "next-auth/middleware";
+import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
-  function middleware(req) {
+  async function middleware(req: NextRequestWithAuth) {
     // ajouter les informations de la session à la requête ?
-    return NextResponse.next();
+    const bearerToken = req.headers.get("Authorization");
+    const token = bearerToken?.split("Bearer ")[1];
+
+    console.log("middleware token", token);
+
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("Authorization", `Bearer ${token}`);
+
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   },
   {
     callbacks: {
