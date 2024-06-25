@@ -142,16 +142,9 @@ const JourneyForm = () => {
     const fields = steps[currentStep].fields;
     const output = await form.trigger(fields as FieldName[]);
     if (!output) return;
-    if (currentStep < steps.length) {
-      if (currentStep === steps.length - 1) {
-        console.log("submitting");
-        // await form.handleSubmit(processForm)();
-      }
-
-      if (currentStep < steps.length - 1) {
-        setCurrentStep((step) => step + 1);
-        setDir("ltr");
-      }
+    if (currentStep < steps.length - 1) {
+      setCurrentStep((step) => step + 1);
+      setDir("ltr");
     }
   };
 
