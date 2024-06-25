@@ -1,5 +1,5 @@
 import React from "react";
-import MobileNav from "@/components/MobileNav";
+import Nav from "@/components/Nav";
 import { ReactParallaxProvider } from "@/providers/Providers";
 
 export default function AppLayout({
@@ -10,7 +10,7 @@ export default function AppLayout({
   return (
     <ReactParallaxProvider>
       {children}
-      <MobileNav />
+      <Nav />
     </ReactParallaxProvider>
   );
 }

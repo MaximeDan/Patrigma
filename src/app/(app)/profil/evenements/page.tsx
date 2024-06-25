@@ -1,13 +1,15 @@
 import React from "react";
 import TopBar from "@/components/TopBar";
 
-const Parcours = () => {
+const Event = () => {
   return (
     <>
       <TopBar />
-      <main>Mes parcours</main>
+      <main>
+        <h1>Mes évènements</h1>
+      </main>
     </>
   );
 };
 
-export default Parcours;
+export default Event;
