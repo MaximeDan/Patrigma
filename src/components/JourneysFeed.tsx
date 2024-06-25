@@ -2,18 +2,17 @@ import { getAllJourneys } from "@/services/journeyService";
 import { handleException } from "@/utils/errorHandlerUtils";
 import JourneyCard from "./JourneyCard";
 
-async function getData() {
+async function getAllData() {
   try {
     const result = await getAllJourneys();
     return result;
   } catch (error: any) {
-    console.log(error, "error");
     handleException(error);
   }
 }
 
 const JourneysFeed = async () => {
-  const journeys = await getData();
+  const journeys = await getAllData();
   if (!journeys) return;
   return (
     <>

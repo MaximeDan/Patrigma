@@ -8,8 +8,8 @@ const Parcours = () => {
   return (
     <>
       <TopBar />
-      <main>
-        <section className="flex flex-col gap-7 px-5 pb-40">
+      <main className="container">
+        <section className="grid grid-cols-1 gap-7 pb-40 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <Suspense fallback={<div>Loading...</div>}>
             <JourneysFeed />
           </Suspense>

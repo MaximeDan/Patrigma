@@ -58,7 +58,12 @@ const FirstStep = ({ form, next }: FirstStepProps) => {
       />
 
       {/* TODO: add image file input */}
-      <Button onClick={next}>
+      <Button
+        type="button"
+        onClick={async () => {
+          await next();
+        }}
+      >
         <span>Suivant</span>
         <Icons.arrowLink className="ml-2" />
       </Button>

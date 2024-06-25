@@ -17,10 +17,12 @@ export const baseStepSchema = z.object({
     .max(1000, { message: "Please enter less than 1000 characters" }),
   picturePuzzle: z
     .string({ required_error: "Required field" })
-    .url({ message: "Please provide a valid URL" }),
+    .url({ message: "Please provide a valid URL" })
+    .optional(),
   pictureHint: z
     .string({ required_error: "Required field" })
-    .url({ message: "Please provide a valid URL" }),
+    .url({ message: "Please provide a valid URL" })
+    .optional(),
   latitude: z.number({ required_error: "Required field" }),
   longitude: z.number({ required_error: "Required field" }),
   address: z
@@ -40,7 +42,7 @@ export const baseStepSchema = z.object({
     .max(50, { message: "Please enter less than 50 characters" })
     .optional(),
   stepNumber: z.number({ required_error: "Required field" }).int(),
-  journeyId: z.number({ required_error: "Required field" }).int(),
+  journeyId: z.number({ required_error: "Required field" }).int().optional(),
 });
 
 // Combined schema for the body
