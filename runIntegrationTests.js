@@ -34,16 +34,17 @@ const startDocker = async () => {
   await new Promise((resolve) => setTimeout(resolve, 15000)); // Increase to 15 seconds
 
   try {
-  await execPromise(
-    "docker-compose exec -T test_db pg_isready -U testuser -h localhost -p 5432"
-  );
-  console.log("PostgreSQL is ready!");
-} catch (error) {
-  console.error("Error checking PostgreSQL readiness:", error);
-  console.log("PostgreSQL logs:");
-  await execPromise("docker-compose logs test_db");
-  throw error;
-}
+    await execPromise(
+      "docker-compose exec -T test_db pg_isready -U testuser -h localhost -p 5432",
+    );
+    console.log("PostgreSQL is ready!");
+  } catch (error) {
+    console.error("Error checking PostgreSQL readiness:", error);
+    console.log("PostgreSQL logs:");
+    await execPromise("docker-compose logs test_db");
+    throw error;
+  }
+};
 
 const applyMigrations = async () => {
   console.log("Applying migrations...");
