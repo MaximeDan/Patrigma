@@ -2,7 +2,7 @@ import { getAllJourneys } from "@/services/journeyService";
 import { handleException } from "@/app/utils/errorHandlerUtils";
 import JourneyCard from "./JourneyCard";
 
-async function getData() {
+async function getAllData() {
   try {
     const result = await getAllJourneys();
     return result;
@@ -12,7 +12,7 @@ async function getData() {
 }
 
 const JourneysFeed = async () => {
-  const journeys = await getData();
+  const journeys = await getAllData();
   if (!journeys) return;
   return (
     <>
