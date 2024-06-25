@@ -4,10 +4,12 @@ interface EventFormStore {
   isVisible: boolean;
   showModal: () => void;
   hideModal: () => void;
+  journeyIdValue: number | null;
+  setJourneyIdValue: (value: number | null) => void;
 }
 
 export const useEventFormStore = create<EventFormStore>((set) => ({
-  isVisible: false,
+  isVisible: true,
   showModal: () => {
     const body = document.querySelector("body");
     body?.classList.add("overflow-hidden");
@@ -18,5 +20,6 @@ export const useEventFormStore = create<EventFormStore>((set) => ({
     body?.classList.remove("overflow-hidden");
     set({ isVisible: false });
   },
-  bottomSheetVisible: false,
+  journeyIdValue: null,
+  setJourneyIdValue: (value) => set({ journeyIdValue: value }),
 }));

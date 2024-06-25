@@ -1,15 +1,6 @@
 import { z } from "zod";
 
-export const eventJourneySchema = z.object({
-  journeyId: z.preprocess(
-    (value) => Number(value),
-    z.number({
-      required_error: "Ce champ est requis",
-    }),
-  ),
-});
-
-export const eventDataSchema = z.object({
+export const eventFormSchema = z.object({
   title: z.string({
     required_error: "Ce champ est requis",
   }),
@@ -32,9 +23,15 @@ export const eventDataSchema = z.object({
     }),
   isPrivate: z.boolean(),
   accessCode: z.string().optional(),
+  startAt: z.date({
+    required_error: "Ce champ est requis",
+  }),
+  endAt: z.date({
+    required_error: "Ce champ est requis",
+  }),
 });
 
-eventDataSchema.superRefine((data, ctx) => {
+eventFormSchema.superRefine((data, ctx) => {
   if (data.numberPlayerMax <= data.numberPlayerMin) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -51,9 +48,4 @@ eventDataSchema.superRefine((data, ctx) => {
       path: ["accessCode"],
     });
   }
-});
-
-export const eventFormSchema = z.object({
-  ...eventJourneySchema.shape,
-  ...eventDataSchema.shape,
 });
