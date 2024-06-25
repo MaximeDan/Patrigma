@@ -1,7 +1,7 @@
 import {
   handleException,
   handlePrismaException,
-} from "@/app/utils/errorHandlerUtils";
+} from "@/utils/errorHandlerUtils";
 import {
   getAllJourneys,
   registerOrModifyJourney,

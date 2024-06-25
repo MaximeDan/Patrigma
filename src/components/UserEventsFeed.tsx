@@ -13,8 +13,8 @@ async function fetchUserEvents(userId: number): Promise<Event[]> {
 }
 
 const UserEventsFeed = async () => {
+  // TODO: use the session
   const events = await fetchUserEvents(7);
-  console.log(events);
   return (
     <div className="mt-4 flex flex-col items-center justify-center">
       <EventUserCarousel events={events} />

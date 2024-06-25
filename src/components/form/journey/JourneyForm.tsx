@@ -69,7 +69,6 @@ const JourneyForm = () => {
   const next = async () => {
     const fields = steps[currentStep].fields;
     const output = await form.trigger(fields as FieldName[]);
-    console.log(output, "output", fields, "fields");
     if (!output) return;
     if (currentStep < steps.length) {
       if (currentStep === steps.length - 1) {

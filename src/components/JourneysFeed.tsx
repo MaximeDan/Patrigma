@@ -1,5 +1,5 @@
 import { getAllJourneys } from "@/services/journeyService";
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import JourneyCard from "./JourneyCard";
 
 async function getData() {

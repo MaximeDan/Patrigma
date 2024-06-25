@@ -34,7 +34,6 @@ const BottomSheetModal = () => {
   const [dragDisabled, setDragDisabled] = useState(false);
 
   useEffect(() => {
-    console.log(editedStep, "edited step");
     if (editedStep) {
       form.setValue("puzzle", editedStep.puzzle);
       form.setValue("answer", editedStep.answer);

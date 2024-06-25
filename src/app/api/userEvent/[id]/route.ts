@@ -1,4 +1,4 @@
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import { getEventsByUserId } from "@/services/userService";
 import { NextRequest, NextResponse } from "next/server";
 

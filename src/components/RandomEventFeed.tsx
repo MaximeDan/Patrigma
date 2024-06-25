@@ -1,6 +1,6 @@
 import { getAllEvents } from "@/services/eventService";
 import { handleException } from "@/utils/errorHandlerUtils";
-import EventAccordion from "./EventAccordion";
+import EventDisplay from "./EventDisplay";
 
 async function getData() {
   try {
@@ -12,11 +12,11 @@ async function getData() {
   }
 }
 
-const EventsFeed = async () => {
+const RandomEventsFeed = async () => {
   const events = await getData();
   if (!events) return;
 
-  return <EventAccordion events={events} />;
+  return <EventDisplay events={events} />;
 };
 
-export default EventsFeed;
+export default RandomEventsFeed;

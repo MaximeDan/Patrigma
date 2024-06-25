@@ -1,4 +1,4 @@
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import { getJourneyByIdWithSteps } from "@/services/journeyService";
 import { NextRequest, NextResponse } from "next/server";
 
