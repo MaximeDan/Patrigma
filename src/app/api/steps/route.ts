@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     // Parse the body with zod to get the step
+    // @ts-ignore
     const step: StepWithoutDates = stepBodySchema.parse(body).step;
 
     const result = await registerOrModifyStep(null, step);

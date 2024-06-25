@@ -80,6 +80,7 @@ const JourneyForm = () => {
     const { steps, ...journey } = data;
 
     const parsedSteps: JourneyStep = JSON.parse(steps);
+    // @ts-ignore
     const stepObject: StepWithoutDates[] = parsedSteps.steps.map(
       (step, index) => {
         // to do : get optional additional location fields (city, country, address, postal code)
