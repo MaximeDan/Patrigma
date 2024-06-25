@@ -40,7 +40,7 @@ const LocationMarker = ({
   });
 
   const myIcon = L.icon({
-    iconUrl: "/img/pin.png",
+    iconUrl: "/img/marker.svg",
     iconSize: [30, 30],
     iconAnchor: [15, 30],
   });
