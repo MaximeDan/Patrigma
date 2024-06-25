@@ -51,6 +51,8 @@ export const registerOrModifyStep = async (
 
   if (!step) throw new BadRequestException("Invalid step");
 
+  if (!step.journeyId) throw new BadRequestException("Invalid journeyId");
+
   const journey = await readJourneyWithSteps(step.journeyId);
   if (!journey) throw new NotFoundException("Journey not found");
 

@@ -82,7 +82,7 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
                 </FormItem>
               </RadioGroup>
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-500" />
           </FormItem>
         )}
       />
@@ -118,7 +118,7 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
                 </FormItem>
               </RadioGroup>
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-500" />
           </FormItem>
         )}
       />
@@ -250,6 +250,7 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
           <span>Retour</span>
         </Button>
         <Button
+          type="button"
           onClick={async () => {
             await next();
           }}

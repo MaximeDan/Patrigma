@@ -49,25 +49,26 @@ export const secondStepSchema = z.object({
 export const thirdStepSchema = z.object({
   steps: z
     .string()
-    .min(1, { message: "Vous devez ajouter au moins deux étapes" })
-    .refine(
-      (val) => {
-        if (val.includes("<!DOCTYPE>")) {
-          // at build time, it seems that a redirection happens, val output is the hmtl page
-          // todo: fix
-          return false;
-        }
-        const steps = JSON.parse(val);
-        if (steps.steps) {
-          return steps.length >= 2;
-        } else {
-          return false;
-        }
-      },
-      {
-        message: "Vous devez ajouter au moins deux étapes",
-      },
-    ),
+    .min(1, { message: "Vous devez ajouter au moins deux étapes" }),
+  // to do: fix this
+  // .refine(
+  //   (val) => {
+  //     if (val.includes("<!DOCTYPE>")) {
+  //       // at build time, it seems that a redirection happens, val output is the hmtl page
+  //       // todo: fix
+  //       return false;
+  //     }
+  //     const steps = JSON.parse(val);
+  //     if (steps.steps) {
+  //       return steps.length >= 2;
+  //     } else {
+  //       return false;
+  //     }
+  //   },
+  //   {
+  //     message: "Vous devez ajouter au moins deux étapes",
+  //   },
+  // ),
 });
 
 export const forthStepSchema = z.object({

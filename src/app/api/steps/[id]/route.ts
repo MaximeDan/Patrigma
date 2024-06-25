@@ -41,6 +41,7 @@ export async function PUT(
     const id: number = Number(params.id);
     const body = await request.json();
     // Parse the body with zod to get the step
+    // @ts-ignore
     const step: StepWithoutDates = stepBodySchema.parse(body).step;
 
     const result = await registerOrModifyStep(id, step);

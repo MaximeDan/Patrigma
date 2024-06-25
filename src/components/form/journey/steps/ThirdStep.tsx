@@ -66,11 +66,12 @@ const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
       </Button>
 
       <div className="mt-11 flex justify-between xs:mt-[60px]">
-        <Button onClick={prev}>
+        <Button type="button" onClick={prev}>
           <Icons.arrowLink className="mr-2 -scale-x-100" />
           <span>Retour</span>
         </Button>
         <Button
+          type="button"
           onClick={async () => {
             await next();
           }}
