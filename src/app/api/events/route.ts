@@ -1,4 +1,4 @@
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import { getAllEvents, registerOrModifyEvent } from "@/services/eventService";
 import { EventWithoutId } from "@/types/event";
 import { eventBodySchema } from "@/validators/api/eventSchema";

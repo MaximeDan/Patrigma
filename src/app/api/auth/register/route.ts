@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { register } from "@/services/userService";
 import { RegisterUser } from "@/types/register";
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import registerSchema from "@/validators/registerSchema";
 
 /**

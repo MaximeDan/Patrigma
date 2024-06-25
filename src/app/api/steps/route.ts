@@ -1,4 +1,4 @@
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import { registerOrModifyStep } from "@/services/stepService";
 import { StepWithoutDates } from "@/types/step";
 import { stepBodySchema } from "@/validators/api/stepSchema";
