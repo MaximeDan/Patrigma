@@ -18,15 +18,14 @@ jobs:
         run: npm install
 
       - name: Run tests and generate report
-        run: |
-          npm test
+        run: npm test
         continue-on-error: false
 
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
           name: jest-test-report
-          path: ./reports/junit/js-test-results.xml
+          path: ./test-report.html
 
       - name: Notify Discord on failure
         if: failure()

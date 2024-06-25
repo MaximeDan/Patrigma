@@ -70,7 +70,14 @@ const seedDatabase = async () => {
 
 const runTests = async () => {
   console.log("Running tests...");
-  await execPromise("npx jest --colors");
+  try {
+    await execPromise("npx jest --colors");
+    console.log("Tests completed successfully.");
+  } catch (error) {
+    console.error("Tests failed:");
+    console.error(error);
+    throw new Error("Tests failed. See logs for details.");
+  }
 };
 
 const stopDocker = async () => {
