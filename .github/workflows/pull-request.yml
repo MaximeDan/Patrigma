@@ -2,6 +2,10 @@ name: Build the app and run tests
 run-name: ${{ github.actor }} is creating a pull request
 on: [pull_request, push]
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
