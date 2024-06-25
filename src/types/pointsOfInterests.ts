@@ -56,6 +56,7 @@ export interface ApiResponse {
 export interface CustomPoint {
   id: string;
   name: string;
+  description: string;
   latitude: number;
   longitude: number;
 }

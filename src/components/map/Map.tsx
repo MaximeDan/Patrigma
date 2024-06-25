@@ -1,4 +1,4 @@
-// components/Map.tsx
+// components/map/LeafletMap.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -11,12 +11,27 @@ import {
 } from "react-leaflet";
 import { CustomPoint } from "@/types/pointsOfInterests";
 import { fetchPoints } from "@/apiClient/fetchPoints";
+import L from "leaflet";
 
-interface MapProps {
+interface LeafletMapProps {
   setDragDisabled: (value: boolean) => void;
+  form: any;
+  updateCoordinates: (latitude: number, longitude: number) => void;
 }
 
-const Map: React.FC<MapProps> = ({ setDragDisabled }) => {
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "/icons/marker-icon-2x.png",
+  iconUrl: "/icons/marker-icon.png",
+  shadowUrl: "/icons/marker-shadow.png",
+});
+
+const LeafletMap: React.FC<LeafletMapProps> = ({
+  setDragDisabled,
+  form,
+  updateCoordinates,
+}) => {
   const [points, setPoints] = useState<CustomPoint[]>([]);
   const center = { lat: 49.4431, lon: 1.0993 };
   const zoom = 13;
@@ -25,7 +40,6 @@ const Map: React.FC<MapProps> = ({ setDragDisabled }) => {
     const loadPoints = async () => {
       try {
         const data = await fetchPoints();
-        console.log(data, "Fetched points:");
         setPoints(data);
       } catch (error) {
         console.error("Error fetching points of interest:", error);
@@ -34,6 +48,10 @@ const Map: React.FC<MapProps> = ({ setDragDisabled }) => {
 
     loadPoints();
   }, []);
+
+  const handleMarkerClick = (latitude: number, longitude: number) => {
+    updateCoordinates(latitude, longitude);
+  };
 
   return (
     <MapContainer
@@ -48,9 +66,16 @@ const Map: React.FC<MapProps> = ({ setDragDisabled }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {points.map((point) => (
-        <Marker key={point.id} position={[point.latitude, point.longitude]}>
+        <Marker
+          key={point.id}
+          position={[point.latitude, point.longitude]}
+          eventHandlers={{
+            click: () => handleMarkerClick(point.latitude, point.longitude),
+          }}
+        >
           <Popup>
             <strong>{point.name}</strong>
+            <p>{point.description}</p>
           </Popup>
         </Marker>
       ))}
@@ -59,4 +84,4 @@ const Map: React.FC<MapProps> = ({ setDragDisabled }) => {
   );
 };
 
-export default Map;
+export default LeafletMap;
