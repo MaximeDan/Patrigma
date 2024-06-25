@@ -7,7 +7,6 @@ async function getData() {
     const result = await getAllJourneys();
     return result;
   } catch (error: any) {
-    console.log(error, "error");
     handleException(error);
   }
 }

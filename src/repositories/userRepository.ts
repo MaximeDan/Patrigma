@@ -10,7 +10,6 @@ export const readUserByEmail = async (
   email: string,
 ): Promise<User | null | undefined> => {
   try {
-    console.log("readUserByEmail", email);
     const user = await prisma.user.findUnique({ where: { email } });
     return user;
   } catch (error) {

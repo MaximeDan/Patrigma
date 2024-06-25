@@ -32,46 +32,24 @@ export function handleException(error: any) {
       return NextResponse.json({ message: error.message }, { status: 404 });
     case error instanceof InternalServerErrorException:
       return NextResponse.json({ message: error.message }, { status: 500 });
+
+    case error instanceof Prisma.PrismaClientKnownRequestError:
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    case error instanceof Prisma.PrismaClientUnknownRequestError:
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    case error instanceof Prisma.PrismaClientRustPanicError:
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    case error instanceof Prisma.PrismaClientInitializationError:
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    case error instanceof Prisma.PrismaClientValidationError:
+      return NextResponse.json({ message: error.message }, { status: 400 });
+
     default:
       return NextResponse.json(
         { message: "An unexpected error occurred" },
         { status: 500 },
       );
   }
-}
-
-export function handlePrismaException(
-  error:
-    | Prisma.PrismaClientKnownRequestError
-    | Prisma.PrismaClientUnknownRequestError
-    | Prisma.PrismaClientRustPanicError
-    | Prisma.PrismaClientInitializationError
-    | Prisma.PrismaClientValidationError,
-) {
-  const message = error.message;
-  const status = 500;
-
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    return NextResponse.json({ message }, { status: 400 });
-  }
-
-  if (error instanceof Prisma.PrismaClientUnknownRequestError) {
-    return NextResponse.json({ message }, { status: 400 });
-  }
-
-  if (error instanceof Prisma.PrismaClientRustPanicError) {
-    return NextResponse.json({ message }, { status: 500 });
-  }
-
-  if (error instanceof Prisma.PrismaClientInitializationError) {
-    return NextResponse.json({ message }, { status: 500 });
-  }
-
-  if (error instanceof Prisma.PrismaClientValidationError) {
-    return NextResponse.json({ message }, { status: 400 });
-  }
-
-  return NextResponse.json({ message }, { status });
 }
 
 function formatZodErrors(error: ZodError): string {
