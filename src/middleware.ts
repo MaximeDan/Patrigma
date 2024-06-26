@@ -1,6 +1,8 @@
 // import { getToken } from "next-auth/jwt";
 import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
+import { secretKey } from "@/constant/secret";
 
 export default withAuth(
   async function middleware(req: NextRequestWithAuth) {
@@ -8,7 +10,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token, req }) => {
+      authorized: async ({ token, req }) => {
         const route = req.nextUrl.pathname;
 
         if (!token) {
@@ -20,6 +22,15 @@ export default withAuth(
             return false;
           }
 
+          if (req.method === "GET") {
+            return true;
+          }
+        }
+
+        if (token) {
+          const { payload } = await jwtVerify(token.jwt, secretKey);
+          console.log(payload, "payload in middleware");
+          // todo: check if user is admin
           if (req.method === "GET") {
             return true;
           }
