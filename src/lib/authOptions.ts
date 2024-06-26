@@ -1,10 +1,16 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getUserById, signIn } from "@/services/userService";
-import { NextAuthOptions, Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { signIn } from "@/services/userService";
+import { NextAuthOptions } from "next-auth";
+import { readUserByEmail } from "@/repositories/userRepository";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "./prisma";
+import { SignJWT } from "jose";
+import { secretKey } from "@/constant/secret";
 
 export const authOptions = {
+  adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === "development",
   pages: {
     signIn: "/signin",
     // signOut: "/auth/signout",
@@ -22,7 +28,6 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials): Promise<any> {
         if (!credentials) {
           return null;
@@ -39,28 +44,39 @@ export const authOptions = {
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user, account, session }) {
+    async session({ token, session }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.accessToken = token.jwt; // Ajouter le JWT encodé à la session
+      }
+      return session;
+    },
+    async jwt({ token, user, account }) {
+      if (account) {
+        console.log("ACCOUNT " + account.access_token);
+      }
       if (user) {
         // @ts-ignore
-        token.id = user.user.id;
+        const dbUser = await readUserByEmail(user.user.email);
+        token.id = dbUser?.id ?? (user.id as number);
+        token.name = dbUser?.name;
+        token.email = dbUser?.email;
+
+        const jwt = await new SignJWT({
+          id: dbUser?.id,
+          name: dbUser?.name,
+          email: dbUser?.email,
+        })
+          .setProtectedHeader({ alg: "HS256" })
+          .setIssuedAt()
+          .setExpirationTime("2h")
+          .sign(secretKey);
+
+        token.jwt = jwt;
       }
       return token;
-    },
-
-    // @ts-ignore
-    async session(session: Session, token: JWT) {
-      // @ts-ignore
-      const dbUser = await getUserById(token?.id || session?.token?.id);
-      // @ts-ignore
-      session.session.user = {
-        id: dbUser?.id,
-        username: dbUser?.username,
-        name: dbUser?.name,
-        lastName: dbUser?.lastName,
-        dateOfBirth: dbUser?.dateOfBirth,
-      };
-
-      return session;
     },
   },
 } satisfies NextAuthOptions;

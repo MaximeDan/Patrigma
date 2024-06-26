@@ -7,6 +7,7 @@ import { Icons } from "@/components/Icons";
 import TopBar from "@/components/TopBar";
 import dynamic from "next/dynamic";
 import { UserEvent, Event, Journey } from "@prisma/client";
+import { JourneyWithStepsAndComments } from "@/types/journey";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
   ssr: false,
@@ -16,7 +17,9 @@ type Params = { id: number };
 
 const EventDetail = ({ params }: { params: Params }) => {
   const [event, setEvent] = useState<Event | null>(null);
-  const [journey, setJourney] = useState<Journey | null>(null);
+  const [journey, setJourney] = useState<JourneyWithStepsAndComments | null>(
+    null,
+  );
   const [isJoined, setIsJoined] = useState(false);
   const [participantCount, setParticipantCount] = useState(0);
 
