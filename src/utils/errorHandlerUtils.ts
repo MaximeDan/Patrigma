@@ -29,6 +29,7 @@ export function handleException(error: any) {
     case error instanceof ForbiddenException:
       return NextResponse.json({ message: error.message }, { status: 403 });
     case error instanceof NotFoundException:
+      console.log("error not found");
       return NextResponse.json({ message: error.message }, { status: 404 });
     case error instanceof InternalServerErrorException:
       return NextResponse.json({ message: error.message }, { status: 500 });

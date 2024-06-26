@@ -268,10 +268,10 @@ async function main() {
       cluesDifficulty: 2,
       physicalDifficulty: 1,
       lastCompletion: new Date("2021-01-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "accessible",
+      partiallySighted: "partiallyAccessible",
+      partiallyDeaf: "unaccessible",
+      cognitivelyImpaired: "undefined",
       steps: {
         create: [
           {
@@ -413,10 +413,10 @@ async function main() {
       cluesDifficulty: 2,
       physicalDifficulty: 1,
       lastCompletion: new Date("2021-02-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "accessible",
+      partiallySighted: "partiallyAccessible",
+      partiallyDeaf: "unaccessible",
+      cognitivelyImpaired: "undefined",
       steps: {
         create: [
           {
@@ -467,10 +467,10 @@ async function main() {
       cluesDifficulty: 3,
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-03-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "accessible",
+      partiallySighted: "partiallyAccessible",
+      partiallyDeaf: "unaccessible",
+      cognitivelyImpaired: "undefined",
       steps: {
         create: [
           {
@@ -609,10 +609,10 @@ async function main() {
       cluesDifficulty: 3,
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-04-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "accessible",
+      partiallySighted: "partiallyAccessible",
+      partiallyDeaf: "unaccessible",
+      cognitivelyImpaired: "undefined",
       steps: {
         create: [
           {
@@ -693,10 +693,10 @@ async function main() {
       cluesDifficulty: 3,
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-05-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "accessible",
+      partiallySighted: "partiallyAccessible",
+      partiallyDeaf: "unaccessible",
+      cognitivelyImpaired: "undefined",
       steps: {
         create: [
           {
