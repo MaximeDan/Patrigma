@@ -90,7 +90,7 @@ const EventStart = ({ params }: { params: Params }) => {
                 type="text"
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                className="flex-1 rounded-md border p-2"
+                className="flex-1 rounded-md border text-black p-2"
                 placeholder="Your answer"
               />
               <button
