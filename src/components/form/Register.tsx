@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/tailwindUtils";
 import { signIn } from "next-auth/react";
-import { registerUserApi } from "@/app/apiClient/registerUser";
+import { registerUserApi } from "@/apiClient/registerUser";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 

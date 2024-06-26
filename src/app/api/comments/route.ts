@@ -1,4 +1,4 @@
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import { registerOrModifyComment } from "@/services/commentService";
 import { CommentWithoutDates } from "@/types/comment";
 import { commentBodySchema } from "@/validators/api/commentSchema";
