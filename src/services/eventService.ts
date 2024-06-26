@@ -16,9 +16,9 @@ import {
   deleteUserEvent,
   readUserEventByUserIdAndEventId,
 } from "@/repositories/userEventRepository";
-import { EventWithUserEvents, EventWithoutId } from "@/types/event";
+import { EventWithUserEvents, EventRequestBody } from "@/types/event";
 import { readUser } from "@/repositories/userRepository";
-import { UserEventWithoutId } from "@/types/userEvent";
+import { UserEventRequestBody } from "@/types/userEvent";
 import { readJourneyWithSteps } from "@/repositories/journeyRepository";
 import { JourneyWithSteps } from "@/types/journey";
 import { EventUserStepWithoutId } from "@/types/eventUserStep";
@@ -69,18 +69,21 @@ export const getAllEvents = async (): Promise<Event[] | null> => {
  */
 export const registerOrModifyEvent = async (
   id: number | null,
-  event: EventWithoutId,
+  event: EventRequestBody,
 ): Promise<Event | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
+    console.log("Invalid id", id);
     throw new BadRequestException("Invalid id");
   }
+  console.log("before throw error event", event);
   if (!event) throw new BadRequestException("Invalid event");
 
   let upsertedEvent: Event | null;
 
   // Check if register or modify
   if (id === null) {
+    console.log("Creating event");
     upsertedEvent = await createEvent(event);
     if (!upsertedEvent)
       throw new InternalServerErrorException("Internal server error");
@@ -140,7 +143,7 @@ export const joinEvent = async (
   if (await readUserEventByUserIdAndEventId(userId, eventId))
     throw new BadRequestException("User already joined event");
 
-  const userEvent: UserEventWithoutId = { userId, eventId };
+  const userEvent: UserEventRequestBody = { userId, eventId };
   const createdUserEvent = await createUserEvent(userEvent);
 
   if (!createdUserEvent)

@@ -18,7 +18,7 @@ const buttonVariants = cva(
         link: "text-foreground underline-offset-4 hover:underline",
         danger: "rounded-lg border border-red-600 !py-3 text-red-600",
         dangerFilled: "rounded-lg bg-red-600 !py-3 text-white",
-        outline: "",
+        outline: "h-10 rounded-lg border px-3 py-2 text-sm",
         ghost: "",
       },
       size: {
