@@ -44,24 +44,24 @@ const Login = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll bg-background px-5 pb-12 pt-5">
+    <div className="fixed left-0 top-0 z-10 flex w-full h-full flex-col overflow-scroll bg-background px-5 pb-12 pt-5">
       <TopBar />
       <div className="flex justify-center mb-6">
-        <h1 className="text-xl font-extrabold text-orange">
-          Inscris toi sur Patrigma et découvre ton patrimoine !
+        <h1 className="text-xl font-extrabold text-orange text-center">
+          Connexion
         </h1>
       </div>
       <div className="flex justify-center">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 flex flex-col items-center"
+            className="space-y-8 flex flex-col items-center w-full max-w-md"
           >
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="example@email.com" />
@@ -74,7 +74,7 @@ const Login = () => {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Mot de passe</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} placeholder="Password" />
@@ -85,12 +85,12 @@ const Login = () => {
             />
             <Button
               type="submit"
-              className="bg-orange text-white hover:bg-orange-600 mt-4"
+              className="bg-orange text-white hover:bg-orange-600 mt-4 w-full md:w-auto"
             >
               <span>Se connecter</span>
               <Icons.check
-                width={14}
-                height={14}
+                width={16}
+                height={16}
                 className="ml-2"
                 fill="#fff"
               />
