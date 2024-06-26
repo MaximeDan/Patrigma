@@ -20,13 +20,23 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   if (!event) return null;
 
   return (
-    <Link href={`/evenements/${event.id}`} passHref>
+    <Link
+      className="mx-auto mt-4 flex max-w-[500px]"
+      href={`/evenements/${event.id}`}
+      passHref
+    >
       <Card className="cursor-pointer">
         <CardHeader>
           <CardTitle>{event.title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <Image src={event.image} alt={event.title} width={500} height={300} />
+          <Image
+            src={event.image}
+            alt={event.title}
+            width={500}
+            height={300}
+            className="h-48 object-cover"
+          />
           <CardDescription>{event.description}</CardDescription>
         </CardContent>
       </Card>

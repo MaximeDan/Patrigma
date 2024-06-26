@@ -23,7 +23,7 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
         <Carousel className="w-full max-w-sm">
           <CarouselContent className="-ml-1 flex">
             {events.map((event) => (
-              <CarouselItem key={event.id} className="flex-none basis-1/3 pl-1">
+              <CarouselItem key={event.id} className="pl-1">
                 <Link href={`/evenements/${event.id}`} passHref>
                   <div className="cursor-pointer p-1">
                     <Card>
@@ -45,8 +45,8 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="!p-0" />
+          <CarouselNext className="!p-0" />
         </Carousel>
       ) : (
         <p className="text-center text-lg text-camel">
