@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import ParallaxImage from "@/components/clients/ParallaxImage";
 import Rating from "@/components/Rating";
 import { Icons } from "@/components/Icons";
-import Image from "next/image";
 
 type Params = { id: number };
 
@@ -12,6 +11,7 @@ const EventDetail = ({ params }: { params: Params }) => {
   const [event, setEvent] = useState(null);
   const [journey, setJourney] = useState(null);
   const [isJoined, setIsJoined] = useState(false);
+  const [participantCount, setParticipantCount] = useState(0);
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -21,6 +21,7 @@ const EventDetail = ({ params }: { params: Params }) => {
         );
         const eventData = await eventResponse.json();
         setEvent(eventData.data);
+        setParticipantCount(eventData.data.userEvents.length);
 
         const journeyResponse = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/journeys/${eventData.data.journeyId}`,
@@ -28,8 +29,6 @@ const EventDetail = ({ params }: { params: Params }) => {
         const journeyData = await journeyResponse.json();
         setJourney(journeyData.data);
 
-        // Check if the user is already joined (mock implementation)
-        // This should be replaced with actual logic to check user participation
         const userJoined = eventData.data.userEvents.some(
           (userEvent) => userEvent.userId === 7, // Replace 7 with the actual user ID
         );
@@ -42,143 +41,205 @@ const EventDetail = ({ params }: { params: Params }) => {
     fetchEventData();
   }, [params.id]);
 
-  const handleJoin = () => {
-    // Mock join event
-    setIsJoined(true);
+  const handleJoin = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/events/${event.id}/join/1`, // Replace 1 with the actual user ID
+        {
+          method: "POST",
+        },
+      );
+      if (response.ok) {
+        setIsJoined(true);
+        setParticipantCount(participantCount + 1);
+      } else {
+        console.error("Failed to join the event");
+      }
+    } catch (error) {
+      console.error("Error joining the event:", error);
+    }
   };
 
-  const handleLeave = () => {
-    // Mock leave event
-    setIsJoined(false);
+  const handleLeave = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/events/${event.id}/leave/1`, // Replace 1 with the actual user ID
+        {
+          method: "POST",
+        },
+      );
+      if (response.ok) {
+        setIsJoined(false);
+        setParticipantCount(participantCount - 1);
+      } else {
+        console.error("Failed to leave the event");
+      }
+    } catch (error) {
+      console.error("Error leaving the event:", error);
+    }
   };
 
   if (!event || !journey) {
     return <div>Loading...</div>;
   }
 
+  const formatDateTime = (dateTimeString) => {
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateTimeString)
+      .toLocaleDateString("fr-FR", options)
+      .replace(",", " à");
+  };
+
   return (
     <main className="flex min-h-screen flex-col bg-gray">
       <ParallaxImage src={event.image} alt={event.title} />
-      <div className="relative flex-1 -translate-y-4 rounded-t-2xl px-5 pb-40 pt-14">
-        <div className="absolute left-4 top-0 flex gap-[6px]">
-          <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
-            <Icons.dumbbel />
-            <p className="text-sm font-semibold text-gray">
-              {journey.physicalDifficulty}
-            </p>
-          </div>
-          <div className="flex items-center gap-1 rounded-b-md bg-green px-2 py-[6px]">
-            <Icons.bulb />
-            <p className="text-sm font-semibold text-gray">
-              {journey.cluesDifficulty}
-            </p>
-          </div>
-        </div>
-        <h1 className="text-xl font-extrabold text-orange">{event.title}</h1>
-        <div className="flex items-center gap-1 text-beige-600">
-          <Icons.mapPin fill="rgba(206, 192, 173, 60%)" />
-          <p className="text-sm font-medium">Paris</p>
-        </div>
-        <p>
-          Par {event.authorId}, le{" "}
-          {new Date(event.createdAt).toLocaleDateString()}
-        </p>
-        <p className="text-sm">{event.description}</p>
-
-        <div className="mt-[18px] flex items-center justify-between text-lg font-semibold text-orange">
-          <h2>Accessibilité</h2>
-          <Icons.arrowLink />
-        </div>
-        <div className="mt-4 flex gap-6">
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
-            <Icons.pmr />
-            <p className="text-sm">{journey.mobilityImpaired}</p>
-          </div>
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
-            <Icons.partiallySighted />
-            <p className="text-sm">{journey.partiallySighted}</p>
-          </div>
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
-            <Icons.partiallyDeaf />
-            <p className="text-sm">{journey.partiallyDeaf}</p>
-          </div>
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
-            <Icons.cognitivelyImpaired />
-            <p className="text-sm">{journey.cognitivelyImpaired}</p>
-          </div>
-        </div>
-
-        <h2 className="mt-[18px] text-lg font-semibold text-orange">
-          Pré-requis
-        </h2>
-        <p>{journey.requirement}</p>
-
-        <h2 className="mt-[18px] text-lg font-semibold text-orange">
-          Commentaires
-        </h2>
-        <div className="flex gap-1">
-          <Rating
-            rating={
-              journey.comments.reduce(
-                (sum, comment) => sum + comment.rating,
-                0,
-              ) / journey.comments.length
-            }
-            ratingCount={journey.comments.length}
-          />
-        </div>
-        <div>
-          {journey.comments.map((comment) => (
-            <div key={comment.id} className="mt-2">
-              <p className="text-sm">{comment.content}</p>
-              <p className="text-sm font-semibold">Rating: {comment.rating}</p>
-            </div>
-          ))}
-        </div>
-
-        <h2 className="mt-[18px] text-lg font-semibold text-orange">
-          Journey Steps
-        </h2>
-        {journey.steps.map((step, index) => (
-          <div key={index} className="mt-2">
-            <Image
-              src={step.picturePuzzle}
-              alt={`Step picture ${index + 1}`}
-              className="mt-2 w-full rounded-lg"
-              width={800}
-              height={400}
-            />
-            <p>{step.puzzle}</p>
-            <p>
-              <strong>Hint:</strong> {step.hint}
-            </p>
-            <p>
-              <strong>Address:</strong> {step.address}, {step.city},{" "}
-              {step.postalCode}, {step.country}
-            </p>
-          </div>
-        ))}
-        <p>{journey.description}</p>
-
-        <div className="mt-6 flex items-center justify-between">
-          <p className="text-lg font-semibold">
-            {event.userEvents.length} participants
-          </p>
+      <div className="relative flex-1 -translate-y-4 rounded-t-2xl px-5 pb-40 pt-14 shadow-lg">
+        <div className="absolute right-4 top-4">
           {isJoined ? (
             <button
               onClick={handleLeave}
               className="rounded bg-red-500 px-4 py-2 text-white"
             >
-              Leave
+              Quitter
             </button>
           ) : (
             <button
               onClick={handleJoin}
               className="rounded bg-green-500 px-4 py-2 text-white"
             >
-              Join
+              Rejoindre
             </button>
           )}
+        </div>
+        <h1 className="mt-4 text-xl font-extrabold text-orange-400">
+          {event.title}
+        </h1>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 text-orange-400">
+            <Icons.mapPin fill="rgba(206, 192, 173, 60%)" />
+            <p className="text-sm font-medium text-orange-400">
+              {journey.steps[0]?.city || "Unknown"}
+            </p>
+          </div>
+        </div>
+        <p className="mt-4 text-sm text-white-200">{event.description}</p>
+
+        <h2 className="mt-8 text-lg font-semibold text-orange-400">
+          Détails de l'événement
+        </h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1 rounded-md bg-white px-2 py-1 shadow-sm">
+            <Icons.dumbbel />
+            <p className="text-sm font-semibold text-gray-200">
+              {journey.physicalDifficulty}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 rounded-md bg-green-700 px-2 py-1 shadow-sm">
+            <Icons.bulb />
+            <p className="text-sm font-semibold text-gray-200">
+              {journey.cluesDifficulty}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 rounded-md bg-white px-2 py-1 shadow-sm">
+            <Icons.nbUsers fill="black" />
+            <p className="text-sm font-semibold text-gray-200">
+              {event.numberPlayerMin}-{event.numberPlayerMax}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 rounded-md bg-white px-2 py-1 shadow-sm">
+            <Icons.agenda />
+            <p className="text-sm font-semibold text-gray-200">
+              {formatDateTime(event.startAt)}
+            </p>
+          </div>
+        </div>
+        <div className="mt-2">
+          <p className="text-sm text-white-200">
+            Participants actuels: {participantCount}
+          </p>
+        </div>
+
+        <h2 className="mt-8 text-lg font-semibold text-orange-400">
+          Accessibilité
+        </h2>
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600 p-2 text-white">
+            <Icons.pmr />
+            <p className="text-sm">{journey.mobilityImpaired}</p>
+          </div>
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600 p-2 text-white">
+            <Icons.partiallySighted />
+            <p className="text-sm">{journey.partiallySighted}</p>
+          </div>
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600 p-2 text-white">
+            <Icons.partiallyDeaf />
+            <p className="text-sm">{journey.partiallyDeaf}</p>
+          </div>
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600 p-2 text-white">
+            <Icons.cognitivelyImpaired />
+            <p className="text-sm">{journey.cognitivelyImpaired}</p>
+          </div>
+        </div>
+
+        <h2 className="mt-8 text-lg font-semibold text-orange-400">
+          Pré-requis
+        </h2>
+        <p className="text-white-200">{journey.requirement}</p>
+
+        <div className="flex flex-col items-start gap-4 rounded-lg border border-gray-300 p-4 text-white shadow-sm">
+          <h2 className="mt-8 text-lg font-semibold text-orange-400">
+            Parcours
+          </h2>
+          <div className="flex flex-col items-start gap-4 rounded-lg  p-4">
+            <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 p-4 shadow-sm">
+              <ParallaxImage
+                src={
+                  journey.steps[0]?.picturePuzzle || "https://picsum.photos/200"
+                }
+                alt={journey.steps[0]?.puzzle}
+              />
+              <div>
+                <h3 className="text-lg font-semibold text-white-200">
+                  {journey.title}
+                </h3>
+                <p className="text-sm text-white-400">
+                  {journey.steps[0]?.city || "Unknown"}
+                </p>
+                <div className="flex items-center">
+                  <Rating
+                    rating={
+                      journey.comments.reduce(
+                        (sum, comment) => sum + comment.rating,
+                        0,
+                      ) / journey.comments.length
+                    }
+                    ratingCount={journey.comments.length}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 className="mt-8 text-lg font-semibold text-orange-400">
+            Commentaires
+          </h2>
+          <div className="rounded-lg p-4">
+            {journey.comments.map((comment) => (
+              <div
+                key={comment.id}
+                className="mt-2 rounded-lg border border-gray-600 p-4 shadow-sm"
+              >
+                <Rating rating={comment.rating} ratingCount={1} />
+                <p className="mt-2 text-sm text-white-200">{comment.content}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </main>
