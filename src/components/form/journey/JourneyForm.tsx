@@ -18,6 +18,7 @@ import Steps from "./steps/Steps";
 import { Icons } from "@/components/Icons";
 import { StepWithoutDates } from "@/types/step";
 import { JourneyWithoutDates } from "@/types/journey";
+import { useSession } from "next-auth/react";
 
 export type JourneyFormValues = z.infer<typeof journeyFormSchema>;
 type FieldName = keyof JourneyFormValues;
@@ -59,6 +60,8 @@ const JourneyForm = () => {
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
   const [currentStep, setCurrentStep] = useState(0);
   const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
+  const { data: session } = useSession();
+  console.log(session, "session in journey form");
 
   const form = useForm<JourneyFormValues>({
     resolver: zodResolver(journeyFormSchema),
@@ -76,7 +79,6 @@ const JourneyForm = () => {
   });
 
   const processForm: SubmitHandler<JourneyFormValues> = async (data) => {
-    console.log("processing form");
     const { steps, ...journey } = data;
 
     const parsedSteps: JourneyStep = JSON.parse(steps);
