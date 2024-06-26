@@ -75,7 +75,7 @@ const Register = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex h-full w-full flex-col overflow-scroll bg-background px-5 pb-12 pt-5">
+    <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll bg-background px-5 pb-12 pt-5">
       <TopBar />
       <div className="mb-6 flex justify-center">
         <h1 className="text-center text-xl font-extrabold text-orange">
@@ -143,11 +143,7 @@ const Register = () => {
                             !field.value && "text-muted-foreground",
                           )}
                         >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
+                          {field.value && format(field.value, "PPP")}
                           <CalendarIcon className="ml-auto size-4 opacity-50" />
                         </Button>
                       </FormControl>

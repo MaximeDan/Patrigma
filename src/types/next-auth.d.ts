@@ -1,5 +1,4 @@
 import { User as UserModel } from "@prisma/client";
-import { JWT } from "next-auth/jwt";
 
 type UserId = number;
 
