@@ -1,21 +1,21 @@
-import { getToken } from "next-auth/jwt";
+// import { getToken } from "next-auth/jwt";
 import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
   async function middleware(req: NextRequestWithAuth) {
-    // ajouter les informations de la session à la requête ?
     return NextResponse.next();
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
         const route = req.nextUrl.pathname;
-        // console.log("middleware route", route, "methode", req.method);
-        // console.log("middleware token callback", token);
 
-        // routes qui ne requièrent pas d'authentification
         if (!token) {
+          if (route.startsWith("/profil")) {
+            return false;
+          }
+
           if (!route.startsWith("/api/users") && req.method === "GET") {
             return true;
           } else {
@@ -27,9 +27,12 @@ export default withAuth(
         return true;
       },
     },
+    pages: {
+      signIn: "/signin",
+    },
   },
 );
 
 export const config = {
-  matcher: ["/api/:path*"], // Appliquer le middleware à toutes les routes sous /api
+  matcher: ["/api/:path*", "/profil"], // Appliquer le middleware à toutes les routes sous /api
 };
