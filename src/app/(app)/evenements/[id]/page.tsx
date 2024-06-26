@@ -6,7 +6,9 @@ import Rating from "@/components/Rating";
 import { Icons } from "@/components/Icons";
 import TopBar from "@/components/TopBar";
 import dynamic from "next/dynamic";
-import { UserEvent, Event, Journey } from "@prisma/client";
+import { UserEvent, Event } from "@prisma/client";
+import { JourneyWithStepsAndComments } from "@/types/journey";
+import { formatDate } from "date-fns";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
   ssr: false,
@@ -16,9 +18,13 @@ type Params = { id: number };
 
 const EventDetail = ({ params }: { params: Params }) => {
   const [event, setEvent] = useState<Event | null>(null);
-  const [journey, setJourney] = useState<Journey | null>(null);
+  const [journey, setJourney] = useState<JourneyWithStepsAndComments | null>(
+    null,
+  );
   const [isJoined, setIsJoined] = useState(false);
   const [participantCount, setParticipantCount] = useState(0);
+    const { data: session } = useSession();
+
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -90,20 +96,6 @@ const EventDetail = ({ params }: { params: Params }) => {
     return <div>Loading...</div>;
   }
 
-  const formatDateTime = (dateTimeString: string): string => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date(dateTimeString)
-      .toLocaleDateString("fr-FR", options)
-      .replace(",", " à");
-  };
-
-  // @ts-ignore
   const firstStep = journey?.steps?.[0];
 
   return (
@@ -167,7 +159,7 @@ const EventDetail = ({ params }: { params: Params }) => {
             <div className="flex items-center gap-1 rounded-md bg-white px-2 py-1 shadow-sm">
               <Icons.agenda />
               <p className="text-sm font-semibold text-gray-200">
-                {formatDateTime(event.startAt)}
+                {formatDate(new Date(event.startAt), "dd/MM/yyyy HH:mm")}
               </p>
             </div>
           </div>
@@ -233,10 +225,12 @@ const EventDetail = ({ params }: { params: Params }) => {
                   <div className="flex items-center">
                     <Rating
                       rating={
-                        journey.comments.reduce(
-                          (sum, comment) => sum + comment.rating,
-                          0,
-                        ) / journey.comments.length
+                        journey.comments.length > 0
+                          ? journey.comments.reduce(
+                              (sum, comment) => sum + (comment.rating ?? 0),
+                              0,
+                            ) / journey.comments.length
+                          : 0
                       }
                       ratingCount={journey.comments.length}
                     />
@@ -254,7 +248,9 @@ const EventDetail = ({ params }: { params: Params }) => {
                   key={comment.id}
                   className="mt-2 rounded-lg border border-gray-600 p-4 shadow-sm"
                 >
-                  <Rating rating={comment.rating} ratingCount={1} />
+                  {comment.rating !== null && (
+                    <Rating rating={comment.rating} ratingCount={1} />
+                  )}
                   <p className=" mt-2 text-sm">{comment.content}</p>
                 </div>
               ))}

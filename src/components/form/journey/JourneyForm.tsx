@@ -61,7 +61,6 @@ const JourneyForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
   const { data: session } = useSession();
-  console.log(session, "session in journey form");
 
   const form = useForm<JourneyFormValues>({
     resolver: zodResolver(journeyFormSchema),

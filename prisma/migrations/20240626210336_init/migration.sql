@@ -71,6 +71,7 @@ CREATE TABLE "Journey" (
     "description" TEXT NOT NULL,
     "requirement" TEXT NOT NULL,
     "treasure" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "estimatedDistance" INTEGER NOT NULL,
     "estimatedDuration" INTEGER,
     "cluesDifficulty" INTEGER NOT NULL,
