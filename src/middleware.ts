@@ -16,15 +16,17 @@ export default withAuth(
             return false;
           }
 
-          if (!route.startsWith("/api/users") && req.method === "GET") {
-            return true;
-          } else {
+          if (route.startsWith("/api/users")) {
             return false;
+          }
+
+          if (req.method === "GET") {
+            return true;
           }
         }
         // si token et role !admin => return false pour les routes admins (/api/users en GET)
 
-        return true;
+        return false;
       },
     },
     pages: {
@@ -34,5 +36,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/api/:path*", "/profil"], // Appliquer le middleware à toutes les routes sous /api
+  matcher: ["/api/:path*", "/:path*"],
 };

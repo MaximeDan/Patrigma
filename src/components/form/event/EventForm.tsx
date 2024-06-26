@@ -69,6 +69,10 @@ const EventForm = () => {
         body: JSON.stringify(body),
       });
 
+      if (response.redirected) {
+        window.location.href = response.url;
+      }
+
       console.log(response, "create event response");
     } catch (error) {
       console.log(error);
