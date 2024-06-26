@@ -102,7 +102,7 @@ const JourneyForm = () => {
 
     // get user id from session
     const journeyObject: JourneyWithoutDates = {
-      authorId: 1,
+      authorId: Number(session?.user?.id),
       title: journey.title,
       description: journey.description,
       requirement: journey.requirement,
@@ -123,6 +123,7 @@ const JourneyForm = () => {
       steps: stepObject,
     };
 
+    const token = session?.accessToken;
     const res = await fetch(
       `${process.env.BASE_URL || "http://localhost:3000"}/api/journeys`,
       {
@@ -130,9 +131,14 @@ const JourneyForm = () => {
         body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       },
     );
+    if (res.redirected) {
+      window.location.href = res.url;
+    }
+
     if (!res.ok) {
       setFormStatus("errored");
     }

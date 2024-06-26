@@ -11,6 +11,12 @@ export const ReactParallaxProvider = ({ children }: ProviderProps) => {
   return <ParallaxProvider>{children}</ParallaxProvider>;
 };
 
-export const NextAuthProvider = ({ children }: ProviderProps) => {
-  return <SessionProvider>{children}</SessionProvider>;
+export const ClientSessionProvider = ({
+  children,
+  session,
+}: {
+  children: React.ReactNode;
+  session: any;
+}) => {
+  return <SessionProvider session={session}>{children}</SessionProvider>;
 };

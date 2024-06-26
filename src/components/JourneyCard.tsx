@@ -78,7 +78,7 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-center gap-1 text-orange">
             <Icons.mapPin fill="#d8552b" />
-            <p className="text-sm font-medium">{journey.steps[0].city}</p>
+            {/* <p className="text-sm font-medium">{journey.steps[0].city}</p> */}
           </div>
           <Icons.arrowLink width={18} height={18} />
         </div>

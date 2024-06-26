@@ -18,12 +18,13 @@ import { Icons } from "@/components/Icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Textarea } from "@/components/ui/textarea";
-import { EventRequestBody } from "@/types/event";
+import { useSession } from "next-auth/react";
 import { addDays } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
 import { handleException } from "@/utils/errorHandlerUtils";
+import { EventRequestBody } from "@/types/event";
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;
 
@@ -35,6 +36,7 @@ const EventForm = () => {
     from: new Date(),
     to: addDays(new Date(), 20),
   });
+  const { data: session } = useSession();
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(eventFormSchema),
@@ -66,7 +68,7 @@ const EventForm = () => {
     try {
       const body: EventRequestBody = {
         journeyId: journeyIdValue,
-        authorId: 1,
+        authorId: Number(session?.user?.id),
         title: data.title,
         description: data.description,
         numberPlayerMin: data.numberPlayerMin,
@@ -77,13 +79,21 @@ const EventForm = () => {
         startAt: data.startAt,
         image: "",
       };
+
+      const token = session?.accessToken;
+
       const response = await fetch("http://localhost:3000/api/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });
+
+      if (response.redirected) {
+        window.location.href = response.url;
+      }
       if (!response.ok) {
         setFormStatus("errored");
       }
