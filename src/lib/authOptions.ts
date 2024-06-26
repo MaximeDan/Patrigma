@@ -44,16 +44,21 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
+        session.accessToken = token.accessToken as string;
       }
 
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
+      if (account) {
+        console.log("ACCOUNT " + account.access_token);
+      }
       if (user) {
         const dbUser = await readUserByEmail(user.user.email);
         token.id = dbUser?.id ?? (user.id as number);
         token.name = dbUser?.name;
         token.email = dbUser?.email;
+        token.accessToken = user.accessToken;
       }
 
       return token;

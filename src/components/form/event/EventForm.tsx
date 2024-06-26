@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Event } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
+import { useSession } from "next-auth/react";
 
 type EventRequestBody = Omit<Event, "id" | "createdAt" | "updatedAt">;
 export type EventFormValues = z.infer<typeof eventFormSchema>;
@@ -26,6 +27,7 @@ const EventForm = () => {
   const { isVisible, hideModal, journeyIdValue, setJourneyIdValue } =
     useEventFormStore();
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
+  const { data: session } = useSession();
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(eventFormSchema),
@@ -50,7 +52,7 @@ const EventForm = () => {
     try {
       const body: EventRequestBody = {
         journeyId: journeyIdValue,
-        authorId: 1,
+        authorId: Number(session?.user?.id),
         title: data.title,
         description: data.description,
         numberPlayerMin: data.numberPlayerMin,
@@ -61,10 +63,14 @@ const EventForm = () => {
         startAt: data.startAt,
         image: "",
       };
+
+      const token = session?.accessToken;
+
       const response = await fetch("/api/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });
