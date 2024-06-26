@@ -6,7 +6,7 @@ import Rating from "@/components/Rating";
 import { Icons } from "@/components/Icons";
 import TopBar from "@/components/TopBar";
 import dynamic from "next/dynamic";
-import { UserEvent, Event, Journey } from "@prisma/client";
+import { UserEvent, Event } from "@prisma/client";
 import { JourneyWithStepsAndComments } from "@/types/journey";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
@@ -110,9 +110,9 @@ const EventDetail = ({ params }: { params: Params }) => {
   const firstStep = journey?.steps?.[0];
 
   return (
-    <>
+    <main className="flex min-h-screen flex-col bg-gray">
       <TopBar />
-      <main className="flex min-h-screen flex-col bg-gray">
+      <div className="mx-auto max-w-[920px]">
         <ParallaxImage src={event.image} alt={event.title} />
         <div className="relative flex-1 -translate-y-4 rounded-t-2xl px-5 pb-40 pt-14 shadow-lg">
           <div className="absolute right-4 top-4">
@@ -264,8 +264,8 @@ const EventDetail = ({ params }: { params: Params }) => {
             </div>
           </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
 
