@@ -23,6 +23,7 @@ import { addDays } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
+import { handleException } from "@/utils/errorHandlerUtils";
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;
 
@@ -57,7 +58,6 @@ const EventForm = () => {
   if (!isVisible) return null;
 
   const processForm: SubmitHandler<EventFormValues> = async (data) => {
-    console.log(data, "data");
     const parsedData = eventFormSchema.safeParse(data);
     if (!parsedData.success || !journeyIdValue) {
       setFormStatus("errored");
@@ -87,11 +87,9 @@ const EventForm = () => {
       if (!response.ok) {
         setFormStatus("errored");
       }
-      console.log(response, "create event response");
     } catch (error) {
-      console.log(error);
+      handleException(error);
     }
-    console.log(data);
   };
 
   const dismissModal = () => {

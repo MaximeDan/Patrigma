@@ -73,17 +73,14 @@ export const registerOrModifyEvent = async (
 ): Promise<Event | null> => {
   // Check arguments
   if (id !== null && !Number.isFinite(id)) {
-    console.log("Invalid id", id);
     throw new BadRequestException("Invalid id");
   }
-  console.log("before throw error event", event);
   if (!event) throw new BadRequestException("Invalid event");
 
   let upsertedEvent: Event | null;
 
   // Check if register or modify
   if (id === null) {
-    console.log("Creating event");
     upsertedEvent = await createEvent(event);
     if (!upsertedEvent)
       throw new InternalServerErrorException("Internal server error");
