@@ -11,6 +11,7 @@ import {
   deleteJourney,
   readJourneyWithSteps,
   readJourneyWithComments,
+  readFullJourney,
 } from "../repositories/journeyRepository";
 import { Journey } from "@prisma/client";
 import {

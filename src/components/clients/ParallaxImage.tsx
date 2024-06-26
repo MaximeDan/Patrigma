@@ -2,14 +2,15 @@
 import React from "react";
 import { ParallaxBanner, ParallaxBannerLayer } from "react-scroll-parallax";
 
-// type HomeParallaxProps = {
-//   imageUrl: string;
-// };
+type ParallaxImageProps = {
+  src: string;
+  alt: string;
+};
 
-const ParallaxImage = (/* {imageUrl}:HomeParallaxProps */) => {
+const ParallaxImage = ({ src, alt }: ParallaxImageProps) => {
   return (
     <ParallaxBanner className="h-[calc(30vh)] w-full">
-      <ParallaxBannerLayer image="/img/min-temp.webp" speed={-8} />
+      <ParallaxBannerLayer image={src} speed={-8} />
     </ParallaxBanner>
   );
 };

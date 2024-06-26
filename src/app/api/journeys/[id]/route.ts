@@ -58,6 +58,12 @@ export async function DELETE(
   }
 }
 
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles GET request to retrieve a journey by its id with its comments and its steps.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } },
