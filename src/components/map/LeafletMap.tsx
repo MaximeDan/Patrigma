@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic"; // Composant LeafletMap chargé dynamiquement
+import dynamic from "next/dynamic";
 
 const LeafletMap = dynamic(() => import("./Map"), { ssr: false });
 

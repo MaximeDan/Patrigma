@@ -7,12 +7,13 @@ import {
   updateUser,
 } from "@/repositories/userRepository";
 import { createUserRole } from "@/repositories/userRoleRepository";
-import { User, UserRole } from "@prisma/client";
+import { User, UserRole, Event } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { getRoleById } from "./roleService";
 import { RegisterUser } from "@/types/register";
 import { UserRoleDataWithUserId } from "@/types/userRole";
 import { BadRequestException, NotFoundException } from "@/types/exceptions";
+import { readEventsByUserId } from "@/repositories/userEventRepository";
 
 /**
  * @params userData: RegisterUser
@@ -120,4 +121,13 @@ export const removeUser = async (id: number): Promise<User | null> => {
   if (!user) throw new NotFoundException("User not found");
 
   return await deleteUser(id);
+};
+
+/**
+ * @params userId: number
+ * @returns Event[]
+ * @description Retrieves all events for a specific user.
+ */
+export const getEventsByUserId = async (userId: number): Promise<Event[]> => {
+  return await readEventsByUserId(userId);
 };

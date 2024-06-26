@@ -1,3 +1,4 @@
+// components/BottomSheetModal.tsx
 "use client";
 import { useJourneyFormStore } from "@/store/journeyFormStore";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,7 @@ const BottomSheetModal = () => {
       form.setValue("hint", editedStep.hint);
       form.setValue(
         "coordinates",
-        `${editedStep.coordinates.latitude};${editedStep.coordinates.longitude}`,
+        `${editedStep.coordinates.latitude};${editedStep.coordinates.longitude}`
       );
     }
   }, [editedStep]);
@@ -71,7 +72,7 @@ const BottomSheetModal = () => {
             longitude,
           },
         },
-        editedStep.index,
+        editedStep.index
       );
     } else {
       addStep({
@@ -93,6 +94,10 @@ const BottomSheetModal = () => {
     hideBottomSheet();
     setEditedStep(null);
     form.reset();
+  };
+
+  const updateCoordinates = (latitude: number, longitude: number) => {
+    form.setValue("coordinates", `${latitude};${longitude}`);
   };
 
   return (
@@ -180,6 +185,7 @@ const BottomSheetModal = () => {
                       <LeafletMap
                         setDragDisabled={setDragDisabled}
                         form={form}
+                        updateCoordinates={updateCoordinates}
                       />
                     </div>
                     <FormMessage className="text-red-500" />
