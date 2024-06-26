@@ -20,7 +20,7 @@ type ThirdStepProps = {
   form: UseFormReturn<JourneyFormValues>;
 };
 
-const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
+const StepsOverviewStep = ({ form, next, prev }: ThirdStepProps) => {
   const { steps, showBottomSheet, removeStep, setEditedStep } =
     useJourneyFormStore();
 
@@ -85,4 +85,4 @@ const ThirdStep = ({ form, next, prev }: ThirdStepProps) => {
   );
 };
 
-export default ThirdStep;
+export default StepsOverviewStep;

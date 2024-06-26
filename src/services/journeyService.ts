@@ -11,6 +11,7 @@ import {
   deleteJourney,
   readJourneyWithSteps,
   readJourneyWithComments,
+  readFullJourney,
 } from "../repositories/journeyRepository";
 import { Journey } from "@prisma/client";
 import {
@@ -64,6 +65,24 @@ export const getJourneyByIdWithComments = async (
   if (!JourneyWithComments) throw new NotFoundException("Journey not found");
 
   return JourneyWithComments;
+};
+
+/**
+ * @params id: number
+ * @returns JourneyWithStepsAndComments
+ * @throws NotFoundException
+ * @description Retrieves a journey by its id with its steps and comments.
+ */
+export const getJourneyByIdWithStepsAndComments = async (
+  id: number,
+): Promise<JourneyWithStepsAndComments | null> => {
+  const journeyWithStepsAndComments: JourneyWithStepsAndComments | null =
+    await readFullJourney(id);
+
+  if (!journeyWithStepsAndComments)
+    throw new NotFoundException("Journey not found");
+
+  return journeyWithStepsAndComments;
 };
 
 /**

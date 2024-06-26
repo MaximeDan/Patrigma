@@ -2,12 +2,11 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { JourneyFormValues } from "../JourneyForm";
-import FirstStep from "./FirstStep";
-import SecondStep from "./SecondStep";
-import ThirdStep from "./ThirdStep";
 import TreasureStep from "./TreasureStep";
-
 import { motion } from "framer-motion";
+import IntroductionStep from "./IntroductionStep";
+import DetailsStep from "./DetailsStep";
+import StepsOverviewStep from "./StepsOverviewStep";
 
 type StepsProps = {
   step: number;
@@ -26,7 +25,7 @@ const Steps = ({ step, next, prev, form, dir }: StepsProps) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <FirstStep next={next} form={form} />
+          <IntroductionStep next={next} form={form} />
         </motion.div>
       )}
       {step === 1 && (
@@ -35,7 +34,7 @@ const Steps = ({ step, next, prev, form, dir }: StepsProps) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <SecondStep next={next} prev={prev} form={form} />
+          <DetailsStep next={next} prev={prev} form={form} />
         </motion.div>
       )}
       {step === 2 && (
@@ -44,7 +43,7 @@ const Steps = ({ step, next, prev, form, dir }: StepsProps) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <ThirdStep next={next} prev={prev} form={form} />
+          <StepsOverviewStep next={next} prev={prev} form={form} />
         </motion.div>
       )}
       {step === 3 && (

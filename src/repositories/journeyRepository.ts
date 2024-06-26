@@ -138,6 +138,31 @@ export const readJourneys = async (): Promise<
 
 /**
  * @params id: number
+ * @returns Journey | null
+ * @description Retrieves a journey by its id without steps.
+ */
+export const readFullJourney = async (
+  id: number,
+): Promise<JourneyWithStepsAndComments | null> => {
+  return await prisma.journey.findUnique({
+    where: { id },
+    include: {
+      steps: {
+        orderBy: {
+          stepNumber: "asc",
+        },
+      },
+      comments: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+  });
+};
+
+/**
+ * @params id: number
  * @params journey: Journey
  * @params steps: Step[]
  * @returns JourneyWithSteps | null

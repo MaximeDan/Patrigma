@@ -17,7 +17,7 @@ type FirstStepProps = {
   form: UseFormReturn<JourneyFormValues>;
 };
 
-const FirstStep = ({ form, next }: FirstStepProps) => {
+const IntroductionStep = ({ form, next }: FirstStepProps) => {
   return (
     <div>
       <h2>Créez votre propre Parcours !</h2>
@@ -71,4 +71,4 @@ const FirstStep = ({ form, next }: FirstStepProps) => {
   );
 };
 
-export default FirstStep;
+export default IntroductionStep;
