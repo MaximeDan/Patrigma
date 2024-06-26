@@ -38,8 +38,22 @@ export const authOptions = {
   ],
   session: { strategy: "jwt" },
   callbacks: {
+    async jwt({ token, account, user }) {
+      if (user) {
+        console.log("Callback JWT IF USER : " + user.id);
+        token.userId = user.id;
+      } else {
+        console.log("User is not defined in this context");
+      }
+      console.log("Callback JWT token : ", token);
+      console.log("Callback JWT account : ", account);
+      console.log("Callback JWT user : ", user);
+      console.log("Callback JWT token.userId : ", token.userId);
+
+      return token;
+    },
     // @ts-ignore
-    async session(session: Session) {
+    async session(session: Session, token) {
       // @ts-ignore
       const dbUser = await getUserById(session.token.id);
       // @ts-ignore
@@ -51,6 +65,8 @@ export const authOptions = {
         lastName: dbUser?.lastName,
         dateOfBirth: dbUser?.dateOfBirth,
       };
+      session.user.id = token.id;
+      console.log("Callback SESSION session.user.id : ", session.user.id);
 
       return session;
     },

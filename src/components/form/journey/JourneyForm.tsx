@@ -18,6 +18,7 @@ import Steps from "./steps/Steps";
 import { Icons } from "@/components/Icons";
 import { StepWithoutDates } from "@/types/step";
 import { JourneyWithoutDates } from "@/types/journey";
+import { useSession } from "next-auth/react";
 
 export type JourneyFormValues = z.infer<typeof journeyFormSchema>;
 type FieldName = keyof JourneyFormValues;
@@ -59,6 +60,7 @@ const JourneyForm = () => {
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
   const [currentStep, setCurrentStep] = useState(0);
   const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
+  const { data: session } = useSession();
 
   const form = useForm<JourneyFormValues>({
     resolver: zodResolver(journeyFormSchema),
@@ -121,6 +123,8 @@ const JourneyForm = () => {
       journey: journeyObject,
       steps: stepObject,
     };
+
+    // console.log("SESSION : " + session?.user?.id);
 
     const res = await fetch(
       `${process.env.BASE_URL || "http://localhost:3000"}/api/journeys`,
