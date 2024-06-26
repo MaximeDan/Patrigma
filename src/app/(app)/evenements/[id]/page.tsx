@@ -68,7 +68,9 @@ const EventDetail = ({ params }: { params: Params }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/join/${session!.user.id}`,
         {
           method: "POST",
-          authorization: `Bearer ${session.accessToken}`,
+          headers: {
+            authorization: `Bearer ${session!.accessToken}`,
+          },
         },
       );
       if (response.ok) {
@@ -88,6 +90,9 @@ const EventDetail = ({ params }: { params: Params }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/leave/${session!.user.id}`,
         {
           method: "DELETE",
+          headers:{
+            authorization: `Bearer ${session!.accessToken}`,
+          },
         },
       );
       if (response.ok) {
@@ -191,10 +196,8 @@ const EventDetail = ({ params }: { params: Params }) => {
 
           {isEventStartable && (
             <div className="mt-4">
-              <Link href={`/events/${params.id}/start`}>
-                <a className="rounded bg-blue-500 px-4 py-2 text-white">
-                  Start Event
-                </a>
+              <Link className="rounded bg-blue-500 px-4 py-2 text-white" href={`${params.id}/start`}>
+                  Lancer l'événement
               </Link>
             </div>
           )}

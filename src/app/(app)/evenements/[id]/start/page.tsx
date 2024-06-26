@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { Event, Journey, Step } from "@prisma/client";
 import TopBar from "@/components/TopBar";
+import { JourneyWithStepsAndComments } from "@/types/journey";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
   ssr: false,
@@ -13,7 +14,7 @@ type Params = { id: number };
 
 const EventStart = ({ params }: { params: Params }) => {
   const [event, setEvent] = useState<Event | null>(null);
-  const [journey, setJourney] = useState<Journey | null>(null);
+  const [journey, setJourney] = useState<JourneyWithStepsAndComments | null>(null);
   const [currentStep, setCurrentStep] = useState<Step | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
@@ -47,9 +48,9 @@ const EventStart = ({ params }: { params: Params }) => {
 
   const handleCheckAnswer = () => {
     if (userAnswer.toLowerCase() === currentStep!.answer.toLowerCase()) {
-      if (stepIndex < journey!.steps.length - 1) {
+      if (stepIndex < journey.steps.length - 1) {
         setStepIndex(stepIndex + 1);
-        setCurrentStep(journey!.steps[stepIndex + 1]);
+        setCurrentStep(journey.steps[stepIndex + 1]);
         setShowHint(false);
         setUserAnswer("");
       } else {

@@ -75,10 +75,10 @@ const Register = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex w-full h-full flex-col overflow-scroll bg-background px-5 pb-12 pt-5">
+    <div className="fixed left-0 top-0 z-10 flex h-full w-full flex-col overflow-scroll bg-background px-5 pb-12 pt-5">
       <TopBar />
-      <div className="flex justify-center mb-6">
-        <h1 className="text-xl font-extrabold text-orange text-center">
+      <div className="mb-6 flex justify-center">
+        <h1 className="text-center text-xl font-extrabold text-orange">
           Inscris toi sur Patrigma et découvre ton patrimoine !
         </h1>
       </div>
@@ -86,7 +86,7 @@ const Register = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 flex flex-col items-center w-full max-w-md"
+            className="flex w-full max-w-md flex-col items-center space-y-8"
           >
             <FormField
               control={form.control}
@@ -211,7 +211,7 @@ const Register = () => {
             />
             <Button
               type="submit"
-              className="bg-orange text-white hover:bg-orange-600 mt-4 w-full md:w-auto"
+              className="mt-4 w-full bg-orange text-white hover:bg-orange-600 md:w-auto"
             >
               <span>S'inscrire</span>
               <Icons.check

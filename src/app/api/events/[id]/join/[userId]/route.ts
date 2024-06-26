@@ -15,6 +15,8 @@ export async function POST(
   try {
     const eventId: number = Number(params.id);
     const userId: number = Number(params.userId);
+    console.log("eventId", eventId);
+    console.log("userId", userId);
 
     const result = await joinEvent(eventId, userId);
     return NextResponse.json({ data: result }, { status: 200 });

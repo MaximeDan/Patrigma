@@ -3,11 +3,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession, signIn } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 const TopBar = () => {
   const currentPath = usePathname();
   const isMainPage = currentPath === "/" || currentPath === "";
-  // todo: retrieve user data from session and display its name and profile picture
+  const { data: session } = useSession();
+
   return (
     <>
       <header className="container flex items-center px-5 py-3">
@@ -15,7 +18,7 @@ const TopBar = () => {
         <nav className="hidden gap-5 sm:flex">
           <Link
             href="/"
-            className={`mx-auto flex h-10 flex-1 items-center justify-center font-semibold uppercase ${isMainPage ? "text-orange" : "text-foreground"} `}
+            className={`mx-auto flex h-10 flex-1 items-center justify-center font-semibold uppercase ${isMainPage ? "text-orange" : "text-foreground"}`}
           >
             Accueil
           </Link>
@@ -41,16 +44,44 @@ const TopBar = () => {
             Évènements
           </Link>
         </nav>
-        <Link className="ml-7 flex flex-col items-center" href="/profil">
-          <Image
-            src="/img/min-shadavatar.webp"
-            alt="logo"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
-          <p className="text-sm">Profil</p>
-        </Link>
+        <div className="ml-7 flex items-center">
+          {session ? (
+            <>
+              <div className="flex flex-col items-center">
+                <Link href={`/profil`}>
+                  <Image
+                    src="/img/min-shadavatar.webp"
+                    alt="logo"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                </Link>
+                <p className="text-sm">{session.user.name}</p>
+              </div>
+            </>
+          ) : (
+            <div className="flex space-x-4">
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => signIn()}
+                className="bg-orange-500 text-sm text-white hover:bg-orange-600"
+              >
+                Se connecter
+              </Button>
+              <Link href="/register">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-orange-500 text-sm text-white hover:bg-orange-600"
+                >
+                  S'enregistrer
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </header>
       <hr className="mb-8 border-beige" />
     </>
