@@ -60,8 +60,11 @@ const JourneyForm = () => {
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
   const [currentStep, setCurrentStep] = useState(0);
   const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
-  const { data: session } = useSession();
-  console.log(session, "session in journey form");
+  const { data: session, status } = useSession();
+
+  if (status === "authenticated") {
+    console.log("JOURNEY FORM - session", session);
+  }
 
   const form = useForm<JourneyFormValues>({
     resolver: zodResolver(journeyFormSchema),

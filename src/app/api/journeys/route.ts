@@ -8,6 +8,8 @@ import { JourneyWithoutDates } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
 import { journeyBodySchema } from "@/validators/api/journeySchema";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 /**
  * @returns NextResponse
@@ -29,6 +31,9 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    console.log("PUT JOURNEY - session", session);
+
     const body = await request.json();
     // Parse the body with zod to get the journey and steps
     const parsedBody = journeyBodySchema.safeParse(body);

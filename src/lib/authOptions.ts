@@ -1,7 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getUserById, signIn } from "@/services/userService";
-import { NextAuthOptions, Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { signIn } from "@/services/userService";
+import { NextAuthOptions } from "next-auth";
+import { readUserByEmail } from "@/repositories/userRepository";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -39,31 +39,24 @@ export const authOptions = {
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user, account, session }) {
-      console.log("account jwt callback", session);
-      if (user) {
-        // @ts-ignore
-        token.id = user.user.id;
+    async session({ token, session }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
       }
-      return token;
-    },
-
-    // @ts-ignore
-    async session(session: Session, token: JWT) {
-      // @ts-ignore
-      const dbUser = await getUserById(token?.id || session?.token?.id);
-      // @ts-ignore
-      session.session.user = {
-        id: dbUser?.id,
-        username: dbUser?.username,
-        name: dbUser?.name,
-        lastName: dbUser?.lastName,
-        dateOfBirth: dbUser?.dateOfBirth,
-      };
-      session.user.id = token.id;
-      console.log("Callback SESSION session.user.id : ", session.user.id);
 
       return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        const dbUser = await readUserByEmail(user.user.email);
+        token.id = dbUser?.id ?? (user.id as number);
+        token.name = dbUser?.name;
+        token.email = dbUser?.email;
+      }
+
+      return token;
     },
   },
 } satisfies NextAuthOptions;
