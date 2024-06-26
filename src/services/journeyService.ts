@@ -70,24 +70,6 @@ export const getJourneyByIdWithComments = async (
 };
 
 /**
- * @params id: number
- * @returns JourneyWithStepsAndComments
- * @throws NotFoundException
- * @description Retrieves a journey by its id with its steps and comments.
- */
-export const getJourneyByIdWithStepsAndComments = async (
-  id: number,
-): Promise<JourneyWithStepsAndComments | null> => {
-  const journeyWithStepsAndComments: JourneyWithStepsAndComments | null =
-    await readFullJourney(id);
-
-  if (!journeyWithStepsAndComments)
-    throw new NotFoundException("Journey not found");
-
-  return journeyWithStepsAndComments;
-};
-
-/**
  * @returns JourneyWithStepsAndComments[]
  * @throws NotFoundException
  * @description Retrieves all journeys without steps.

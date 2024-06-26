@@ -1,6 +1,5 @@
 import { handleException } from "@/utils/errorHandlerUtils";
 import {
-  getJourneyByIdWithStepsAndComments,
   getJourneyById,
   registerOrModifyJourney,
   removeJourney,
@@ -9,26 +8,6 @@ import { JourneyWithoutDates } from "@/types/journey";
 import { StepWithoutDates } from "@/types/step";
 import { journeyBodySchema } from "@/validators/api/journeySchema";
 import { NextRequest, NextResponse } from "next/server";
-
-/**
- * @params request: NextRequest
- * @params params: { id: string }
- * @returns NextResponse
- * @description Handles GET request to retrieve a journey by its id with its comments and its steps.
- */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const id: number = Number(params.id);
-
-  try {
-    const result = await getJourneyByIdWithStepsAndComments(id);
-    return NextResponse.json({ data: result }, { status: 200 });
-  } catch (error: any) {
-    return handleException(error);
-  }
-}
 
 /**
  * @params request: NextRequest
@@ -79,6 +58,12 @@ export async function DELETE(
   }
 }
 
+/**
+ * @params request: NextRequest
+ * @params params: { id: string }
+ * @returns NextResponse
+ * @description Handles GET request to retrieve a journey by its id with its comments and its steps.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } },
