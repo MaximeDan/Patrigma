@@ -100,7 +100,7 @@ const EventForm = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll  bg-background px-5  pb-12 pt-5">
+    <div className="fixed left-0 top-0 z-10 mx-auto flex size-full max-w-[920px] flex-col overflow-scroll  bg-background px-5  pb-12 pt-5">
       <div className="flex justify-end">
         <Button onClick={dismissModal}>
           <span>Quitter</span>
@@ -118,7 +118,7 @@ const EventForm = () => {
                   <FormControl>
                     <>
                       <Label htmlFor="title">Titre*</Label>
-                      <Input {...field} id="title" />
+                      <Input {...field} id="title" className="max-w-[500px]" />
                     </>
                   </FormControl>
                   <FormMessage className="text-red-500" />
@@ -134,14 +134,18 @@ const EventForm = () => {
                   <FormControl>
                     <>
                       <Label htmlFor="description">Description*</Label>
-                      <Textarea {...field} id="description" />
+                      <Textarea
+                        {...field}
+                        id="description"
+                        className="max-w-[500px]"
+                      />
                     </>
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
-            <div className="flex gap-5">
+            <div className="flex max-w-[500px] gap-5">
               <FormField
                 control={form.control}
                 name="numberPlayerMin"
@@ -208,7 +212,7 @@ const EventForm = () => {
               control={form.control}
               name="isPrivate"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
+                <FormItem className="flex max-w-[500px] flex-row items-center justify-between rounded-lg border p-3">
                   <div className="space-y-0.5">
                     <Label>Partie privée</Label>
                     <FormDescription>
