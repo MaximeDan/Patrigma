@@ -11,7 +11,15 @@ const TopBar = () => {
   return (
     <>
       <header className="container flex items-center px-5 py-3">
-        <div className="mr-auto size-14 rounded-full bg-slate-300"></div>
+        <Link href="/" className="mr-auto">
+          <Image
+            src="/img/appIcon/Iconarchive-Seaside-Treasure-Map.128.png"
+            alt="Site Logo"
+            width={80}
+            height={80}
+            className="rounded-full"
+          />
+        </Link>
         <nav className="hidden gap-5 sm:flex">
           <Link
             href="/"
@@ -44,7 +52,7 @@ const TopBar = () => {
         <Link className="ml-7 flex flex-col items-center" href="/profil">
           <Image
             src="/img/min-shadavatar.webp"
-            alt="logo"
+            alt="Profil"
             width={40}
             height={40}
             className="rounded-full"
