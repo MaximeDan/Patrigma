@@ -62,6 +62,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-html-reporter": "^3.10.2",
+    "jest-junit": "^16.0.0",
     "jest-summary-reporter": "^0.0.2",
     "next-test-api-route-handler": "^4.0.8",
     "prisma": "^5.15.1",
