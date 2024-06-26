@@ -7,8 +7,6 @@ export default withAuth(
     const bearerToken = req.headers.get("Authorization");
     const token = bearerToken?.split("Bearer ")[1];
 
-    console.log("middleware token", token);
-
     const requestHeaders = new Headers(req.headers);
     requestHeaders.set("Authorization", `Bearer ${token}`);
 
@@ -22,8 +20,6 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const route = req.nextUrl.pathname;
-        console.log("middleware route", route, "methode", req.method);
-        console.log("middleware token callback", token);
 
         // routes qui ne requièrent pas d'authentification
         if (!token) {

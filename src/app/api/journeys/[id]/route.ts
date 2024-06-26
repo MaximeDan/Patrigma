@@ -1,6 +1,7 @@
 import { handleException } from "@/utils/errorHandlerUtils";
 import {
   getJourneyByIdWithStepsAndComments,
+  getJourneyById,
   registerOrModifyJourney,
   removeJourney,
 } from "@/services/journeyService";
@@ -73,6 +74,19 @@ export async function DELETE(
     return new Response(null, {
       status: 204,
     });
+  } catch (error: any) {
+    return handleException(error);
+  }
+}
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const id: number = Number(params.id);
+    const result = await getJourneyById(id);
+    return NextResponse.json({ data: result }, { status: 200 });
   } catch (error: any) {
     return handleException(error);
   }

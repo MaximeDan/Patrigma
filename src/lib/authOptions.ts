@@ -40,7 +40,6 @@ export const authOptions = {
   session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user, account, session }) {
-      console.log("account jwt callback", session);
       if (user) {
         // @ts-ignore
         token.id = user.user.id;

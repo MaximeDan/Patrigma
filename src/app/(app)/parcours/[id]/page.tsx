@@ -1,92 +1,158 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ParallaxImage from "@/components/clients/ParallaxImage";
 import Rating from "@/components/Rating";
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { buttonAction } from "@/types/enums/button";
+import { getJourneyById } from "@/services/journeyService";
+import { handleException } from "@/utils/errorHandlerUtils";
+import { format } from "date-fns";
+import { calculateAverageRating } from "@/utils/utils";
+import { notFound } from "next/navigation";
+import TopBar from "@/components/TopBar";
 
 type Params = { id: string };
 
-const JourneyDetail = ({ params }: { params: Params }) => {
-  // get journey by id
+const getSingleJourney = async (id: string) => {
+  try {
+    const journey = await getJourneyById(Number(id));
+    return journey;
+  } catch (error: any) {
+    handleException(error);
+  }
+};
+
+const levelIntToText = (level: number) => {
+  switch (level) {
+    case 1:
+      return "Facile";
+    case 2:
+      return "Intermédiaire";
+    case 3:
+      return "Difficile";
+    default:
+      return "Facile";
+  }
+};
+
+const LevelBullet = ({ level }: { level: string }) => {
+  switch (level) {
+    case "unaccessible":
+      return (
+        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-1" />
+      );
+    case "partiallyAccessible":
+      return (
+        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-2" />
+      );
+    case "accessible":
+      return (
+        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-3" />
+      );
+    default:
+      return (
+        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level" />
+      );
+  }
+};
+
+const JourneyUI = async (id: string) => {
+  const journey = await getSingleJourney(id);
+  if (!journey) return notFound();
+
+  const averageRating = calculateAverageRating(journey.comments);
   return (
-    <main className="flex min-h-screen flex-col bg-gray">
+    <div className="mx-auto max-w-[920px]">
       <div className="relative">
+        <div className="absolute left-4 top-0 flex gap-[6px]">
+          <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
+            <Icons.dumbbel />
+            <p className="text-sm font-semibold text-gray">
+              {levelIntToText(journey.physicalDifficulty)}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 rounded-b-md bg-green px-2 py-[6px]">
+            <Icons.bulb />
+            <p className="text-sm font-semibold text-gray">
+              {levelIntToText(journey.cluesDifficulty)}
+            </p>
+          </div>
+        </div>
         <ParallaxImage />
         <Button
           action={buttonAction.SET_JOURNEY_ID}
-          ressourceId={parseInt(params.id)}
+          ressourceId={parseInt(id)}
           className="absolute right-5 top-5 border-orange bg-gray"
         >
           <span>Créer un évènement</span>
           <Icons.arrowLink fill="#d8552b" className="ml-2" />
         </Button>
       </div>
-      <div className="relative flex-1 rounded-t-2xl px-5 pb-40 pt-14">
-        <div className="absolute left-4 top-0 flex gap-[6px]">
-          <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
-            <Icons.dumbbel />
-            <p className="text-sm font-semibold text-gray">Facile</p>
-          </div>
-          <div className="flex items-center gap-1 rounded-b-md bg-green px-2 py-[6px]">
-            <Icons.bulb />
-            <p className="text-sm font-semibold text-gray">Intermédiaire</p>
-          </div>
-        </div>
-        <h1 className="text-xl font-extrabold text-orange">
-          Sentier du biscuit sablé
-        </h1>
+      <div className="flex-1 rounded-t-2xl px-5 pb-40 pt-14">
+        <h1 className="text-xl font-extrabold text-orange">{journey.title}</h1>
         <div className="flex items-center gap-1 text-beige-600">
           <Icons.mapPin fill="rgba(206, 192, 173, 60%)" />
-          <p className="text-sm font-medium">Normandie</p>
+          <p className="text-sm font-medium">{journey.steps[0].city}</p>
         </div>
-        <p>TODO: Par Jean Blonblon, le 23/06/2024</p>
+        <p>Créé le {format(new Date(journey.createdAt), "dd/MM/yyyy")}</p>
 
-        <p className="text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-          accumsan ligula tellus, a luctus eros lobortis eu. Fusce rhoncus
-          turpis in metus fermentum, nec hendrerit elit mattis. In ipsum diam,
-          pellentesque ut porttitor eu, laoreet et dolor. Sed bibendum nec nulla
-          eu fringilla. Aliquam erat volutpat. Nullam quis risus scelerisque,
-          aliquet sapien ultricies, vulputate urna. Aenean sed dolor a nisl
-          pellentesque venenatis at eget lectus. Vestibulum tempus at dui quis
-          faucibus.
-        </p>
+        <p className="text-sm">{journey.description}</p>
         <div className="mt-[18px] flex items-center justify-between text-lg font-semibold text-orange">
           <h2>Accessibilité</h2>
-          <Icons.arrowLink />
         </div>
         <div className="mt-4 flex gap-6">
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
+          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
+            <LevelBullet level={journey.mobilityImpaired} />
             <Icons.pmr />
           </div>
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2  border-cadetblue bg-cadetblue-600">
+          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2  border-cadetblue bg-white">
+            <LevelBullet level={journey.partiallySighted} />
             <Icons.partiallySighted />
           </div>
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
+          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
+            <LevelBullet level={journey.partiallyDeaf} />
             <Icons.partiallyDeaf />
           </div>
-          <div className="flex aspect-[1/1] flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-cadetblue-600">
+          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
+            <LevelBullet level={journey.cognitivelyImpaired} />
             <Icons.cognitivelyImpaired />
           </div>
         </div>
         <h2 className="mt-[18px] text-lg font-semibold text-orange">
           Pré-requis
         </h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Necessitatibus facilis velit dolores consectetur ea, molestias autem
-          maiores dicta, laboriosam eaque, nesciunt esse accusamus libero
-          aperiam.
-        </p>
+        <p>{journey.requirement}</p>
 
         <h2 className="mt-[18px] text-lg font-semibold text-orange">
           Commentaires
         </h2>
-        <div className="flex gap-1">
-          <Rating rating={3.5} ratingCount={4} />
+        <div className="flex flex-col gap-1">
+          <Rating
+            rating={averageRating}
+            ratingCount={journey.comments.length}
+          />
+          {journey.comments.map((comment) => (
+            <div key={comment.id} className="mb-3 flex flex-col gap-1">
+              <p>{comment.content}</p>
+              <p className="text-sm text-camel">
+                ({format(new Date(comment.createdAt), "dd/MM/yyyy")})
+              </p>
+            </div>
+          ))}
         </div>
       </div>
+    </div>
+  );
+};
+
+const JourneyDetail = ({ params }: { params: Params }) => {
+  // get journey by id
+  return (
+    <main className="flex min-h-screen flex-col bg-gray">
+      <TopBar />
+      <Suspense fallback={<div>Loading...</div>}>
+        {JourneyUI(params.id)}
+      </Suspense>
     </main>
   );
 };

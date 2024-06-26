@@ -6,7 +6,7 @@ const Event = () => {
   return (
     <>
       <TopBar />
-      <main className="container">
+      <main className="container !max-w-[920px]">
         <section className="flex flex-col gap-7 px-5 pb-40">
           <Suspense fallback={<div>Loading...</div>}>
             <EventsFeed />

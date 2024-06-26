@@ -1,14 +1,14 @@
 import prisma from "@/lib/prisma";
-import { UserEventWithoutId } from "@/types/userEvent";
+import { UserEventRequestBody } from "@/types/userEvent";
 import { UserEvent, Event } from "@prisma/client";
 
 /**
- * @params data: UserEventWithoutId
+ * @params data: UserEventRequestBody
  * @returns UserEvent
  * @description Creates a new user event with the provided data.
  */
 export const createUserEvent = async (
-  data: UserEventWithoutId,
+  data: UserEventRequestBody,
 ): Promise<UserEvent> => {
   return await prisma.userEvent.create({
     data,

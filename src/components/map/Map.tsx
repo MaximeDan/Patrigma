@@ -18,7 +18,7 @@ interface LeafletMapProps {
   form: any;
   updateCoordinates: (latitude: number, longitude: number) => void;
 }
-
+// @ts-ignore todo: fix this @MaximeDan
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({

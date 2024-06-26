@@ -12,18 +12,17 @@ const nextConfig = {
 };
 
 const nextConfigFunction = async (phase) => {
-    const withPWA = (await import("@ducanh2912/next-pwa")).default({
-      dest: "public",
-      cacheOnFrontEndNav: true,
-      aggressiveFrontEndNavCaching: true,
-      reloadOnOnline: true,
-      swcMinify: true,
-      workboxOptions: {
-        disableDevLogs: true,
-      },
-    });
-    return withPWA(nextConfig);
+  const withPWA = (await import("@ducanh2912/next-pwa")).default({
+    dest: "public",
+    cacheOnFrontEndNav: true,
+    aggressiveFrontEndNavCaching: true,
+    reloadOnOnline: true,
+    swcMinify: true,
+    workboxOptions: {
+      disableDevLogs: true,
+    },
+  });
+  return withPWA(nextConfig);
 };
 
 export default nextConfigFunction;
-

@@ -69,8 +69,24 @@ export const createJourney = async (
  * @returns Journey | null
  * @description Retrieves a journey by its id.
  */
-export const readJourney = async (id: number): Promise<Journey | null> => {
-  return await prisma.journey.findUnique({ where: { id } });
+export const readJourney = async (
+  id: number,
+): Promise<JourneyWithStepsAndComments | null> => {
+  return await prisma.journey.findUnique({
+    where: { id },
+    include: {
+      steps: {
+        orderBy: {
+          stepNumber: "asc",
+        },
+      },
+      comments: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+  });
 };
 
 /**
