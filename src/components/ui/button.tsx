@@ -3,8 +3,11 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { signOut } from "next-auth/react";
-
+import { useEventFormStore } from "@/store/eventFormStore";
 import { cn } from "@/lib/tailwindUtils";
+import { buttonAction } from "@/types/enums/button";
+import { BadRequestException } from "@/types/exceptions";
+import { handleException } from "@/utils/errorHandlerUtils";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium uppercase  disabled:pointer-events-none disabled:opacity-50",
@@ -36,25 +39,55 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  isSignOut?: boolean;
+  action?: buttonAction;
+  ressourceId?: number;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, asChild = false, isSignOut = false, ...props },
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      action,
+      ressourceId,
+      ...props
+    },
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
+
+    const { setJourneyIdValue, showModal } = useEventFormStore();
+    const handleAction = async () => {
+      try {
+        switch (action) {
+          case buttonAction.SIGN_OUT:
+            await signOut();
+            break;
+          case buttonAction.SET_JOURNEY_ID:
+            if (!ressourceId) throw new BadRequestException("id is required");
+            setJourneyIdValue(ressourceId);
+            showModal();
+            break;
+          default:
+            break;
+        }
+      } catch (error) {
+        handleException(error);
+      }
+    };
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
         onClick={
-          isSignOut
+          action
             ? async (e) => {
                 e.preventDefault();
-                await signOut();
+                await handleAction();
               }
             : props.onClick
         }

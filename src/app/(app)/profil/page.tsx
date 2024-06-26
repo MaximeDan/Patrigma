@@ -3,6 +3,7 @@ import TopBar from "@/components/TopBar";
 import Link from "next/link";
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
+import { buttonAction } from "@/types/enums/button";
 
 const Profil = () => {
   return (
@@ -55,7 +56,7 @@ const Profil = () => {
             <span className="font-semibold">Mentions légales</span>
           </Link>
         </section>
-        <Button isSignOut variant="danger">
+        <Button action={buttonAction.SIGN_OUT} variant="danger">
           Déconnexion
         </Button>
         <Button variant="dangerFilled">Supprimer mon compte</Button>
