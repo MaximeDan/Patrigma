@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { UserEventWithoutId } from "@/types/userEvent";
-import { UserEvent } from "@prisma/client";
+import { UserEvent, Event } from "@prisma/client";
 
 /**
  * @params data: UserEventWithoutId
@@ -72,4 +72,22 @@ export const deleteUserEvent = async (
   id: number,
 ): Promise<UserEvent | null> => {
   return await prisma.userEvent.delete({ where: { id } });
+};
+
+/**
+ * @params userId: number
+ * @returns Event[]
+ * @description Retrieves all events for a specific user.
+ */
+export const readEventsByUserId = async (userId: number): Promise<Event[]> => {
+  const events = await prisma.event.findMany({
+    where: {
+      userEvents: {
+        some: {
+          userId,
+        },
+      },
+    },
+  });
+  return events;
 };

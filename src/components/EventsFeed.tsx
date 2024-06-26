@@ -1,5 +1,5 @@
 import { getAllEvents } from "@/services/eventService";
-import { handleException } from "@/app/utils/errorHandlerUtils";
+import { handleException } from "@/utils/errorHandlerUtils";
 import EventAccordion from "./EventAccordion";
 
 async function getData() {
