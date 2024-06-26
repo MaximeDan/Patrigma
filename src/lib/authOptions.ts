@@ -2,9 +2,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { signIn } from "@/services/userService";
 import { NextAuthOptions } from "next-auth";
 import { readUserByEmail } from "@/repositories/userRepository";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "./prisma";
 
 export const authOptions = {
+  adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === "development",
   pages: {
     signIn: "/signin",
     // signOut: "/auth/signout",
@@ -54,6 +58,7 @@ export const authOptions = {
         console.log("ACCOUNT " + account.access_token);
       }
       if (user) {
+        // @ts-ignore
         const dbUser = await readUserByEmail(user.user.email);
         token.id = dbUser?.id ?? (user.id as number);
         token.name = dbUser?.name;

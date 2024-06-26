@@ -9,7 +9,7 @@ interface EventFormStore {
 }
 
 export const useEventFormStore = create<EventFormStore>((set) => ({
-  isVisible: true,
+  isVisible: false,
   showModal: () => {
     const body = document.querySelector("body");
     body?.classList.add("overflow-hidden");

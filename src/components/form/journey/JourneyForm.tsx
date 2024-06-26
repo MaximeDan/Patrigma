@@ -135,6 +135,10 @@ const JourneyForm = () => {
         },
       },
     );
+    if (res.redirected) {
+      window.location.href = res.url;
+    }
+
     if (!res.ok) {
       setFormStatus("errored");
     }
