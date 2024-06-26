@@ -1,4 +1,3 @@
-// components/map/LeafletMap.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -12,6 +11,7 @@ import {
 import { CustomPoint } from "@/types/pointsOfInterests";
 import { fetchPoints } from "@/apiClient/fetchPoints";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 interface LeafletMapProps {
   setDragDisabled: (value: boolean) => void;
