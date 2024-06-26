@@ -126,6 +126,7 @@ model Journey {
   description         String
   requirement         String
   treasure            String
+  image               String
   estimatedDistance   Int
   estimatedDuration   Int?
   cluesDifficulty     Int

@@ -20,12 +20,9 @@ describe("NextAuth API", () => {
           }),
         });
 
-        console.log("Response status:", res.status);
 
         if (res.status === 302) {
           const location = res.headers.get("location");
-          console.log("Redirect location:", location);
-
           // Check that the location header contains the expected URL
           expect(location).toContain("/"); // Adjust based on your redirect URL
         }
@@ -33,7 +30,6 @@ describe("NextAuth API", () => {
         // Optionally, if you expect JSON in other cases (e.g., error responses)
         if (res.status !== 302) {
           const data = await res.json();
-          console.log("Response data:", data);
 
           expect(res.status).toBe(200);
           expect(data).toHaveProperty("user");
@@ -61,10 +57,7 @@ describe("NextAuth API", () => {
           }),
         });
 
-        console.log("Response status:", res.status);
-
         const data = await res.json();
-        console.log("Response data:", data);
 
         expect(res.status).toBe(401);
         expect(data).toEqual(

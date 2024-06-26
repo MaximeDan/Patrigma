@@ -12,7 +12,7 @@ const Profil = () => {
       <TopBar />
       <main className="mx-auto flex max-w-[400px] flex-col gap-7 px-5 pb-40">
         <PageTitle />
-        <section>
+        {/* <section>
           <h2 className="mb-4 text-2xl font-semibold">Créations</h2>
           <div className="flex flex-col gap-3">
             <Button type="button" className="w-fit">
@@ -28,7 +28,7 @@ const Profil = () => {
               </Link>
             </Button>
           </div>
-        </section>
+        </section> */}
         <section className="flex flex-col rounded-lg bg-gray px-5 py-4">
           <Link href="/" className="flex h-8 items-center gap-5 text-sm">
             <div className="flex size-5 items-center justify-center">

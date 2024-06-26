@@ -49,13 +49,12 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
-        session.accessToken = token.jwt; // Ajouter le JWT encodé à la session
+        session.accessToken = token.jwt;
       }
       return session;
     },
     async jwt({ token, user, account }) {
       if (account) {
-        console.log("ACCOUNT " + account.access_token);
       }
       if (user) {
         // @ts-ignore

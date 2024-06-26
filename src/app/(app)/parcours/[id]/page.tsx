@@ -78,7 +78,7 @@ const JourneyUI = async (id: string) => {
             </p>
           </div>
         </div>
-        <ParallaxImage />
+        <ParallaxImage src={journey.image} alt={journey.title} />
         <Button
           action={buttonAction.SET_JOURNEY_ID}
           ressourceId={parseInt(id)}

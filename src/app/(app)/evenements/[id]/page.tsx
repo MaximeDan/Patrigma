@@ -8,6 +8,9 @@ import TopBar from "@/components/TopBar";
 import dynamic from "next/dynamic";
 import { UserEvent, Event } from "@prisma/client";
 import { JourneyWithStepsAndComments } from "@/types/journey";
+import { format } from "date-fns";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
   ssr: false,
@@ -22,6 +25,7 @@ const EventDetail = ({ params }: { params: Params }) => {
   );
   const [isJoined, setIsJoined] = useState(false);
   const [participantCount, setParticipantCount] = useState(0);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -39,24 +43,34 @@ const EventDetail = ({ params }: { params: Params }) => {
         const journeyData = await journeyResponse.json();
         setJourney(journeyData.data);
 
-        const userJoined = eventData.data.userEvents.some(
-          (userEvent: UserEvent) => userEvent.userId === 7, // Replace 7 with the actual user ID
-        );
-        setIsJoined(userJoined);
+        if (session) {
+          const userJoined = eventData.data.userEvents.some(
+            (userEvent: UserEvent) => userEvent.userId === session.user.id,
+          );
+          setIsJoined(userJoined);
+        }
       } catch (error) {
         console.error("Error fetching event or journey data:", error);
       }
     };
 
     fetchEventData();
-  }, [params.id]);
+  }, [params.id, session]);
 
   const handleJoin = async () => {
+    if (!session) {
+      signIn();
+      return;
+    }
+
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/join/2`, // Replace 1 with the actual user ID
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/join/${session!.user.id}`,
         {
           method: "POST",
+          headers: {
+            authorization: `Bearer ${session!.accessToken}`,
+          },
         },
       );
       if (response.ok) {
@@ -73,9 +87,12 @@ const EventDetail = ({ params }: { params: Params }) => {
   const handleLeave = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/leave/2`, // Replace 1 with the actual user ID
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/leave/${session!.user.id}`,
         {
           method: "DELETE",
+          headers:{
+            authorization: `Bearer ${session!.accessToken}`,
+          },
         },
       );
       if (response.ok) {
@@ -93,21 +110,8 @@ const EventDetail = ({ params }: { params: Params }) => {
     return <div>Loading...</div>;
   }
 
-  const formatDateTime = (dateTimeString: string): string => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date(dateTimeString)
-      .toLocaleDateString("fr-FR", options)
-      .replace(",", " à");
-  };
-
-  // @ts-ignore
   const firstStep = journey?.steps?.[0];
+  const isEventStartable = isJoined && new Date() >= new Date(event.startAt);
 
   return (
     <main className="flex min-h-screen flex-col bg-gray">
@@ -170,7 +174,7 @@ const EventDetail = ({ params }: { params: Params }) => {
             <div className="flex items-center gap-1 rounded-md bg-white px-2 py-1 shadow-sm">
               <Icons.agenda />
               <p className="text-sm font-semibold text-gray-200">
-                {formatDateTime(event.startAt)}
+                {format(new Date(event.startAt), "dd/MM/yyyy HH:mm")}
               </p>
             </div>
           </div>
@@ -188,6 +192,14 @@ const EventDetail = ({ params }: { params: Params }) => {
                 name={firstStep.puzzle}
               />
             </>
+          )}
+
+          {isEventStartable && (
+            <div className="mt-4">
+              <Link className="rounded bg-blue-500 px-4 py-2 text-white" href={`${params.id}/start`}>
+                  Lancer l'événement
+              </Link>
+            </div>
           )}
 
           <h2 className="mt-8 text-lg font-semibold text-orange-400">
@@ -219,7 +231,7 @@ const EventDetail = ({ params }: { params: Params }) => {
 
           <div className="mt-8 flex flex-col items-start gap-4 rounded-lg border border-gray-300 p-4 text-white shadow-sm">
             <h2 className="text-lg font-semibold text-orange-400">Parcours</h2>
-            <div className="flex flex-col items-start gap-4 rounded-lg  p-4">
+            <div className="flex flex-col items-start gap-4 rounded-lg p-4">
               <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 p-4 shadow-sm">
                 <ParallaxImage
                   src={
@@ -236,10 +248,12 @@ const EventDetail = ({ params }: { params: Params }) => {
                   <div className="flex items-center">
                     <Rating
                       rating={
-                        journey.comments.reduce(
-                          (sum, comment) => sum + comment.rating,
-                          0,
-                        ) / journey.comments.length
+                        journey.comments.length > 0
+                          ? journey.comments.reduce(
+                              (sum, comment) => sum + (comment.rating ?? 0),
+                              0,
+                            ) / journey.comments.length
+                          : 0
                       }
                       ratingCount={journey.comments.length}
                     />
@@ -257,7 +271,9 @@ const EventDetail = ({ params }: { params: Params }) => {
                   key={comment.id}
                   className="mt-2 rounded-lg border border-gray-600 p-4 shadow-sm"
                 >
-                  <Rating rating={comment.rating} ratingCount={1} />
+                  {comment.rating !== null && (
+                    <Rating rating={comment.rating} ratingCount={1} />
+                  )}
                   <p className=" mt-2 text-sm">{comment.content}</p>
                 </div>
               ))}

@@ -29,13 +29,8 @@ export default withAuth(
 
         if (token) {
           const { payload } = await jwtVerify(token.jwt, secretKey);
-          console.log(payload, "payload in middleware");
-          // todo: check if user is admin
-          if (req.method === "GET") {
-            return true;
-          }
+          return true;
         }
-        // si token et role !admin => return false pour les routes admins (/api/users en GET)
 
         return false;
       },
