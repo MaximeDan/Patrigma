@@ -2,6 +2,8 @@ import React from "react";
 import ParallaxImage from "@/components/clients/ParallaxImage";
 import Rating from "@/components/Rating";
 import { Icons } from "@/components/Icons";
+import { Button } from "@/components/ui/button";
+import { buttonAction } from "@/types/enums/button";
 
 type Params = { id: string };
 
@@ -9,8 +11,18 @@ const JourneyDetail = ({ params }: { params: Params }) => {
   // get journey by id
   return (
     <main className="flex min-h-screen flex-col bg-gray">
-      <ParallaxImage />
-      <div className="relative flex-1 -translate-y-4 rounded-t-2xl px-5 pb-40 pt-14">
+      <div className="relative">
+        <ParallaxImage />
+        <Button
+          action={buttonAction.SET_JOURNEY_ID}
+          ressourceId={parseInt(params.id)}
+          className="absolute right-5 top-5 border-orange bg-gray"
+        >
+          <span>Créer un évènement</span>
+          <Icons.arrowLink fill="#d8552b" className="ml-2" />
+        </Button>
+      </div>
+      <div className="relative flex-1 rounded-t-2xl px-5 pb-40 pt-14">
         <div className="absolute left-4 top-0 flex gap-[6px]">
           <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
             <Icons.dumbbel />

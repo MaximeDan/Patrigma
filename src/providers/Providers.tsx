@@ -11,11 +11,6 @@ export const ReactParallaxProvider = ({ children }: ProviderProps) => {
   return <ParallaxProvider>{children}</ParallaxProvider>;
 };
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-  session: any;
-}
-
-export const AuthProvider = ({ children, session }: AuthProviderProps) => {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+export const NextAuthProvider = ({ children }: ProviderProps) => {
+  return <SessionProvider>{children}</SessionProvider>;
 };

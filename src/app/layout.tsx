@@ -2,8 +2,7 @@ import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/providers/Providers";
-import { Session, getServerSession } from "next-auth";
+import { NextAuthProvider } from "@/providers/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,13 +55,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = (await getServerSession()) as Session;
-
   return (
-    <html lang="fr">
-      <body className={`${inter.className} min-h-screen bg-background`}>
-        <AuthProvider session={session}>{children}</AuthProvider>
-      </body>
-    </html>
+    <NextAuthProvider>
+      <html lang="fr">
+        <body className={`${inter.className} min-h-screen bg-background`}>
+          {children}
+        </body>
+      </html>
+    </NextAuthProvider>
   );
 }

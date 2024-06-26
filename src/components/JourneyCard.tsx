@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Icons } from "./Icons";
 import Rating from "./Rating";
 import { JourneyWithStepsAndComments } from "@/types/journey";
-import { calculateAverageRating } from "@/app/utils/utils";
+import { calculateAverageRating } from "@/utils/utils";
 
 type JourneyCardProps = {
   journey: JourneyWithStepsAndComments;

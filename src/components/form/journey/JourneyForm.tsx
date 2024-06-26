@@ -61,6 +61,7 @@ const JourneyForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
   const { data: session } = useSession();
+  console.log(session, "session in journey form");
 
   const form = useForm<JourneyFormValues>({
     resolver: zodResolver(journeyFormSchema),
@@ -78,7 +79,6 @@ const JourneyForm = () => {
   });
 
   const processForm: SubmitHandler<JourneyFormValues> = async (data) => {
-    console.log("processing form");
     const { steps, ...journey } = data;
 
     const parsedSteps: JourneyStep = JSON.parse(steps);
@@ -146,16 +146,9 @@ const JourneyForm = () => {
     const fields = steps[currentStep].fields;
     const output = await form.trigger(fields as FieldName[]);
     if (!output) return;
-    if (currentStep < steps.length) {
-      if (currentStep === steps.length - 1) {
-        console.log("submitting");
-        // await form.handleSubmit(processForm)();
-      }
-
-      if (currentStep < steps.length - 1) {
-        setCurrentStep((step) => step + 1);
-        setDir("ltr");
-      }
+    if (currentStep < steps.length - 1) {
+      setCurrentStep((step) => step + 1);
+      setDir("ltr");
     }
   };
 

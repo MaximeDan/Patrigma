@@ -31,11 +31,11 @@ const startDocker = async () => {
   console.log("Waiting for PostgreSQL to be ready...");
 
   // Wait for a few seconds to give PostgreSQL time to start
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 15000)); // Increase to 15 seconds
 
   try {
     await execPromise(
-      "docker-compose exec test_db pg_isready -U testuser -h localhost -p 5432",
+      "docker-compose exec -T test_db pg_isready -U testuser -h localhost -p 5432",
     );
     console.log("PostgreSQL is ready!");
   } catch (error) {
@@ -48,17 +48,36 @@ const startDocker = async () => {
 
 const applyMigrations = async () => {
   console.log("Applying migrations...");
-  await execPromise("npx prisma migrate deploy");
+  try {
+    await execPromise("npx prisma migrate deploy");
+    console.log("Migrations applied successfully.");
+  } catch (error) {
+    console.error("Error applying migrations:", error);
+    throw error;
+  }
 };
 
 const seedDatabase = async () => {
   console.log("Seeding database...");
-  await execPromise("npx prisma db seed");
+  try {
+    await execPromise("npx prisma db seed");
+    console.log("Database seeded successfully.");
+  } catch (error) {
+    console.error("Error seeding database:", error);
+    throw error;
+  }
 };
 
 const runTests = async () => {
   console.log("Running tests...");
-  await execPromise("npx jest --colors");
+  try {
+    await execPromise("npx jest --colors");
+    console.log("Tests completed successfully.");
+  } catch (error) {
+    console.error("Tests failed:");
+    console.error(error);
+    process.exit(1);
+  }
 };
 
 const stopDocker = async () => {

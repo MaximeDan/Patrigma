@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUserById, signIn } from "@/services/userService";
 import { NextAuthOptions, Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -38,28 +39,22 @@ export const authOptions = {
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, account, user }) {
+    async jwt({ token, user, account, session }) {
+      console.log("account jwt callback", session);
       if (user) {
-        console.log("Callback JWT IF USER : " + user.id);
-        token.userId = user.id;
-      } else {
-        console.log("User is not defined in this context");
+        // @ts-ignore
+        token.id = user.user.id;
       }
-      console.log("Callback JWT token : ", token);
-      console.log("Callback JWT account : ", account);
-      console.log("Callback JWT user : ", user);
-      console.log("Callback JWT token.userId : ", token.userId);
-
       return token;
     },
+
     // @ts-ignore
-    async session(session: Session, token) {
+    async session(session: Session, token: JWT) {
       // @ts-ignore
-      const dbUser = await getUserById(session.token.id);
+      const dbUser = await getUserById(token?.id || session?.token?.id);
       // @ts-ignore
       session.session.user = {
         id: dbUser?.id,
-        email: dbUser?.email,
         username: dbUser?.username,
         name: dbUser?.name,
         lastName: dbUser?.lastName,

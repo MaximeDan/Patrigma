@@ -107,8 +107,15 @@ const config: Config = {
   // projects: undefined,
 
   // Use this configuration option to add custom reporters to Jest
-  reporters: [
+   reporters: [
     "default",
+    [
+      "jest-junit",
+      {
+        outputDirectory: "./reports/junit",
+        outputName: "js-test-results.xml",
+      },
+    ],
     [
       "jest-html-reporter",
       {
