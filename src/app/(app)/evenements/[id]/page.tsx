@@ -6,6 +6,7 @@ import Rating from "@/components/Rating";
 import { Icons } from "@/components/Icons";
 import TopBar from "@/components/TopBar";
 import dynamic from "next/dynamic";
+import { UserEvent, Event, Journey } from "@prisma/client";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
   ssr: false,
@@ -14,8 +15,8 @@ const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
 type Params = { id: number };
 
 const EventDetail = ({ params }: { params: Params }) => {
-  const [event, setEvent] = useState(null);
-  const [journey, setJourney] = useState(null);
+  const [event, setEvent] = useState<Event | null>(null);
+  const [journey, setJourney] = useState<Journey | null>(null);
   const [isJoined, setIsJoined] = useState(false);
   const [participantCount, setParticipantCount] = useState(0);
 
@@ -36,7 +37,7 @@ const EventDetail = ({ params }: { params: Params }) => {
         setJourney(journeyData.data);
 
         const userJoined = eventData.data.userEvents.some(
-          (userEvent) => userEvent.userId === 7, // Replace 7 with the actual user ID
+          (userEvent: UserEvent) => userEvent.userId === 7, // Replace 7 with the actual user ID
         );
         setIsJoined(userJoined);
       } catch (error) {
@@ -50,7 +51,7 @@ const EventDetail = ({ params }: { params: Params }) => {
   const handleJoin = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event.id}/join/2`, // Replace 1 with the actual user ID
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/join/2`, // Replace 1 with the actual user ID
         {
           method: "POST",
         },
@@ -65,12 +66,11 @@ const EventDetail = ({ params }: { params: Params }) => {
       console.error("Error joining the event:", error);
     }
   };
-  console.log(event?.id, "event ID to leave");
 
   const handleLeave = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event.id}/leave/2`, // Replace 1 with the actual user ID
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/leave/2`, // Replace 1 with the actual user ID
         {
           method: "DELETE",
         },
@@ -90,8 +90,8 @@ const EventDetail = ({ params }: { params: Params }) => {
     return <div>Loading...</div>;
   }
 
-  const formatDateTime = (dateTimeString) => {
-    const options = {
+  const formatDateTime = (dateTimeString: string): string => {
+    const options: Intl.DateTimeFormatOptions = {
       day: "2-digit",
       month: "2-digit",
       year: "2-digit",
@@ -103,8 +103,8 @@ const EventDetail = ({ params }: { params: Params }) => {
       .replace(",", " à");
   };
 
-  const firstStep = journey.steps[0];
-  console.log(firstStep);
+  // @ts-ignore
+  const firstStep = journey?.steps?.[0];
 
   return (
     <>
