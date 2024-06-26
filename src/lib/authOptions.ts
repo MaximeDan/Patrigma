@@ -4,6 +4,8 @@ import { NextAuthOptions } from "next-auth";
 import { readUserByEmail } from "@/repositories/userRepository";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "./prisma";
+import { SignJWT } from "jose";
+import { secretKey } from "@/constant/secret";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -26,7 +28,6 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials): Promise<any> {
         if (!credentials) {
           return null;
@@ -48,8 +49,8 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
+        session.jwt = token.jwt; // Ajouter le JWT encodé à la session
       }
-
       return session;
     },
     async jwt({ token, user }) {
@@ -59,8 +60,19 @@ export const authOptions = {
         token.id = dbUser?.id ?? (user.id as number);
         token.name = dbUser?.name;
         token.email = dbUser?.email;
-      }
 
+        const jwt = await new SignJWT({
+          id: dbUser?.id,
+          name: dbUser?.name,
+          email: dbUser?.email,
+        })
+          .setProtectedHeader({ alg: "HS256" })
+          .setIssuedAt()
+          .setExpirationTime("2h")
+          .sign(secretKey);
+
+        token.jwt = jwt;
+      }
       return token;
     },
   },
