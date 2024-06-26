@@ -1,4 +1,3 @@
-// components/map/LeafletMap.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -12,13 +11,14 @@ import {
 import { CustomPoint } from "@/types/pointsOfInterests";
 import { fetchPoints } from "@/apiClient/fetchPoints";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 interface LeafletMapProps {
   setDragDisabled: (value: boolean) => void;
   form: any;
   updateCoordinates: (latitude: number, longitude: number) => void;
 }
-
+// @ts-ignore todo: fix this @MaximeDan
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({

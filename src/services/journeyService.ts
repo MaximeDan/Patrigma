@@ -11,6 +11,7 @@ import {
   deleteJourney,
   readJourneyWithSteps,
   readJourneyWithComments,
+  readFullJourney,
 } from "../repositories/journeyRepository";
 import { Journey } from "@prisma/client";
 import {
@@ -27,8 +28,10 @@ import { StepWithoutDates } from "@/types/step";
  * @throws NotFoundException
  * @description Retrieves a journey by its id without steps.
  */
-export const getJourneyById = async (id: number): Promise<Journey | null> => {
-  const journey: Journey | null = await readJourney(id);
+export const getJourneyById = async (
+  id: number,
+): Promise<JourneyWithStepsAndComments | null> => {
+  const journey: JourneyWithStepsAndComments | null = await readJourney(id);
   if (!journey) throw new NotFoundException("Journey not found");
 
   return journey;

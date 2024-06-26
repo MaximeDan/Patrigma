@@ -16,7 +16,8 @@ export async function DELETE(
     const eventId: number = Number(params.id);
     const userId: number = Number(params.userId);
 
-    await leaveEvent(eventId, userId);
+    console.log("Leave event", eventId, "for user", userId);
+    await leaveEvent(userId, eventId);
 
     // Using Response instead of NextResponse because NextResponse doesn't handle status 204 actually
     return new Response(null, {

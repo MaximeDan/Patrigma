@@ -16,7 +16,7 @@ const UserEventsFeed = async () => {
   // TODO: use the session
   const events = await fetchUserEvents(7);
   return (
-    <div className="mt-4 flex flex-col items-center justify-center">
+    <div className="mt-4 flex flex-col items-center justify-center px-16">
       <EventUserCarousel events={events} />
     </div>
   );

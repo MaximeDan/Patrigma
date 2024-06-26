@@ -31,7 +31,7 @@ async function main() {
       username: "aliceUserName",
       password: "alicePassword",
       dateOfBirth: new Date("1990-01-01"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/300",
       userRoles: {
         create: [
           {
@@ -63,7 +63,7 @@ async function main() {
       username: "bobUserName",
       password: "bobPassword",
       dateOfBirth: new Date("1999-01-01"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/301",
       userRoles: {
         create: [
           {
@@ -88,7 +88,7 @@ async function main() {
       username: "charlieUserName",
       password: "charliePassword",
       dateOfBirth: new Date("1985-05-05"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/302",
       userRoles: {
         create: [
           {
@@ -113,7 +113,7 @@ async function main() {
       username: "davidUserName",
       password: "davidPassword",
       dateOfBirth: new Date("1995-07-15"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/303",
       userRoles: {
         create: [
           {
@@ -138,7 +138,7 @@ async function main() {
       username: "emmaUserName",
       password: "emmaPassword",
       dateOfBirth: new Date("1992-09-20"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/304",
       userRoles: {
         create: [
           {
@@ -163,7 +163,7 @@ async function main() {
       username: "frankUserName",
       password: "frankPassword",
       dateOfBirth: new Date("1988-03-10"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/305",
       userRoles: {
         create: [
           {
@@ -188,7 +188,7 @@ async function main() {
       username: "graceUserName",
       password: "gracePassword",
       dateOfBirth: new Date("1991-11-25"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/306",
       userRoles: {
         create: [
           {
@@ -213,7 +213,7 @@ async function main() {
       username: "henryUserName",
       password: "henryPassword",
       dateOfBirth: new Date("1994-12-05"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/307",
       userRoles: {
         create: [
           {
@@ -238,7 +238,7 @@ async function main() {
       username: "isabellaUserName",
       password: "isabellaPassword",
       dateOfBirth: new Date("1993-06-30"),
-      avatar: "https://picsum.photos/seed/picsum/200/300",
+      avatar: "https://picsum.photos/200/308",
       userRoles: {
         create: [
           {
@@ -258,29 +258,30 @@ async function main() {
     update: {},
     create: {
       authorId: alice.id,
-      title: "Treasure Hunt in Old Paris",
+      title: "Chasse au trésor dans le Vieux Paris",
       description:
-        "Discover the historical heritage of Paris by solving puzzles and following clues to find the hidden treasure.",
-      requirement: "No specific skills required. Suitable for all ages.",
-      treasure: "A chest filled with gold coins and historical souvenirs.",
+        "Découvrez le patrimoine historique de Paris en résolvant des énigmes et en suivant des indices pour trouver le trésor caché.",
+      requirement:
+        "Aucune compétence spécifique requise. Convient à tous les âges.",
+      treasure: "Un coffre rempli de pièces d'or et de souvenirs historiques.",
       estimatedDistance: 5,
       estimatedDuration: 2,
       cluesDifficulty: 2,
       physicalDifficulty: 1,
       lastCompletion: new Date("2021-01-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "Partiellement accessible",
+      partiallySighted: "Partiellement accessible",
+      partiallyDeaf: "Partiellement accessible",
+      cognitivelyImpaired: "Partiellement accessible",
       steps: {
         create: [
           {
             puzzle:
-              "Which famous tower in Paris is known for its iron structure?",
-            answer: "Eiffel Tower",
-            hint: "It was built by Gustave Eiffel for the 1889 Universal Exposition.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+              "Quelle célèbre tour de Paris est connue pour sa structure en fer?",
+            answer: "Tour Eiffel",
+            hint: "Elle a été construite par Gustave Eiffel pour l'Exposition universelle de 1889.",
+            picturePuzzle: "https://picsum.photos/300/200?random=1",
+            pictureHint: "https://picsum.photos/300/201?random=2",
             latitude: 48.8584,
             longitude: 2.2945,
             address: "Champ de Mars, 5 Avenue Anatole France",
@@ -290,11 +291,11 @@ async function main() {
             stepNumber: 1,
           },
           {
-            puzzle: "Which famous museum houses the Mona Lisa?",
-            answer: "Louvre Museum",
-            hint: "It is located in the Louvre Palace, the former residence of the French kings.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            puzzle: "Quel célèbre musée abrite la Joconde?",
+            answer: "Musée du Louvre",
+            hint: "Il est situé dans le Palais du Louvre, l'ancienne résidence des rois de France.",
+            picturePuzzle: "https://picsum.photos/300/202?random=3",
+            pictureHint: "https://picsum.photos/300/203?random=4",
             latitude: 48.8606,
             longitude: 2.3376,
             address: "Rue de Rivoli",
@@ -305,11 +306,11 @@ async function main() {
           },
           {
             puzzle:
-              "In which district of Paris is the Notre-Dame Cathedral located?",
+              "Dans quel quartier de Paris se trouve la Cathédrale Notre-Dame?",
             answer: "Île de la Cité",
-            hint: "It is located on an island in the middle of the Seine River.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Elle est située sur une île au milieu de la Seine.",
+            picturePuzzle: "https://picsum.photos/300/204?random=5",
+            pictureHint: "https://picsum.photos/300/205?random=6",
             latitude: 48.853,
             longitude: 2.3499,
             address: "6 Parvis Notre-Dame - Pl. Jean-Paul II",
@@ -320,11 +321,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous cabaret is known for its dance and music shows?",
+              "Quel célèbre cabaret est connu pour ses spectacles de danse et de musique?",
             answer: "Moulin Rouge",
-            hint: "It is located in the Pigalle district, known for its lively nightlife.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Il est situé dans le quartier de Pigalle, connu pour sa vie nocturne animée.",
+            picturePuzzle: "https://picsum.photos/300/206?random=7",
+            pictureHint: "https://picsum.photos/300/207?random=8",
             latitude: 48.8842,
             longitude: 2.3323,
             address: "82 Boulevard de Clichy",
@@ -335,11 +336,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous monument commemorates the French soldiers who died in World War I?",
+              "Quel célèbre monument commémore les soldats français morts pendant la Première Guerre mondiale?",
             answer: "Arc de Triomphe",
-            hint: "It is located at the end of the Champs-Élysées avenue.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Il est situé au bout de l'avenue des Champs-Élysées.",
+            picturePuzzle: "https://picsum.photos/300/208?random=9",
+            pictureHint: "https://picsum.photos/300/209?random=10",
             latitude: 48.8738,
             longitude: 2.295,
             address: "Place Charles de Gaulle",
@@ -350,11 +351,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous cathedral is located on the highest point in Paris?",
-            answer: "Sacré-Cœur Basilica",
-            hint: "It offers a panoramic view of the city from its dome.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+              "Quelle célèbre basilique est située sur le point culminant de Paris?",
+            answer: "Basilique du Sacré-Cœur",
+            hint: "Elle offre une vue panoramique sur la ville depuis son dôme.",
+            picturePuzzle: "https://picsum.photos/300/210?random=11",
+            pictureHint: "https://picsum.photos/300/211?random=12",
             latitude: 48.8867,
             longitude: 2.3431,
             address: "35 Rue du Chevalier de la Barre",
@@ -365,11 +366,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous avenue in Paris is known for its luxury shops and theaters?",
+              "Quelle célèbre avenue de Paris est connue pour ses boutiques de luxe et ses théâtres?",
             answer: "Champs-Élysées",
-            hint: "It is often called 'the most beautiful avenue in the world'.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Elle est souvent appelée 'la plus belle avenue du monde'.",
+            picturePuzzle: "https://picsum.photos/300/212?random=13",
+            pictureHint: "https://picsum.photos/300/213?random=14",
             latitude: 48.8698,
             longitude: 2.3078,
             address: "Avenue des Champs-Élysées",
@@ -380,11 +381,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous opera house in Paris is known for its grand architecture?",
+              "Quel célèbre opéra de Paris est connu pour son architecture grandiose?",
             answer: "Palais Garnier",
-            hint: "It was designed by Charles Garnier and opened in 1875.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Il a été conçu par Charles Garnier et ouvert en 1875.",
+            picturePuzzle: "https://picsum.photos/300/214?random=15",
+            pictureHint: "https://picsum.photos/300/215?random=16",
             latitude: 48.8719,
             longitude: 2.3314,
             address: "Place de l'Opéra",
@@ -403,28 +404,30 @@ async function main() {
     update: {},
     create: {
       authorId: alice.id,
-      title: "Treasure Hunt in the Latin Quarter",
+      title: "Chasse au trésor dans le Quartier Latin",
       description:
-        "Explore the Latin Quarter in Paris by solving puzzles and following clues to find the hidden treasure.",
-      requirement: "No specific skills required. Suitable for all ages.",
-      treasure: "A chest filled with gold coins and cultural souvenirs.",
+        "Explorez le Quartier Latin à Paris en résolvant des énigmes et en suivant des indices pour trouver le trésor caché.",
+      requirement:
+        "Aucune compétence spécifique requise. Convient à tous les âges.",
+      treasure: "Un coffre rempli de pièces d'or et de souvenirs culturels.",
       estimatedDistance: 2,
       estimatedDuration: 1,
       cluesDifficulty: 2,
       physicalDifficulty: 1,
       lastCompletion: new Date("2021-02-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "Partiellement accessible",
+      partiallySighted: "Partiellement accessible",
+      partiallyDeaf: "Partiellement accessible",
+      cognitivelyImpaired: "Partiellement accessible",
       steps: {
         create: [
           {
-            puzzle: "Which famous university is located in the Latin Quarter?",
+            puzzle:
+              "Quelle célèbre université est située dans le Quartier Latin?",
             answer: "Sorbonne",
-            hint: "It was founded in 1257 and is one of the oldest universities in the world.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Elle a été fondée en 1257 et est l'une des plus anciennes universités du monde.",
+            picturePuzzle: "https://picsum.photos/300/216?random=17",
+            pictureHint: "https://picsum.photos/300/217?random=18",
             latitude: 48.8462,
             longitude: 2.3444,
             address: "1 Rue Victor Cousin",
@@ -434,14 +437,14 @@ async function main() {
             stepNumber: 1,
           },
           {
-            puzzle: "Which famous monument is located near the Sorbonne?",
-            answer: "Pantheon",
-            hint: "It was built in 1790 and houses the tombs of famous personalities.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            puzzle: "Quel célèbre monument est situé près de la Sorbonne?",
+            answer: "Panthéon",
+            hint: "Il a été construit en 1790 et abrite les tombes de personnalités célèbres.",
+            picturePuzzle: "https://picsum.photos/300/218?random=19",
+            pictureHint: "https://picsum.photos/300/219?random=20",
             latitude: 48.8466,
             longitude: 2.3469,
-            address: "Place du Pantheon",
+            address: "Place du Panthéon",
             city: "Paris",
             postalCode: "75005",
             country: "France",
@@ -457,29 +460,30 @@ async function main() {
     update: {},
     create: {
       authorId: alice.id,
-      title: "Treasure Hunt through the Heritage of Rouen",
+      title: "Chasse au trésor à travers le patrimoine de Rouen",
       description:
-        "Embark on a discovery of Rouen's historic and cultural heritage by solving puzzles and following clues to find the hidden treasure.",
-      requirement: "No specific skills required. Suitable for all ages.",
-      treasure: "A chest filled with gold coins and historical souvenirs.",
+        "Partez à la découverte du patrimoine historique et culturel de Rouen en résolvant des énigmes et en suivant des indices pour trouver le trésor caché.",
+      requirement:
+        "Aucune compétence spécifique requise. Convient à tous les âges.",
+      treasure: "Un coffre rempli de pièces d'or et de souvenirs historiques.",
       estimatedDistance: 5,
       estimatedDuration: 2.5,
       cluesDifficulty: 3,
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-03-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "Partiellement accessible",
+      partiallySighted: "Partiellement accessible",
+      partiallyDeaf: "Partiellement accessible",
+      cognitivelyImpaired: "Partiellement accessible",
       steps: {
         create: [
           {
             puzzle:
-              "Which famous monument is located on the Place du Vieux-Marché?",
-            answer: "Saint Joan of Arc Church",
-            hint: "This church is dedicated to Joan of Arc and is located on the site where she was burned at the stake.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+              "Quel célèbre monument est situé sur la Place du Vieux-Marché?",
+            answer: "Église Sainte-Jeanne-d'Arc",
+            hint: "Cette église est dédiée à Jeanne d'Arc et est située sur le site où elle a été brûlée vive.",
+            picturePuzzle: "https://picsum.photos/300/220?random=21",
+            pictureHint: "https://picsum.photos/300/221?random=22",
             latitude: 49.4421,
             longitude: 1.0939,
             address: "Place du Vieux-Marché",
@@ -490,11 +494,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous museum is located on the left bank of the Seine?",
-            answer: "Museum of Fine Arts of Rouen",
-            hint: "This museum houses an important collection of artworks from the Middle Ages to the 21st century.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+              "Quel célèbre musée est situé sur la rive gauche de la Seine?",
+            answer: "Musée des Beaux-Arts de Rouen",
+            hint: "Ce musée abrite une importante collection d'œuvres d'art du Moyen Âge au XXIe siècle.",
+            picturePuzzle: "https://picsum.photos/300/222?random=23",
+            pictureHint: "https://picsum.photos/300/223?random=24",
             latitude: 49.4427,
             longitude: 1.0931,
             address: "Esplanade Marcel Duchamp",
@@ -504,11 +508,12 @@ async function main() {
             stepNumber: 2,
           },
           {
-            puzzle: "Which famous monument is located on the Cathedral Square?",
-            answer: "Rouen Cathedral",
-            hint: "This cathedral is one of the largest Gothic structures in Europe and has inspired many artists, including Claude Monet.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            puzzle:
+              "Quel célèbre monument est situé sur la Place de la Cathédrale?",
+            answer: "Cathédrale de Rouen",
+            hint: "Cette cathédrale est l'une des plus grandes structures gothiques d'Europe et a inspiré de nombreux artistes, dont Claude Monet.",
+            picturePuzzle: "https://picsum.photos/300/224?random=25",
+            pictureHint: "https://picsum.photos/300/225?random=26",
             latitude: 49.44,
             longitude: 1.0949,
             address: "Place de la Cathédrale",
@@ -518,11 +523,12 @@ async function main() {
             stepNumber: 3,
           },
           {
-            puzzle: "Which famous square is located near the Rouen Cathedral?",
+            puzzle:
+              "Quelle célèbre place est située près de la Cathédrale de Rouen?",
             answer: "Place du Général de Gaulle",
-            hint: "This square is named after the former French president and is a popular meeting place in Rouen.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Cette place est nommée d'après l'ancien président français et est un lieu de rencontre populaire à Rouen.",
+            picturePuzzle: "https://picsum.photos/300/226?random=27",
+            pictureHint: "https://picsum.photos/300/227?random=28",
             latitude: 49.4407,
             longitude: 1.0937,
             address: "Place du Général de Gaulle",
@@ -532,11 +538,12 @@ async function main() {
             stepNumber: 4,
           },
           {
-            puzzle: "Which famous clock is located in the Gros-Horloge street?",
+            puzzle:
+              "Quelle célèbre horloge est située dans la rue du Gros-Horloge?",
             answer: "Gros-Horloge",
-            hint: "This astronomical clock is one of the main attractions in Rouen and dates back to the 14th century.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Cette horloge astronomique est l'une des principales attractions de Rouen et date du XIVe siècle.",
+            picturePuzzle: "https://picsum.photos/300/228?random=29",
+            pictureHint: "https://picsum.photos/300/229?random=30",
             latitude: 49.4402,
             longitude: 1.0941,
             address: "Rue du Gros-Horloge",
@@ -546,11 +553,11 @@ async function main() {
             stepNumber: 5,
           },
           {
-            puzzle: "Which famous square is located near the Gros-Horloge?",
+            puzzle: "Quelle célèbre place est située près du Gros-Horloge?",
             answer: "Place de la Pucelle",
-            hint: "This square is named after Joan of Arc, also known as the Maid of Orleans.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Cette place est nommée d'après Jeanne d'Arc, également connue sous le nom de la Pucelle d'Orléans.",
+            picturePuzzle: "https://picsum.photos/300/230?random=31",
+            pictureHint: "https://picsum.photos/300/231?random=32",
             latitude: 49.4404,
             longitude: 1.0934,
             address: "Place de la Pucelle",
@@ -561,11 +568,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous street is known for its half-timbered houses?",
+              "Quelle célèbre rue est connue pour ses maisons à colombages?",
             answer: "Rue du Gros-Horloge",
-            hint: "This street is one of the most picturesque in Rouen and is lined with beautiful half-timbered houses.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Cette rue est l'une des plus pittoresques de Rouen et est bordée de belles maisons à colombages.",
+            picturePuzzle: "https://picsum.photos/300/232?random=33",
+            pictureHint: "https://picsum.photos/300/233?random=34",
             latitude: 49.4402,
             longitude: 1.0941,
             address: "Rue du Gros-Horloge",
@@ -576,11 +583,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous square is located near the Rue du Gros-Horloge?",
+              "Quelle célèbre place est située près de la rue du Gros-Horloge?",
             answer: "Place de la Calende",
-            hint: "This square is a lively area in Rouen with many shops, cafes, and restaurants.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Cette place est un quartier animé de Rouen avec de nombreux magasins, cafés et restaurants.",
+            picturePuzzle: "https://picsum.photos/300/234?random=35",
+            pictureHint: "https://picsum.photos/300/235?random=36",
             latitude: 49.4409,
             longitude: 1.0936,
             address: "Place de la Calende",
@@ -599,29 +606,30 @@ async function main() {
     update: {},
     create: {
       authorId: alice.id,
-      title: "Treasure Hunt in Old Nice",
+      title: "Chasse au trésor dans le Vieux Nice",
       description:
-        "Discover the historical heritage of Nice by solving puzzles and following clues to find the hidden treasure.",
-      requirement: "No particular skills required. Suitable for all ages.",
-      treasure: "A chest filled with gold coins and historical souvenirs.",
+        "Découvrez le patrimoine historique de Nice en résolvant des énigmes et en suivant des indices pour trouver le trésor caché.",
+      requirement:
+        "Aucune compétence particulière requise. Convient à tous les âges.",
+      treasure: "Un coffre rempli de pièces d'or et de souvenirs historiques.",
       estimatedDistance: 4,
       estimatedDuration: 2,
       cluesDifficulty: 3,
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-04-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "Partiellement accessible",
+      partiallySighted: "Partiellement accessible",
+      partiallyDeaf: "Partiellement accessible",
+      cognitivelyImpaired: "Partiellement accessible",
       steps: {
         create: [
           {
             puzzle:
-              "Which famous monument is located on the Promenade des Anglais?",
+              "Quel célèbre monument est situé sur la Promenade des Anglais?",
             answer: "Hôtel Negresco",
-            hint: "This iconic hotel is a symbol of the city of Nice.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Cet hôtel emblématique est un symbole de la ville de Nice.",
+            picturePuzzle: "https://picsum.photos/300/236?random=37",
+            pictureHint: "https://picsum.photos/300/237?random=38",
             latitude: 43.6957,
             longitude: 7.2706,
             address: "37 Promenade des Anglais",
@@ -632,11 +640,11 @@ async function main() {
           },
           {
             puzzle:
-              "Which famous park is located at the top of the Castle Hill?",
+              "Quel célèbre parc est situé au sommet de la Colline du Château?",
             answer: "Parc de la Colline du Château",
-            hint: "This park offers a panoramic view of the city of Nice.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Ce parc offre une vue panoramique sur la ville de Nice.",
+            picturePuzzle: "https://picsum.photos/300/238?random=39",
+            pictureHint: "https://picsum.photos/300/239?random=40",
             latitude: 43.6965,
             longitude: 7.2827,
             address: "Montée du Château",
@@ -646,11 +654,11 @@ async function main() {
             stepNumber: 2,
           },
           {
-            puzzle: "Which famous museum is located on Place Garibaldi?",
+            puzzle: "Quel célèbre musée est situé sur la Place Garibaldi?",
             answer: "Musée d'Art Moderne et d'Art Contemporain",
-            hint: "This museum houses a collection of modern and contemporary art.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Ce musée abrite une collection d'art moderne et contemporain.",
+            picturePuzzle: "https://picsum.photos/300/240?random=41",
+            pictureHint: "https://picsum.photos/300/241?random=42",
             latitude: 43.7037,
             longitude: 7.2794,
             address: "Place Yves Klein",
@@ -660,11 +668,11 @@ async function main() {
             stepNumber: 3,
           },
           {
-            puzzle: "Which famous market is located on Place Masséna?",
+            puzzle: "Quel célèbre marché est situé sur la Place Masséna?",
             answer: "Marché aux Fleurs",
-            hint: "This colorful market offers a wide variety of flowers and plants.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Ce marché coloré offre une grande variété de fleurs et de plantes.",
+            picturePuzzle: "https://picsum.photos/300/242?random=43",
+            pictureHint: "https://picsum.photos/300/243?random=44",
             latitude: 43.6972,
             longitude: 7.2706,
             address: "Place Masséna",
@@ -683,28 +691,29 @@ async function main() {
     update: {},
     create: {
       authorId: alice.id,
-      title: "Treasure Hunt through the Heritage of Toulouse",
+      title: "Chasse au trésor à travers le patrimoine de Toulouse",
       description:
-        "Embark on a journey to discover the historical and cultural heritage of Toulouse by solving puzzles and following clues to find the hidden treasure.",
-      requirement: "No particular skills required. Suitable for all ages.",
-      treasure: "A chest filled with gold coins and historical souvenirs.",
+        "Partez à la découverte du patrimoine historique et culturel de Toulouse en résolvant des énigmes et en suivant des indices pour trouver le trésor caché.",
+      requirement:
+        "Aucune compétence particulière requise. Convient à tous les âges.",
+      treasure: "Un coffre rempli de pièces d'or et de souvenirs historiques.",
       estimatedDistance: 5,
       estimatedDuration: 2.5,
       cluesDifficulty: 3,
       physicalDifficulty: 2,
       lastCompletion: new Date("2021-05-01"),
-      mobilityImpaired: "Partially accessible",
-      partiallySighted: "Partially accessible",
-      partiallyDeaf: "Partially accessible",
-      cognitivelyImpaired: "Partially accessible",
+      mobilityImpaired: "Partiellement accessible",
+      partiallySighted: "Partiellement accessible",
+      partiallyDeaf: "Partiellement accessible",
+      cognitivelyImpaired: "Partiellement accessible",
       steps: {
         create: [
           {
-            puzzle: "Which famous monument is located on Place du Capitole?",
+            puzzle: "Quel célèbre monument est situé sur la Place du Capitole?",
             answer: "Capitole de Toulouse",
-            hint: "The Capitole is the city hall of Toulouse and also houses the Théâtre du Capitole.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Le Capitole est l'hôtel de ville de Toulouse et abrite également le Théâtre du Capitole.",
+            picturePuzzle: "https://picsum.photos/300/244?random=45",
+            pictureHint: "https://picsum.photos/300/245?random=46",
             latitude: 43.6045,
             longitude: 1.444,
             address: "Place du Capitole",
@@ -714,11 +723,11 @@ async function main() {
             stepNumber: 1,
           },
           {
-            puzzle: "Which famous museum is located on Allées Jules Guesde?",
+            puzzle: "Quel célèbre musée est situé sur les Allées Jules Guesde?",
             answer: "Musée des Augustins",
-            hint: "The Musée des Augustins is an art museum located in a former Augustinian convent.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "Le Musée des Augustins est un musée d'art situé dans un ancien couvent augustinien.",
+            picturePuzzle: "https://picsum.photos/300/246?random=47",
+            pictureHint: "https://picsum.photos/300/247?random=48",
             latitude: 43.5992,
             longitude: 1.4436,
             address: "21 Rue de Metz",
@@ -728,11 +737,12 @@ async function main() {
             stepNumber: 2,
           },
           {
-            puzzle: "Which famous monument is located on Place Saint-Sernin?",
+            puzzle:
+              "Quel célèbre monument est situé sur la Place Saint-Sernin?",
             answer: "Basilique Saint-Sernin",
-            hint: "The Basilique Saint-Sernin is a Romanesque church and an important pilgrimage site.",
-            picturePuzzle: "https://picsum.photos/seed/picsum/200/300",
-            pictureHint: "https://picsum.photos/seed/picsum/200/300",
+            hint: "La Basilique Saint-Sernin est une église romane et un important site de pèlerinage.",
+            picturePuzzle: "https://picsum.photos/300/248?random=49",
+            pictureHint: "https://picsum.photos/300/249?random=50",
             latitude: 43.611,
             longitude: 1.4489,
             address: "Place Saint-Sernin",
@@ -752,12 +762,12 @@ async function main() {
     create: {
       authorId: alice.id,
       journeyId: journey1.id,
-      title: "Amazing Race",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Course Incroyable",
+      image: "https://picsum.photos/400/200?random=51",
       numberPlayerMax: 10,
       numberPlayerMin: 1,
       description:
-        "Join us for an exciting race filled with challenges and puzzles!",
+        "Rejoignez-nous pour une course excitante remplie de défis et d'énigmes!",
       accessCode: "1234",
       startAt: new Date("2024-05-01"),
       endAt: new Date("2024-05-01"),
@@ -770,11 +780,12 @@ async function main() {
     create: {
       authorId: bob.id,
       journeyId: journey1.id,
-      title: "Escape Room Adventure",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Aventure Escape Room",
+      image: "https://picsum.photos/400/201?random=52",
       numberPlayerMax: 5,
       numberPlayerMin: 1,
-      description: "Can you solve the puzzles and escape the room in time?",
+      description:
+        "Pouvez-vous résoudre les énigmes et échapper à la pièce à temps?",
       accessCode: "5678",
       startAt: new Date("2024-06-01"),
       endAt: new Date("2024-06-01"),
@@ -787,12 +798,12 @@ async function main() {
     create: {
       authorId: bob.id,
       journeyId: journey2.id,
-      title: "Treasure Hunt",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Chasse au Trésor",
+      image: "https://picsum.photos/400/202?random=53",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
       description:
-        "Embark on a thrilling treasure hunt and uncover hidden secrets!",
+        "Lancez-vous dans une chasse au trésor palpitante et découvrez des secrets cachés!",
       accessCode: "abcd",
       startAt: new Date("2024-07-01"),
       endAt: new Date("2024-07-01"),
@@ -806,11 +817,11 @@ async function main() {
       authorId: charlie.id,
       journeyId: journey2.id,
       title: "Mystery Mansion",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      image: "https://picsum.photos/400/203?random=54",
       numberPlayerMax: 12,
       numberPlayerMin: 3,
       description:
-        "Explore the haunted mansion and solve the mystery that lies within!",
+        "Explorez le manoir hanté et résolvez le mystère qui s'y cache!",
       accessCode: "efgh",
       startAt: new Date("2024-08-01"),
       endAt: new Date("2024-08-01"),
@@ -823,12 +834,12 @@ async function main() {
     create: {
       authorId: david.id,
       journeyId: journey2.id,
-      title: "Puzzle Challenge",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Défi Enigme",
+      image: "https://picsum.photos/400/204?random=55",
       numberPlayerMax: 6,
       numberPlayerMin: 1,
       description:
-        "Test your puzzle-solving skills in this challenging adventure!",
+        "Testez vos compétences en résolution d'énigmes dans cette aventure stimulante!",
       accessCode: "ijkl",
       startAt: new Date("2024-09-01"),
       endAt: new Date("2024-09-01"),
@@ -841,12 +852,12 @@ async function main() {
     create: {
       authorId: emma.id,
       journeyId: journey3.id,
-      title: "Outdoor Expedition",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Expédition en Plein Air",
+      image: "https://picsum.photos/400/205?random=56",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
       description:
-        "Embark on an exciting outdoor expedition and conquer nature's challenges!",
+        "Partez pour une expédition en plein air excitante et relevez les défis de la nature!",
       accessCode: "mnop",
       startAt: new Date("2024-10-01"),
       endAt: new Date("2024-10-01"),
@@ -859,12 +870,12 @@ async function main() {
     create: {
       authorId: frank.id,
       journeyId: journey3.id,
-      title: "City Scavenger Hunt",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Chasse au Trésor Urbain",
+      image: "https://picsum.photos/400/206?random=57",
       numberPlayerMax: 10,
       numberPlayerMin: 1,
       description:
-        "Explore the city and solve clues to complete the ultimate scavenger hunt!",
+        "Explorez la ville et résolvez des indices pour compléter la chasse au trésor ultime!",
       accessCode: "qrst",
       startAt: new Date("2024-11-01"),
       endAt: new Date("2024-11-01"),
@@ -877,12 +888,12 @@ async function main() {
     create: {
       authorId: frank.id,
       journeyId: journey3.id,
-      title: "Team Building Challenge",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Défi de Cohésion d'Équipe",
+      image: "https://picsum.photos/400/207?random=58",
       numberPlayerMax: 4,
       numberPlayerMin: 1,
       description:
-        "Enhance teamwork and communication skills in this thrilling team building challenge!",
+        "Renforcez les compétences en travail d'équipe et en communication dans ce défi de cohésion d'équipe passionnant!",
       accessCode: "uvwx",
       startAt: new Date("2024-12-01"),
       endAt: new Date("2024-12-01"),
@@ -895,12 +906,12 @@ async function main() {
     create: {
       authorId: henry.id,
       journeyId: journey4.id,
-      title: "Outdoor Escape",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Évasion en Plein Air",
+      image: "https://picsum.photos/400/208?random=59",
       numberPlayerMax: 6,
       numberPlayerMin: 1,
       description:
-        "Escape the ordinary and immerse yourself in an unforgettable outdoor adventure!",
+        "Échappez à l'ordinaire et plongez dans une aventure en plein air inoubliable!",
       accessCode: "yzab",
       startAt: new Date("2024-05-01"),
       endAt: new Date("2024-05-01"),
@@ -913,12 +924,12 @@ async function main() {
     create: {
       authorId: henry.id,
       journeyId: journey4.id,
-      title: "Mysterious Island",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Île Mystérieuse",
+      image: "https://picsum.photos/400/209?random=60",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
       description:
-        "Unravel the secrets of a mysterious island in this thrilling adventure!",
+        "Découvrez les secrets d'une île mystérieuse dans cette aventure palpitante!",
       accessCode: "cdef",
       startAt: new Date("2024-06-01"),
       endAt: new Date("2024-06-01"),
@@ -931,12 +942,12 @@ async function main() {
     create: {
       authorId: emma.id,
       journeyId: journey4.id,
-      title: "Enchanted Forest",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Forêt Enchantée",
+      image: "https://picsum.photos/400/210?random=61",
       numberPlayerMax: 12,
       numberPlayerMin: 3,
       description:
-        "Step into the enchanted forest and embark on a magical journey like no other!",
+        "Entrez dans la forêt enchantée et embarquez pour un voyage magique comme aucun autre!",
       accessCode: "ghij",
       startAt: new Date("2024-07-01"),
       endAt: new Date("2024-07-01"),
@@ -949,12 +960,12 @@ async function main() {
     create: {
       authorId: charlie.id,
       journeyId: journey5.id,
-      title: "Epic Quest",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Quête Épique",
+      image: "https://picsum.photos/400/211?random=62",
       numberPlayerMax: 10,
       numberPlayerMin: 1,
       description:
-        "Embark on an epic quest filled with challenges, puzzles, and adventure!",
+        "Partez pour une quête épique remplie de défis, d'énigmes et d'aventures!",
       accessCode: "klmn",
       startAt: new Date("2024-08-01"),
       endAt: new Date("2024-08-01"),
@@ -967,12 +978,12 @@ async function main() {
     create: {
       authorId: bob.id,
       journeyId: journey5.id,
-      title: "Mystic Temple",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Temple Mystique",
+      image: "https://picsum.photos/400/212?random=63",
       numberPlayerMax: 8,
       numberPlayerMin: 2,
       description:
-        "Enter the mystic temple and solve ancient riddles to unlock its secrets!",
+        "Entrez dans le temple mystique et résolvez des énigmes anciennes pour découvrir ses secrets!",
       accessCode: "opqr",
       startAt: new Date("2024-09-01"),
       endAt: new Date("2024-09-01"),
@@ -985,12 +996,12 @@ async function main() {
     create: {
       authorId: david.id,
       journeyId: journey5.id,
-      title: "Virtual Reality Adventure",
-      image: "https://picsum.photos/seed/picsum/200/300",
+      title: "Aventure en Réalité Virtuelle",
+      image: "https://picsum.photos/400/213?random=64",
       numberPlayerMax: 6,
       numberPlayerMin: 1,
       description:
-        "Immerse yourself in a thrilling virtual reality adventure like never before!",
+        "Plongez dans une aventure en réalité virtuelle passionnante comme jamais auparavant!",
       accessCode: "stuv",
       startAt: new Date("2024-10-01"),
       endAt: new Date("2024-10-01"),
@@ -1065,7 +1076,7 @@ async function main() {
     update: {},
     create: {
       authorId: bob.id,
-      content: "Great experience! Loved every moment of it.",
+      content: "Expérience géniale! J'ai adoré chaque instant.",
       rating: 4,
       journeyId: journey1.id,
     },
@@ -1076,7 +1087,7 @@ async function main() {
     update: {},
     create: {
       authorId: charlie.id,
-      content: "Highly recommended! The challenges were engaging and fun.",
+      content: "Très recommandé! Les défis étaient engageants et amusants.",
       rating: 5,
       journeyId: journey1.id,
     },
@@ -1087,7 +1098,7 @@ async function main() {
     update: {},
     create: {
       authorId: david.id,
-      content: "Amazing race! Can't wait to participate again.",
+      content: "Course incroyable! J'ai hâte de participer à nouveau.",
       rating: 4,
       journeyId: journey1.id,
     },
@@ -1099,7 +1110,7 @@ async function main() {
     create: {
       authorId: alice.id,
       content:
-        "The treasure hunt was so much fun! We found the hidden treasure!",
+        "La chasse au trésor était tellement amusante! Nous avons trouvé le trésor caché!",
       rating: 5,
       journeyId: journey2.id,
     },
@@ -1110,7 +1121,8 @@ async function main() {
     update: {},
     create: {
       authorId: grace.id,
-      content: "The puzzles were challenging but rewarding. Highly recommend!",
+      content:
+        "Les énigmes étaient difficiles mais gratifiantes. Je recommande vivement!",
       rating: 4,
       journeyId: journey2.id,
     },
@@ -1122,7 +1134,7 @@ async function main() {
     create: {
       authorId: emma.id,
       content:
-        "The treasure hunt was a great team-building activity. Thumbs up!",
+        "La chasse au trésor était une excellente activité de team-building. Pouces en l'air!",
       rating: 5,
       journeyId: journey2.id,
     },
@@ -1134,7 +1146,7 @@ async function main() {
     create: {
       authorId: david.id,
       content:
-        "The outdoor expedition was an amazing adventure! Loved every moment.",
+        "L'expédition en plein air était une aventure incroyable! J'ai adoré chaque moment.",
       rating: 5,
       journeyId: journey3.id,
     },
@@ -1146,7 +1158,7 @@ async function main() {
     create: {
       authorId: frank.id,
       content:
-        "The city scavenger hunt was so much fun! We explored hidden gems in the city.",
+        "La chasse au trésor en ville était tellement amusante! Nous avons exploré des trésors cachés dans la ville.",
       rating: 4,
       journeyId: journey3.id,
     },
@@ -1158,7 +1170,7 @@ async function main() {
     create: {
       authorId: charlie.id,
       content:
-        "The team building challenge was a great way to bond with colleagues. Highly recommend!",
+        "Le défi de team-building était un excellent moyen de renforcer les liens avec les collègues. Je recommande vivement!",
       rating: 5,
       journeyId: journey3.id,
     },
@@ -1169,7 +1181,8 @@ async function main() {
     update: {},
     create: {
       authorId: grace.id,
-      content: "The outdoor escape was disappointing. Not worth the time.",
+      content:
+        "L'évasion en plein air était décevante. Pas la peine de perdre son temps.",
       rating: 2,
       journeyId: journey4.id,
     },
@@ -1181,7 +1194,7 @@ async function main() {
     create: {
       authorId: isabella.id,
       content:
-        "The mysterious island was underwhelming. Expected more excitement.",
+        "L'île mystérieuse était décevante. Je m'attendais à plus d'excitation.",
       rating: 3,
       journeyId: journey4.id,
     },
@@ -1192,7 +1205,7 @@ async function main() {
     update: {},
     create: {
       authorId: charlie.id,
-      content: "The enchanted forest was a letdown. Lackluster experience.",
+      content: "La forêt enchantée était décevante. Une expérience insipide.",
       rating: 2,
       journeyId: journey4.id,
     },
@@ -1204,7 +1217,7 @@ async function main() {
     create: {
       authorId: isabella.id,
       content:
-        "The epic quest was absolutely thrilling! The challenges were mind-bending.",
+        "La quête épique était absolument palpitante! Les défis étaient incroyables.",
       rating: 5,
       journeyId: journey5.id,
     },
@@ -1216,7 +1229,7 @@ async function main() {
     create: {
       authorId: henry.id,
       content:
-        "The mystic temple was an incredible experience. The riddles were challenging but solvable.",
+        "Le temple mystique était une expérience incroyable. Les énigmes étaient difficiles mais faisables.",
       rating: 4,
       journeyId: journey5.id,
     },
@@ -1228,7 +1241,7 @@ async function main() {
     create: {
       authorId: charlie.id,
       content:
-        "The virtual reality adventure was mind-blowing! It felt like being in a different world.",
+        "L'aventure en réalité virtuelle était époustouflante! C'était comme être dans un autre monde.",
       rating: 5,
       journeyId: journey5.id,
     },

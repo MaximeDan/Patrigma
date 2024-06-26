@@ -27,7 +27,7 @@ type SecondStepProps = {
   form: UseFormReturn<JourneyFormValues>;
 };
 
-const SecondStep = ({ form, next, prev }: SecondStepProps) => {
+const DetailsStep = ({ form, next, prev }: SecondStepProps) => {
   return (
     <div>
       <h2>Que doit-on savoir sur le parcours ?</h2>
@@ -263,4 +263,4 @@ const SecondStep = ({ form, next, prev }: SecondStepProps) => {
   );
 };
 
-export default SecondStep;
+export default DetailsStep;

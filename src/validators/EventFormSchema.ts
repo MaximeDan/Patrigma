@@ -7,27 +7,38 @@ export const eventFormSchema = z.object({
   description: z.string({
     required_error: "Ce champ est requis",
   }),
-  numberPlayerMin: z
-    .number({
-      required_error: "Ce champ est requis",
-    })
-    .min(1, {
-      message: "Le nombre de joueur minimum doit être supérieur à 0",
-    }),
-  numberPlayerMax: z
-    .number({
-      required_error: "Ce champ est requis",
-    })
-    .max(40, {
-      message: "Le nombre de joueur maximum doit être inférieur à 40",
-    }),
-  isPrivate: z.boolean(),
+  numberPlayerMin: z.preprocess(
+    (data) => {
+      return Number(data);
+    },
+    z
+      .number({
+        required_error: "Ce champ est requis",
+      })
+      .min(1, {
+        message: "Le nombre de joueur minimum doit être supérieur à 0",
+      }),
+  ),
+  numberPlayerMax: z.preprocess(
+    (data) => {
+      return Number(data);
+    },
+    z
+      .number({
+        required_error: "Ce champ est requis",
+      })
+      .min(1, {
+        message: "Le nombre de joueur maximum doit être supérieur à 0",
+      }),
+  ),
+
+  isPrivate: z.boolean().default(false),
   accessCode: z.string().optional(),
   startAt: z.date({
-    required_error: "Ce champ est requis",
+    required_error: "Veuillez renseigner une date de début",
   }),
   endAt: z.date({
-    required_error: "Ce champ est requis",
+    required_error: "Veuillez renseigner une date de fin",
   }),
 });
 

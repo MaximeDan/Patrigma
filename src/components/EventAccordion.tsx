@@ -60,12 +60,12 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
           <AccordionTrigger className="py-2 text-lg font-medium">
             {formatted}
           </AccordionTrigger>
-          <AccordionContent className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <AccordionContent className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
             {groupedEvents[original].map((event) => (
               <div key={event.id} className="flex flex-col rounded-lg bg-gray">
                 <Link href={`/evenements/${event.id}`}>
                   <Image
-                    src={`${event.image}200`}
+                    src={`${event.image}`}
                     alt={event.title}
                     className="mb-4 h-32 w-full rounded object-cover"
                     width={200}

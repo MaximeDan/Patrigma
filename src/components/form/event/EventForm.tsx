@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { eventFormSchema } from "@/validators/EventFormSchema";
 import { z } from "zod";
 import { useEventFormStore } from "@/store/eventFormStore";
@@ -10,23 +10,32 @@ import {
   FormField,
   FormItem,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icons } from "@/components/Icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { Event } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "next-auth/react";
+import { addDays } from "date-fns";
+import { DateRange } from "react-day-picker";
+import { Calendar } from "@/components/ui/calendar";
+import { Switch } from "@/components/ui/switch";
+import { handleException } from "@/utils/errorHandlerUtils";
+import { EventRequestBody } from "@/types/event";
 
-type EventRequestBody = Omit<Event, "id" | "createdAt" | "updatedAt">;
 export type EventFormValues = z.infer<typeof eventFormSchema>;
 
 const EventForm = () => {
   const { isVisible, hideModal, journeyIdValue, setJourneyIdValue } =
     useEventFormStore();
   const [formStatus, setFormStatus] = useState<"idle" | "errored">("idle");
+  const [date, setDate] = React.useState<DateRange | undefined>({
+    from: new Date(),
+    to: addDays(new Date(), 20),
+  });
   const { data: session } = useSession();
 
   const form = useForm<EventFormValues>({
@@ -40,6 +49,13 @@ const EventForm = () => {
       accessCode: undefined,
     },
   });
+
+  useEffect(() => {
+    if (date?.from && date?.to) {
+      form.setValue("startAt", date.from);
+      form.setValue("endAt", date.to);
+    }
+  }, [date]);
 
   if (!isVisible) return null;
 
@@ -66,7 +82,7 @@ const EventForm = () => {
 
       const token = session?.accessToken;
 
-      const response = await fetch("/api/events", {
+      const response = await fetch("http://localhost:3000/api/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,12 +94,12 @@ const EventForm = () => {
       if (response.redirected) {
         window.location.href = response.url;
       }
-
-      console.log(response, "create event response");
+      if (!response.ok) {
+        setFormStatus("errored");
+      }
     } catch (error) {
-      console.log(error);
+      handleException(error);
     }
-    console.log(data);
   };
 
   const dismissModal = () => {
@@ -94,7 +110,7 @@ const EventForm = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll bg-background px-5  pb-12 pt-5">
+    <div className="fixed left-0 top-0 z-10 mx-auto flex size-full max-w-[920px] flex-col overflow-scroll  bg-background px-5  pb-12 pt-5">
       <div className="flex justify-end">
         <Button onClick={dismissModal}>
           <span>Quitter</span>
@@ -112,7 +128,7 @@ const EventForm = () => {
                   <FormControl>
                     <>
                       <Label htmlFor="title">Titre*</Label>
-                      <Input {...field} id="title" />
+                      <Input {...field} id="title" className="max-w-[500px]" />
                     </>
                   </FormControl>
                   <FormMessage className="text-red-500" />
@@ -128,14 +144,18 @@ const EventForm = () => {
                   <FormControl>
                     <>
                       <Label htmlFor="description">Description*</Label>
-                      <Textarea {...field} id="description" />
+                      <Textarea
+                        {...field}
+                        id="description"
+                        className="max-w-[500px]"
+                      />
                     </>
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
-            <div className="flex gap-5">
+            <div className="flex max-w-[500px] gap-5">
               <FormField
                 control={form.control}
                 name="numberPlayerMin"
@@ -171,6 +191,77 @@ const EventForm = () => {
                 )}
               />
             </div>
+            <Calendar
+              initialFocus
+              mode="range"
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={setDate}
+              numberOfMonths={2}
+            />
+            <FormField
+              control={form.control}
+              name="startAt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endAt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isPrivate"
+              render={({ field }) => (
+                <FormItem className="flex max-w-[500px] flex-row items-center justify-between rounded-lg border p-3">
+                  <div className="space-y-0.5">
+                    <Label>Partie privée</Label>
+                    <FormDescription>
+                      Si vous cochez cette case, vous devrez fournir un code
+                      d'accès pour rejoindre la partie.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {form.watch("isPrivate") && (
+              <FormField
+                control={form.control}
+                name="accessCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <>
+                        <Label htmlFor="accessCode">Code d'accès</Label>
+                        <Input {...field} id="accessCode" />
+                      </>
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            <Button type="submit" className="mt-5">
+              <span>Créer l'évènement</span>
+              <Icons.arrowLink width={14} height={14} className="ml-2" />
+            </Button>
           </form>
         )}
 
