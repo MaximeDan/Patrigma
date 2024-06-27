@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Event, Journey, Step } from "@prisma/client";
+import { Event, Step } from "@prisma/client";
 import TopBar from "@/components/TopBar";
 import { JourneyWithStepsAndComments } from "@/types/journey";
 
@@ -14,7 +14,9 @@ type Params = { id: number };
 
 const EventStart = ({ params }: { params: Params }) => {
   const [event, setEvent] = useState<Event | null>(null);
-  const [journey, setJourney] = useState<JourneyWithStepsAndComments | null>(null);
+  const [journey, setJourney] = useState<JourneyWithStepsAndComments | null>(
+    null,
+  );
   const [currentStep, setCurrentStep] = useState<Step | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
@@ -48,7 +50,7 @@ const EventStart = ({ params }: { params: Params }) => {
 
   const handleCheckAnswer = () => {
     if (userAnswer.toLowerCase() === currentStep!.answer.toLowerCase()) {
-      if (stepIndex < journey.steps.length - 1) {
+      if (journey && stepIndex < journey.steps.length - 1) {
         setStepIndex(stepIndex + 1);
         setCurrentStep(journey.steps[stepIndex + 1]);
         setShowHint(false);
@@ -90,7 +92,7 @@ const EventStart = ({ params }: { params: Params }) => {
                 type="text"
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                className="flex-1 rounded-md border text-black p-2"
+                className="flex-1 rounded-md border p-2 text-black"
                 placeholder="Your answer"
               />
               <button

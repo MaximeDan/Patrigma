@@ -90,7 +90,7 @@ const EventDetail = ({ params }: { params: Params }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/${event!.id}/leave/${session!.user.id}`,
         {
           method: "DELETE",
-          headers:{
+          headers: {
             authorization: `Bearer ${session!.accessToken}`,
           },
         },
@@ -196,8 +196,11 @@ const EventDetail = ({ params }: { params: Params }) => {
 
           {isEventStartable && (
             <div className="mt-4">
-              <Link className="rounded bg-blue-500 px-4 py-2 text-white" href={`${params.id}/start`}>
-                  Lancer l'événement
+              <Link
+                className="rounded bg-blue-500 px-4 py-2 text-white"
+                href={`${params.id}/start`}
+              >
+                Lancer l'événement
               </Link>
             </div>
           )}

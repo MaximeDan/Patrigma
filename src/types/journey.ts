@@ -28,4 +28,5 @@ export type JourneyWithoutDates = {
   partiallySighted: string;
   partiallyDeaf: string;
   cognitivelyImpaired: string;
+  image: string;
 };

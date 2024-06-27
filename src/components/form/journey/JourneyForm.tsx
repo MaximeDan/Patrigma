@@ -113,6 +113,7 @@ const JourneyForm = () => {
       treasure: journey.treasure,
       cluesDifficulty: Number(journey.cluesDifficulty),
       physicalDifficulty: Number(journey.physicalDifficulty),
+      image: "https://picsum.photos/300/200?random=1",
       estimatedDistance: 1000,
       estimatedDuration: 60,
       lastCompletion: new Date(),

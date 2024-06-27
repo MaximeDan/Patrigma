@@ -54,8 +54,6 @@ export const authOptions = {
       return session;
     },
     async jwt({ token, user, account }) {
-      if (account) {
-      }
       if (user) {
         // @ts-ignore
         const dbUser = await readUserByEmail(user.user.email);

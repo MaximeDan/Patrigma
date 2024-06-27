@@ -17,7 +17,7 @@ import { Journey } from "@prisma/client";
 export const createJourney = async (
   journey: JourneyWithoutDates,
   steps: StepWithoutDates[],
-): Promise<JourneyWithSteps | null> => {
+): Promise<Journey | null> => {
   return await prisma.journey.create({
     include: {
       steps: {
@@ -41,6 +41,7 @@ export const createJourney = async (
       partiallySighted: journey.partiallySighted,
       partiallyDeaf: journey.partiallyDeaf,
       cognitivelyImpaired: journey.cognitivelyImpaired,
+      image: journey.image,
       steps: {
         createMany: {
           data: steps.map((step) => ({
