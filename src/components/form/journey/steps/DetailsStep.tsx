@@ -56,6 +56,9 @@ const DetailsStep = ({ form, next, prev }: SecondStepProps) => {
         name="physicalDifficulty"
         render={({ field }) => (
           <FormItem className="space-y-3">
+            <FormLabel className="font-medium">
+              Sélectionnez la difficulté physique :
+            </FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -92,6 +95,9 @@ const DetailsStep = ({ form, next, prev }: SecondStepProps) => {
         name="cluesDifficulty"
         render={({ field }) => (
           <FormItem className="space-y-3">
+            <FormLabel className="font-medium">
+              Sélectionnez la difficulté des énigmes :
+            </FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}

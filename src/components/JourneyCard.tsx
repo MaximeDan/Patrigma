@@ -66,7 +66,7 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
         <Image
           width={500}
           height={500}
-          src="/img/min-temp.webp"
+          src={journey.image}
           alt="journey image"
           className="h-44 w-full rounded-t-lg object-cover"
         />

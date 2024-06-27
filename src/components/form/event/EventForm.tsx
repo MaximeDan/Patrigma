@@ -74,10 +74,10 @@ const EventForm = () => {
         numberPlayerMin: data.numberPlayerMin,
         numberPlayerMax: data.numberPlayerMax,
         isPrivate: data.isPrivate,
+        image: "https://picsum.photos/400/200?random=51",
         accessCode: data.accessCode || null,
         endAt: data.endAt,
         startAt: data.startAt,
-        image: "",
       };
 
       const token = session?.accessToken;

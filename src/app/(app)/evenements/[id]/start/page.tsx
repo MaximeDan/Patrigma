@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Event, Journey, Step } from "@prisma/client";
+import { Event, Step } from "@prisma/client";
 import TopBar from "@/components/TopBar";
 import { JourneyWithStepsAndComments } from "@/types/journey";
 
@@ -75,7 +75,7 @@ const EventStart = ({ params }: { params: Params }) => {
           </h1>
           <div className="mt-4">
             <h2 className="text-lg font-semibold text-orange-400">
-              Step {stepIndex + 1}
+              Etape n°{stepIndex + 1}
             </h2>
             <div className="my-4">
               <LeafletEventMap
@@ -90,7 +90,7 @@ const EventStart = ({ params }: { params: Params }) => {
                 type="text"
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                className="flex-1 rounded-md border text-black p-2"
+                className="flex-1 rounded-md border p-2 text-black"
                 placeholder="Your answer"
               />
               <button
