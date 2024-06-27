@@ -28,8 +28,13 @@ export default withAuth(
         }
 
         if (token) {
-          const { payload } = await jwtVerify(token.jwt, secretKey);
-          return true;
+          try {
+            const { payload } = await jwtVerify(token.jwt, secretKey);
+            console.log("JWT payload in middleware", payload);
+            return true;
+          } catch (error) {
+            return false;
+          }
         }
 
         return false;

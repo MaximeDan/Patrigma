@@ -46,6 +46,7 @@ const baseJourneySchema = z.object({
   cognitivelyImpaired: z
     .string({ required_error: "Required field" })
     .max(255, { message: "Please enter less than 255 characters" }),
+  image: z.string({ required_error: "Required field" }),
 });
 
 // Schéma combiné pour le corps de la requête avec transformation des steps pour inclure journeyId

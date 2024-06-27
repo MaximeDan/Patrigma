@@ -106,7 +106,7 @@ export const registerOrModifyJourney = async (
   if (!journey) throw new BadRequestException("Invalid journey");
   if (!steps) throw new BadRequestException("Invalid steps");
 
-  let upsertedJourneyWithSteps: JourneyWithSteps | null;
+  let upsertedJourneyWithSteps: Journey | null;
 
   // Check if register or modify
   if (id === null) {

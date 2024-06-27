@@ -31,7 +31,7 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    await getServerSession(authOptions);
 
     const body = await request.json();
     // Parse the body with zod to get the journey and steps
