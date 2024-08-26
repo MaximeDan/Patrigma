@@ -9,22 +9,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build application
-        run: npm run build
-
-      - name: Serve application
+      - name: Build and run Docker Compose
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: |
-          npm run start &  # start the Next.js application
-          echo "Waiting for server to start..."
-          sleep 15  # Adjust this depending on how long your app takes to start
+          docker-compose -f docker-compose.dev.yml up -d  # Start services in detached mode
+          
+          # Wait for services to be ready (adjust as needed)
+          echo "Waiting for services to be ready..."
+          sleep 30
 
       - name: Install xvfb
         run: sudo apt-get install -y xvfb
@@ -34,10 +34,9 @@ jobs:
 
       - name: Run Lighthouse Accessibility Tests
         run: |
-          # Run Lighthouse inside xvfb
           xvfb-run lighthouse http://localhost:3000 --output json --output-path ./lighthouse-report.json --only-categories=accessibility
           xvfb-run lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html --only-categories=accessibility
-          
+
       - name: Upload Lighthouse Report JSON
         uses: actions/upload-artifact@v3
         with:
