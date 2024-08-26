@@ -1,0 +1,59 @@
+name: Accessibility Test
+on: [push]
+
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+
+      - name: Serve application
+        run: |
+          npm run start &  # start the Next.js application
+          echo "Waiting for server to start..."
+          sleep 15  # Adjust this depending on how long your app takes to start
+
+      - name: Install Lighthouse
+        run: npm install -g lighthouse
+
+      - name: Run Lighthouse Accessibility Tests
+        run: |
+          lighthouse http://localhost:3000 --output json --output-path ./lighthouse-report.json --only-categories=accessibility
+          lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html --only-categories=accessibility
+          
+      - name: Upload Lighthouse Report JSON
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-report-json
+          path: ./lighthouse-report.json
+
+      - name: Upload Lighthouse Report HTML
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-report-html
+          path: ./lighthouse-report.html
+          
+      - name: Extract Accessibility Score
+        run: |
+          node -e "
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('./lighthouse-report.json', 'utf8'));
+            const score = report.categories.accessibility.score * 100;
+            console.log('Accessibility Score:', score);
+            if (score < 90) {
+              process.exit(1);
+            }
+          "
