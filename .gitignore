@@ -44,3 +44,5 @@ test-report.html
 sw.*
 workbox-*
 swe-worker-*
+
+/reports

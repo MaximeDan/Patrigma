@@ -8,7 +8,7 @@ import {
 } from "@/repositories/userRepository";
 import { createUserRole } from "@/repositories/userRoleRepository";
 import { User, UserRole, Event } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { getRoleById } from "./roleService";
 import { RegisterUser } from "@/types/register";
 import { UserRoleDataWithUserId } from "@/types/userRole";

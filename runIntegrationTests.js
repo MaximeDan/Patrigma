@@ -27,7 +27,7 @@ const execPromise = (command) =>
 
 const startDocker = async () => {
   console.log("Starting Docker container...");
-  await execPromise("docker-compose up -d test_db");
+  await execPromise("docker-compose -f docker-compose.test.yml up -d test_db");
   console.log("Waiting for PostgreSQL to be ready...");
 
   // Wait for a few seconds to give PostgreSQL time to start
@@ -35,13 +35,13 @@ const startDocker = async () => {
 
   try {
     await execPromise(
-      "docker-compose exec -T test_db pg_isready -U testuser -h localhost -p 5432",
+      "docker-compose -f docker-compose.test.yml exec -T test_db pg_isready -U testuser -h localhost -p 5432",
     );
     console.log("PostgreSQL is ready!");
   } catch (error) {
     console.error("Error checking PostgreSQL readiness:", error);
     console.log("PostgreSQL logs:");
-    await execPromise("docker-compose logs test_db");
+    await execPromise("docker-compose -f docker-compose.test.yml logs test_db");
     throw error;
   }
 };
@@ -82,7 +82,7 @@ const runTests = async () => {
 
 const stopDocker = async () => {
   console.log("Stopping Docker container...");
-  await execPromise("docker-compose down");
+  await execPromise("docker-compose -f docker-compose.test.yml down");
 };
 
 const main = async () => {
