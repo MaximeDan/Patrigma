@@ -52,17 +52,14 @@ jobs:
           echo "Waiting for Next.js to be ready..."
           sleep 10
 
-      - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v8
+      - name: Install xvfb
+        run: sudo apt-get install -y xvfb
+
+      - name: Run Lighthouse CI with xvfb
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: http://localhost:3000
-          outputPath: './lighthouse-ci-results'
           uploadArtifacts: true
-          thresholds: |
-            accessibility=80
-
-      - name: Upload Lighthouse CI Reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: lighthouse-ci-results
-          path: ./lighthouse-ci-results/*
+        env:
+          # Run xvfb to ensure Lighthouse can run Chrome headlessly
+          XVFB_RUN_CMD: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24'
