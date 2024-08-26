@@ -26,13 +26,17 @@ jobs:
           echo "Waiting for server to start..."
           sleep 15  # Adjust this depending on how long your app takes to start
 
+      - name: Install xvfb
+        run: sudo apt-get install -y xvfb
+
       - name: Install Lighthouse
         run: npm install -g lighthouse
 
       - name: Run Lighthouse Accessibility Tests
         run: |
-          lighthouse http://localhost:3000 --output json --output-path ./lighthouse-report.json --only-categories=accessibility
-          lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html --only-categories=accessibility
+          # Run Lighthouse inside xvfb
+          xvfb-run lighthouse http://localhost:3000 --output json --output-path ./lighthouse-report.json --only-categories=accessibility
+          xvfb-run lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html --only-categories=accessibility
           
       - name: Upload Lighthouse Report JSON
         uses: actions/upload-artifact@v3
@@ -45,7 +49,7 @@ jobs:
         with:
           name: lighthouse-report-html
           path: ./lighthouse-report.html
-          
+
       - name: Extract Accessibility Score
         run: |
           node -e "
