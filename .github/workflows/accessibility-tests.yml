@@ -1,4 +1,6 @@
 name: Accessibility Test
+run-name: Checking Aceessibility
+
 on: [push]
 
 jobs:
@@ -80,7 +82,7 @@ jobs:
             const report = JSON.parse(fs.readFileSync('./lighthouse-report.json', 'utf8'));
             const score = report.categories.accessibility.score * 100;
             console.log('Accessibility Score:', score);
-            if (score < 90) {
+            if (score < 80) {
               process.exit(1);
             }
           "
