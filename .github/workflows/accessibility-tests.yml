@@ -1,5 +1,5 @@
 name: Accessibility Test
-run-name: Checking Aceessibility
+run-name: Checking Accessibility
 
 on: [push]
 
@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm ci  # Installez les packages NPM nécessaires
+        run: npm ci  
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
@@ -50,39 +50,19 @@ jobs:
         run: |
           npm run start &  # Start the Next.js application in the background
           echo "Waiting for Next.js to be ready..."
-          sleep 10  # Adjust this depending on how long your app takes to start
+          sleep 10
 
-      - name: Install xvfb
-        run: sudo apt-get install -y xvfb
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: http://localhost:3000
+          outputPath: './lighthouse-ci-results'
+          uploadArtifacts: true
+          thresholds: |
+            accessibility=80
 
-      - name: Install Lighthouse
-        run: npm install -g lighthouse
-
-      - name: Run Lighthouse Accessibility Tests
-        run: |
-          xvfb-run lighthouse http://localhost:3000 --output json --output-path ./lighthouse-report.json --only-categories=accessibility
-          xvfb-run lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html --only-categories=accessibility
-
-      - name: Upload Lighthouse Report JSON
+      - name: Upload Lighthouse CI Reports
         uses: actions/upload-artifact@v3
         with:
-          name: lighthouse-report-json
-          path: ./lighthouse-report.json
-
-      - name: Upload Lighthouse Report HTML
-        uses: actions/upload-artifact@v3
-        with:
-          name: lighthouse-report-html
-          path: ./lighthouse-report.html
-
-      - name: Extract Accessibility Score
-        run: |
-          node -e "
-            const fs = require('fs');
-            const report = JSON.parse(fs.readFileSync('./lighthouse-report.json', 'utf8'));
-            const score = report.categories.accessibility.score * 100;
-            console.log('Accessibility Score:', score);
-            if (score < 80) {
-              process.exit(1);
-            }
-          "
+          name: lighthouse-ci-results
+          path: ./lighthouse-ci-results/*
