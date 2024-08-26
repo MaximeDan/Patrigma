@@ -14,17 +14,29 @@ jobs:
 
       - name: Build and run Docker Compose
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: |
-          docker-compose -f docker-compose.dev.yml up -d  # Start services in detached mode
+          docker-compose -f docker-compose.dev.yml up -d  
           
-          # Wait for services to be ready (adjust as needed)
-          echo "Waiting for services to be ready..."
+          # Wait for DB services to be ready (adjust sleep time as necessary)
+          echo "Waiting for database to be ready..."
           sleep 30
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js application
+        run: npm run build
+
+      - name: Start Next.js application
+        env:
+          DATABASE_URL: postgres://postgres:${{ secrets.DATABASE_PASSWORD }}@localhost:5433/patrigma_db
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:3000
+        run: |
+          npm run start &  # Start the Next.js application in the background
+          echo "Waiting for Next.js to be ready..."
+          sleep 10  # Adjust this depending on how long your app takes to start
 
       - name: Install xvfb
         run: sudo apt-get install -y xvfb
