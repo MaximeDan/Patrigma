@@ -1,0 +1,20 @@
+services:
+  patrigma_db:
+    image: postgres:latest
+    container_name: patrigma_db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: patrigma_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d patrigma_db -h localhost -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+volumes:
+  postgres_data:
