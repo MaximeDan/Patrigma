@@ -145,5 +145,6 @@ jobs:
           reporter: jest-junit
       
       - name: Display test report link
+        if: always()
         run: |
           echo "::notice title=Test Report::[Click here to view the test results](https://github.com/${{ github.repository }}/runs/${{ github.run_id }})"
