@@ -10,7 +10,7 @@ jobs:
   test-app:
     name: Test App
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true # à supprimer une fois les tests corrigés
     steps:
       - name: Checkout
         uses: actions/checkout@v4
