@@ -61,3 +61,12 @@ jobs:
           uploadArtifacts: true
         env:
           XVFB_RUN_CMD: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24'
+
+      - name: Check Accessibility Score
+        run: |
+          SCORE=$(cat .lighthouseci/localhost_3000.report.json | jq '.categories.accessibility.score * 100')
+          echo "Accessibility Score: $SCORE"
+          if [ "$SCORE" -lt 90 ]; then
+            echo "Accessibility score is below 90. Failing the job."
+            exit 1
+          fi
