@@ -86,8 +86,8 @@ jobs:
           release_name: "Release v${{ needs.build-docker-prod.outputs.version }}"
           draft: false
           prerelease: false
-          body: Docker image for this release: ghcr.io/${{ needs.build-docker-prod.outputs.repo_owner }}/patrigma:v${{ needs.build-docker-prod.outputs.version }}
-
+          body: "Docker image for this release: ghcr.io/${{ needs.build-docker-prod.outputs.repo_owner }}/patrigma:v${{ needs.build-docker-prod.outputs.version }}"
+          
   notify:
     runs-on: ubuntu-latest
     needs: create_release
