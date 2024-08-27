@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        
+
       - name: Install Docker Compose
         run: |
           sudo apt-get update
@@ -143,3 +143,7 @@ jobs:
           name: Jest tests
           path: ./reports/junit/js-test-results.xml
           reporter: jest-junit
+      
+      - name: Display test report link
+        run: |
+          echo "::notice title=Test Report::[Click here to view the test results](https://github.com/${{ github.repository }}/runs/${{ github.run_id }})"
