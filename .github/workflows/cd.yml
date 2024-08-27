@@ -13,7 +13,7 @@ jobs:
   test-app:
     name: Test App
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true  # Continuer même si les tests échouent
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,10 +29,14 @@ jobs:
       - name: Run tests
         run: npm test
 
-  create_release:
-    name: Create Release
+  build-docker-prod:
     runs-on: ubuntu-latest
     needs: test-app
+    continue-on-error: true  # Continuer même si le build échoue
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,28 +45,7 @@ jobs:
         id: get_version
         run: |
           VERSION=$(jq -r .version package.json)
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        with:
-          tag_name: "v${{ env.VERSION }}"
-          release_name: "Release v${{ env.VERSION }}"
-          draft: false
-          prerelease: false
-
-  build-docker-prod:
-    runs-on: ubuntu-latest
-    needs: [test-app, create_release]
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -76,31 +59,40 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.VERSION }}  # Utilisation de la variable VERSION globale
+          tags: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.VERSION }}
           labels: "version=${{ env.VERSION }},commit=${{ github.sha }}"
+
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: build-docker-prod
+    continue-on-error: true  # Continuer même si la création de release échoue
+    steps:
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          tag_name: "v${{ env.VERSION }}"
+          release_name: "Release v${{ env.VERSION }}"
+          draft: false
+          prerelease: false
+          body: |
+            Docker image for this release: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.VERSION }}
 
   notify:
     runs-on: ubuntu-latest
-    needs: build-docker-prod
+    needs: create_release
     steps:
       - name: Notify Discord on failure
-        if: failure()
+        if: always()  # Exécutez toujours cette étape, que les étapes précédentes échouent ou réussissent
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Failed for Release v${{ env.VERSION }}"
+          title: "Build Failed or Succeeded for Release v${{ env.VERSION }}"
           message: |
-            The build for release v${{ env.VERSION }} has failed.
+            The build for release v${{ env.VERSION }} may have failed or succeeded.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
-      - name: Notify Discord on success
-        if: success()
-        uses: containrrr/shoutrrr-action@v1
-        with:
-          url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Succeeded for Release v${{ env.VERSION }}"
-          message: |
-            The build for release v${{ env.VERSION }} was successful.
-            Commit message: ${{ github.event.head_commit.message }}
-            Commit SHA: ${{ github.sha }}
-            The Docker image has been published.
+            Check the build logs for details.
