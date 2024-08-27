@@ -4,7 +4,7 @@ run-name: Release and Publish Docker image
 on:
   push:
     branches:
-      - main
+      - tesci
 
 jobs:
   test-app:
