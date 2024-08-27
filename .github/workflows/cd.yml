@@ -1,11 +1,10 @@
-name: Build, Test, and Publish
-run-name: Publish Docker image
+name: Build, Test, Release, and Publish
+run-name: Release and Publish Docker image
 
 on:
   push:
     branches:
-      - tesci
-
+      - main
 
 jobs:
   test-app:
@@ -15,7 +14,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Install Docker Compose
         run: |
           sudo apt-get update
@@ -27,10 +26,32 @@ jobs:
       - name: Run tests
         run: npm test
 
-  build-docker-prod:
+  create_release:
+    name: Create Release
     runs-on: ubuntu-latest
     needs: test-app
-    if: github.ref_name == 'tesci' || github.ref_type == 'tag'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "::set-output name=version::$(jq -r .version package.json)"
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ steps.get_version.outputs.version }}"
+          release_name: "Release v${{ steps.get_version.outputs.version }}"
+          draft: false
+          prerelease: false
+
+  build-docker-prod:
+    runs-on: ubuntu-latest
+    needs: [test-app, create_release]
     permissions:
       contents: read
       packages: write
@@ -50,7 +71,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/my-app
+          images: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ steps.get_version.outputs.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -64,9 +85,24 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-docker-prod
     steps:
-      - name: Shoutrrr
+      - name: Notify Discord on failure
+        if: failure()
         uses: containrrr/shoutrrr-action@v1
         with:
-          url: ${{ secrets.NOTIF_URL }}
-          title: Deployed ${{ github.sha }} on server
-          message: See changes at ${{ github.event.compare }}.
+          url: ${{ secrets.NOTIFICATION_URL }}
+          title: "Build Failed for Release v${{ steps.get_version.outputs.version }}"
+          message: |
+            The build for release v${{ steps.get_version.outputs.version }} has failed.
+            Commit message: ${{ github.event.head_commit.message }}
+            Commit SHA: ${{ github.sha }}
+      - name: Notify Discord on success
+        if: success()
+        uses: containrrr/shoutrrr-action@v1
+        with:
+          url: ${{ secrets.NOTIFICATION_URL }}
+          title: "Build Succeeded for Release v${{ steps.get_version.outputs.version }}"
+          message: |
+            The build for release v${{ steps.get_version.outputs.version }} was successful.
+            Commit message: ${{ github.event.head_commit.message }}
+            Commit SHA: ${{ github.sha }}
+            The Docker image has been published.
