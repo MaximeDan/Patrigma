@@ -8,12 +8,13 @@ on:
 
 env:
   VERSION: ""  # Définition initiale de la variable
+  REPO_OWNER: ""  # Variable pour stocker le nom du propriétaire du repo en minuscules
 
 jobs:
   test-app:
     name: Test App
     runs-on: ubuntu-latest
-    continue-on-error: true  # Continuer même si les tests échouent
+    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,7 +33,6 @@ jobs:
   build-docker-prod:
     runs-on: ubuntu-latest
     needs: test-app
-    continue-on-error: true  # Continuer même si le build échoue
     permissions:
       contents: read
       packages: write
@@ -40,6 +40,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Convert repository owner to lowercase
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "REPO_OWNER=$REPO_OWNER" >> $GITHUB_ENV
 
       - name: Get version from package.json
         id: get_version
@@ -59,14 +64,13 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.VERSION }}
+          tags: ghcr.io/${{ env.REPO_OWNER }}/patrigma:v${{ env.VERSION }}
           labels: "version=${{ env.VERSION }},commit=${{ github.sha }}"
 
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
     needs: build-docker-prod
-    continue-on-error: true  # Continuer même si la création de release échoue
     steps:
       - name: Create GitHub Release
         id: create_release
@@ -79,7 +83,7 @@ jobs:
           draft: false
           prerelease: false
           body: |
-            Docker image for this release: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.VERSION }}
+            Docker image for this release: ghcr.io/${{ env.REPO_OWNER }}/patrigma:v${{ env.VERSION }}
 
   notify:
     runs-on: ubuntu-latest
