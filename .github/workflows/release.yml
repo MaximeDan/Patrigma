@@ -1,0 +1,105 @@
+name: Build, Test, Release, and Publish
+run-name: Release and Publish Docker image
+
+on:
+  push:
+    branches:
+      - tesci
+
+jobs:
+  test-app:
+    name: Test App
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  build-docker-prod:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: test-app
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      repo_owner: ${{ steps.convert_repo_owner.outputs.repo_owner }}
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Convert repository owner to lowercase
+        id: convert_repo_owner
+        run: |
+          echo "repo_owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "::set-output name=repo_owner::$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          version=$(jq -r .version package.json)
+          echo "version=$version" >> $GITHUB_ENV
+          echo "::set-output name=version::$version"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Build and push Docker image with version tag
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ steps.convert_repo_owner.outputs.repo_owner }}/patrigma:v${{ steps.get_version.outputs.version }}
+            ghcr.io/${{ steps.convert_repo_owner.outputs.repo_owner }}/patrigma:latest
+          labels: "version=${{ steps.get_version.outputs.version }},commit=${{ github.sha }}"
+
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: build-docker-prod
+    steps:
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          tag_name: "v${{ needs.build-docker-prod.outputs.version }}"
+          release_name: "Release v${{ needs.build-docker-prod.outputs.version }}"
+          draft: false
+          prerelease: false
+          body: "Docker image for this release: ghcr.io/${{ needs.build-docker-prod.outputs.repo_owner }}/patrigma:v${{ needs.build-docker-prod.outputs.version }}"
+          
+  notify:
+    runs-on: ubuntu-latest
+    needs: create_release
+    steps:
+      - name: Notify Discord on failure
+        if: always()  # Exécutez toujours cette étape, que les étapes précédentes échouent ou réussissent
+        uses: containrrr/shoutrrr-action@v1
+        with:
+          url: ${{ secrets.NOTIFICATION_URL }}
+          title: "Build Failed or Succeeded for Release v${{ needs.build-docker-prod.outputs.version }}"
+          message: |
+            The build for release v${{ needs.build-docker-prod.outputs.version }} may have failed or succeeded.
+            Commit message: ${{ github.event.head_commit.message }}
+            Commit SHA: ${{ github.sha }}
+            Check the build logs for details.
