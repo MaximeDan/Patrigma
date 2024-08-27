@@ -9,13 +9,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: npm ci  
 
       - name: Set up Docker
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Install Docker Compose
         run: |
@@ -64,8 +64,14 @@ jobs:
 
       - name: Check Accessibility Score
         run: |
-          SCORE=$(cat .lighthouseci/localhost_3000.report.json | jq '.categories.accessibility.score * 100')
+          # Trouver le fichier JSON généré
+          REPORT_FILE=$(ls .lighthouseci/*.json | head -n 1)
+          
+          # Lire le score d'accessibilité
+          SCORE=$(cat $REPORT_FILE | jq '.categories.accessibility.score * 100')
           echo "Accessibility Score: $SCORE"
+          
+          # Vérifier si le score est inférieur à 90
           if [ "$SCORE" -lt 90 ]; then
             echo "Accessibility score is below 90. Failing the job."
             exit 1
