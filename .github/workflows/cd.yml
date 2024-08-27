@@ -6,6 +6,9 @@ on:
     branches:
       - tesci
 
+env:
+  VERSION: ""  # Définition initiale de la variable
+
 jobs:
   test-app:
     name: Test App
@@ -37,8 +40,8 @@ jobs:
       - name: Get version from package.json
         id: get_version
         run: |
-          version=$(jq -r .version package.json)
-          echo "version=$version" >> $GITHUB_ENV
+          VERSION=$(jq -r .version package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         id: create_release
@@ -46,8 +49,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          tag_name: "v${{ env.version }}"
-          release_name: "Release v${{ env.version }}"
+          tag_name: "v${{ env.VERSION }}"
+          release_name: "Release v${{ env.VERSION }}"
           draft: false
           prerelease: false
 
@@ -74,8 +77,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.version }}
-          labels: "version=${{ env.version }},commit=${{ github.sha }}"
+          tags: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.VERSION }}  # Utilisation de la variable VERSION globale
+          labels: "version=${{ env.VERSION }},commit=${{ github.sha }}"
 
   notify:
     runs-on: ubuntu-latest
@@ -86,9 +89,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Failed for Release v${{ env.version }}"
+          title: "Build Failed for Release v${{ env.VERSION }}"
           message: |
-            The build for release v${{ env.version }} has failed.
+            The build for release v${{ env.VERSION }} has failed.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
       - name: Notify Discord on success
@@ -96,9 +99,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Succeeded for Release v${{ env.version }}"
+          title: "Build Succeeded for Release v${{ env.VERSION }}"
           message: |
-            The build for release v${{ env.version }} was successful.
+            The build for release v${{ env.VERSION }} was successful.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
             The Docker image has been published.
