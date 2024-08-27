@@ -6,10 +6,6 @@ on:
     branches:
       - tesci
 
-env:
-  VERSION: ""  # Définition initiale de la variable
-  REPO_OWNER: ""  # Variable pour stocker le nom du propriétaire du repo en minuscules
-
 jobs:
   test-app:
     name: Test App
@@ -31,8 +27,12 @@ jobs:
         run: npm test
 
   build-docker-prod:
+    name: Build Docker Image
     runs-on: ubuntu-latest
     needs: test-app
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      repo_owner: ${{ steps.convert_repo_owner.outputs.repo_owner }}
     permissions:
       contents: read
       packages: write
@@ -42,15 +42,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Convert repository owner to lowercase
+        id: convert_repo_owner
         run: |
-          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          echo "REPO_OWNER=$REPO_OWNER" >> $GITHUB_ENV
+          echo "repo_owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "::set-output name=repo_owner::$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
 
       - name: Get version from package.json
         id: get_version
         run: |
-          VERSION=$(jq -r .version package.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          version=$(jq -r .version package.json)
+          echo "version=$version" >> $GITHUB_ENV
+          echo "::set-output name=version::$version"
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -59,13 +61,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image with version tag
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.REPO_OWNER }}/patrigma:v${{ env.VERSION }}
-          labels: "version=${{ env.VERSION }},commit=${{ github.sha }}"
+          tags: |
+            ghcr.io/${{ steps.convert_repo_owner.outputs.repo_owner }}/patrigma:v${{ steps.get_version.outputs.version }}
+            ghcr.io/${{ steps.convert_repo_owner.outputs.repo_owner }}/patrigma:latest
+          labels: "version=${{ steps.get_version.outputs.version }},commit=${{ github.sha }}"
 
   create_release:
     name: Create Release
@@ -78,12 +82,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          tag_name: "v${{ env.VERSION }}"
-          release_name: "Release v${{ env.VERSION }}"
+          tag_name: "v${{ needs.build-docker-prod.outputs.version }}"
+          release_name: "Release v${{ needs.build-docker-prod.outputs.version }}"
           draft: false
           prerelease: false
-          body: |
-            Docker image for this release: ghcr.io/${{ env.REPO_OWNER }}/patrigma:v${{ env.VERSION }}
+          body: Docker image for this release: ghcr.io/${{ needs.build-docker-prod.outputs.repo_owner }}/patrigma:v${{ needs.build-docker-prod.outputs.version }}
 
   notify:
     runs-on: ubuntu-latest
@@ -94,9 +97,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Failed or Succeeded for Release v${{ env.VERSION }}"
+          title: "Build Failed or Succeeded for Release v${{ needs.build-docker-prod.outputs.version }}"
           message: |
-            The build for release v${{ env.VERSION }} may have failed or succeeded.
+            The build for release v${{ needs.build-docker-prod.outputs.version }} may have failed or succeeded.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
             Check the build logs for details.
