@@ -36,16 +36,18 @@ jobs:
 
       - name: Get version from package.json
         id: get_version
-        run: echo "::set-output name=version::$(jq -r .version package.json)"
+        run: |
+          version=$(jq -r .version package.json)
+          echo "version=$version" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          tag_name: "v${{ steps.get_version.outputs.version }}"
-          release_name: "Release v${{ steps.get_version.outputs.version }}"
+          tag_name: "v${{ env.version }}"
+          release_name: "Release v${{ env.version }}"
           draft: false
           prerelease: false
 
@@ -65,13 +67,13 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ steps.get_version.outputs.version }}
+          images: ghcr.io/${{ github.repository_owner }}/patrigma:v${{ env.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -90,9 +92,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Failed for Release v${{ steps.get_version.outputs.version }}"
+          title: "Build Failed for Release v${{ env.version }}"
           message: |
-            The build for release v${{ steps.get_version.outputs.version }} has failed.
+            The build for release v${{ env.version }} has failed.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
       - name: Notify Discord on success
@@ -100,9 +102,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Succeeded for Release v${{ steps.get_version.outputs.version }}"
+          title: "Build Succeeded for Release v${{ env.version }}"
           message: |
-            The build for release v${{ steps.get_version.outputs.version }} was successful.
+            The build for release v${{ env.version }} was successful.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
             The Docker image has been published.
