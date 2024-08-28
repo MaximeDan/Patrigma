@@ -26,7 +26,7 @@ const Rating = ({ rating, ratingCount }: RatingProps) => {
     stars.push(<Icons.emptyStar className="size-4" key={i} />);
   }
   return (
-    <div className="mb-3 mt-1 flex items-start ora">
+    <div className="mb-3 mt-1 flex items-start">
       {stars}
       <p className="ml-1 text-[16px] text-orange-700">{`(${ratingCount} avis)`}</p>
     </div>
