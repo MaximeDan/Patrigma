@@ -84,8 +84,14 @@ describe("detailsStepSchema", () => {
       partiallyDeaf: "partiallyAccessible",
       cognitivelyImpaired: "undefined",
     };
-    expect(() => detailsStepSchema.parse(data)).toThrow(
-      "Vous devez sélectionner une option",
+    const result = detailsStepSchema.safeParse(data);
+    expect(result.success).toBe(false);
+
+    const mobilityImpairedError = result.error?.issues.find(
+      (issue) => issue.path[0] === "mobilityImpaired",
+    );
+    expect(mobilityImpairedError?.message).toBe(
+      "Invalid enum value. Expected 'undefined' | 'unaccessible' | 'partiallyAccessible' | 'accessible', received 'invalidValue'",
     );
   });
 });

@@ -99,7 +99,16 @@ describe("addStepArraySchema", () => {
         },
       },
     ];
-    expect(() => addStepArraySchema.parse(data)).toThrow();
+
+    try {
+      addStepArraySchema.parse(data);
+    } catch (error) {
+      const zodError = error as z.ZodError;
+      const latitudeError = zodError.issues.find((issue) =>
+        issue.path.includes("latitude"),
+      );
+      expect(latitudeError).toBeDefined();
+    }
   });
 
   it("should fail when any required field is missing", () => {

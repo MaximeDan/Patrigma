@@ -75,7 +75,7 @@ jobs:
         run: |
           docker-compose -f docker-compose.dev.yml up -d  
           
-          until docker exec -i <your_database_container_name> pg_isready -U <your_database_user>; do
+          until docker exec -i patrigma_db pg_isready -U postgres; do
             echo "Waiting for the database to be ready..."
             sleep 2
           done

@@ -1,4 +1,4 @@
-import { eventFormSchema } from "./path/to/eventFormSchema"; // Assurez-vous de remplacer par le chemin correct
+import { eventFormSchema } from "@/validators/EventFormSchema";
 
 describe("eventFormSchema", () => {
   it("should pass when all fields are valid", () => {
@@ -91,7 +91,7 @@ describe("eventFormSchema", () => {
       title: "Valid Event",
       description: "This is a valid event description.",
       numberPlayerMin: 5,
-      numberPlayerMax: 4, // This should fail
+      numberPlayerMax: 4,
       isPrivate: false,
       startAt: new Date(),
       endAt: new Date(Date.now() + 3600 * 1000),
@@ -121,10 +121,9 @@ describe("eventFormSchema", () => {
       description: "This is a valid event description.",
       numberPlayerMin: 2,
       numberPlayerMax: 5,
-      isPrivate: true, // Private event
+      isPrivate: true,
       startAt: new Date(),
       endAt: new Date(Date.now() + 3600 * 1000),
-      // Missing accessCode
     };
 
     const result = eventFormSchema.safeParse(invalidData);
@@ -141,8 +140,8 @@ describe("eventFormSchema", () => {
       description: "This is a valid event description.",
       numberPlayerMin: 2,
       numberPlayerMax: 5,
-      isPrivate: true, // Private event
-      accessCode: "secret-code", // Provided accessCode
+      isPrivate: true,
+      accessCode: "secret-code",
       startAt: new Date(),
       endAt: new Date(Date.now() + 3600 * 1000),
     };
@@ -158,7 +157,7 @@ describe("eventFormSchema", () => {
       numberPlayerMin: 2,
       numberPlayerMax: 5,
       isPrivate: false,
-      endAt: new Date(Date.now() + 3600 * 1000), // Missing startAt
+      endAt: new Date(Date.now() + 3600 * 1000),
     };
 
     const result = eventFormSchema.safeParse(invalidData);
@@ -176,7 +175,7 @@ describe("eventFormSchema", () => {
       numberPlayerMin: 2,
       numberPlayerMax: 5,
       isPrivate: false,
-      startAt: new Date(), // Missing endAt
+      startAt: new Date(),
     };
 
     const result = eventFormSchema.safeParse(invalidData);

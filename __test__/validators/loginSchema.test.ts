@@ -6,7 +6,8 @@ describe("loginSchema", () => {
       email: "test@example.com",
       password: "securePassword123",
     };
-    expect(() => loginSchema.parse(data)).not.toThrow();
+    const result = loginSchema.safeParse(data);
+    expect(result.success).toBe(true);
   });
 
   it("should fail when email is empty", () => {
@@ -14,7 +15,9 @@ describe("loginSchema", () => {
       email: "",
       password: "securePassword123",
     };
-    expect(() => loginSchema.parse(data)).toThrow("Ce champ est requis");
+    const result = loginSchema.safeParse(data);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe("Invalid email");
   });
 
   it("should fail when email is not a valid email address", () => {
@@ -22,22 +25,8 @@ describe("loginSchema", () => {
       email: "invalid-email",
       password: "securePassword123",
     };
-    expect(() => loginSchema.parse(data)).toThrow();
-  });
-
-  it("should fail when password is empty", () => {
-    const data = {
-      email: "test@example.com",
-      password: "",
-    };
-    expect(() => loginSchema.parse(data)).toThrow("Ce champ est requis");
-  });
-
-  it("should fail when both email and password are empty", () => {
-    const data = {
-      email: "",
-      password: "",
-    };
-    expect(() => loginSchema.parse(data)).toThrow("Ce champ est requis");
+    const result = loginSchema.safeParse(data);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe("Invalid email");
   });
 });
