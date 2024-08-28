@@ -25,14 +25,14 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       href={`/evenements/${event.id}`}
       passHref
     >
-      <Card className="cursor-pointer pl-0 bg-slate-200">
+      <Card className="cursor-pointer bg-slate-200 pl-0">
         <CardContent className="p-0">
           <Image
             src={event.image}
             alt={event.title}
             width={500}
             height={300}
-            className="h-48 w-full pl-0 rounded-t-lg object-cover"
+            className="h-48 w-full rounded-t-lg object-cover pl-0"
           />
         </CardContent>
         <CardHeader>

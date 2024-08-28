@@ -155,7 +155,7 @@ const JourneyUI = async (id: string) => {
           {journey.comments.map((comment) => (
             <div key={comment.id} className="mb-3 flex flex-col gap-1">
               <p>{comment.content}</p>
-              <p className="text-sm text-camel">
+              <p className="text-sm text-gray-200">
                 ({format(new Date(comment.createdAt), "dd/MM/yyyy")})
               </p>
             </div>

@@ -52,7 +52,7 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
           <CarouselNext className="-right-4 size-12 border-orange bg-white !p-0 text-orange" />
         </Carousel>
       ) : (
-        <p className="text-center text-lg text-camel">
+        <p className="text-center text-lg text-gray-200">
           Vous n'êtes inscrit à aucun événement.
         </p>
       )}
