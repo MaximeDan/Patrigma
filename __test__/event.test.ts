@@ -15,6 +15,8 @@ it("Get all Events", async () => {
   });
 });
 
+let eventId: number;
+
 it("Create an event successfully", async () => {
   await testApiHandler({
     appHandler: eventHandler,
@@ -35,6 +37,8 @@ it("Create an event successfully", async () => {
           endAt: "2024-08-28T10:12:39.162Z",
         }),
       });
+      const data = await res.json();
+      eventId = data.data.id;
       expect(res.status).toBe(201);
     },
   });
@@ -64,10 +68,10 @@ it("Create an event with missing arguments", async () => {
   });
 });
 
-it("Update a journey with a specific id", async () => {
+it("Update an event with a specific id", async () => {
   await testApiHandler({
     paramsPatcher(params) {
-      params.id = "2";
+      params.id = eventId.toString();
     },
     appHandler: eventWithParamsHandler,
     async test({ fetch }) {
@@ -147,7 +151,7 @@ it("Update an event that doesn't exist", async () => {
 it("Delete an event with a specific id", async () => {
   await testApiHandler({
     paramsPatcher(params) {
-      params.id = "2";
+      params.id = eventId.toString();
     },
     appHandler: eventWithParamsHandler,
     async test({ fetch }) {
