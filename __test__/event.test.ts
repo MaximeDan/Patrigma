@@ -23,7 +23,7 @@ it("Create an event successfully", async () => {
         method: "POST",
         body: JSON.stringify({
           authorId: 1,
-          journeyId: 1,
+          journeyId: 2,
           title: "string",
           image: "https://www.google.com",
           numberPlayerMin: 1,
@@ -35,8 +35,6 @@ it("Create an event successfully", async () => {
           endAt: "2024-08-28T10:12:39.162Z",
         }),
       });
-      const data = await res.json();
-      console.log("create event", data);
       expect(res.status).toBe(201);
     },
   });
@@ -50,7 +48,7 @@ it("Create an event with missing arguments", async () => {
         method: "POST",
         body: JSON.stringify({
           authorId: 1,
-          journeyId: 1,
+          journeyId: 2,
           image: "string",
           numberPlayerMin: 1,
           numberPlayerMax: 10,
@@ -69,7 +67,7 @@ it("Create an event with missing arguments", async () => {
 it("Update a journey with a specific id", async () => {
   await testApiHandler({
     paramsPatcher(params) {
-      params.id = "1";
+      params.id = "2";
     },
     appHandler: eventWithParamsHandler,
     async test({ fetch }) {
@@ -88,8 +86,6 @@ it("Update a journey with a specific id", async () => {
           image: "https://www.google.com",
         }),
       });
-      const data = await res.json();
-      console.log("update event", data);
       expect(res.status).toBe(200);
     },
   });
@@ -151,13 +147,11 @@ it("Update an event that doesn't exist", async () => {
 it("Delete an event with a specific id", async () => {
   await testApiHandler({
     paramsPatcher(params) {
-      params.id = "1";
+      params.id = "2";
     },
     appHandler: eventWithParamsHandler,
     async test({ fetch }) {
       const res = await fetch({ method: "DELETE" });
-      const data = await res.json();
-      console.log("delete event", data);
       expect(res.status).toBe(204);
     },
   });
