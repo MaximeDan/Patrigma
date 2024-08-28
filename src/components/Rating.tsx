@@ -15,7 +15,7 @@ const Rating = ({ rating, ratingCount }: RatingProps) => {
   const stars = [];
 
   for (let i = 0; i < fullStars; i++) {
-    stars.push(<Icons.fullStar className="size-4" key={i} />);
+    stars.push(<Icons.fullStar className="size-4 fill-current" key={i} />);
   }
 
   for (let i = 0; i < halfStars; i++) {
@@ -26,9 +26,9 @@ const Rating = ({ rating, ratingCount }: RatingProps) => {
     stars.push(<Icons.emptyStar className="size-4" key={i} />);
   }
   return (
-    <div className="mb-3 mt-1 flex items-start">
+    <div className="mb-3 mt-1 flex items-start ora">
       {stars}
-      <p className="ml-1 text-[12px] text-beige-600">{`(${ratingCount} avis)`}</p>
+      <p className="ml-1 text-[16px] text-orange-700">{`(${ratingCount} avis)`}</p>
     </div>
   );
 };

@@ -62,7 +62,7 @@ const JourneyUI = async (id: string) => {
 
   const averageRating = calculateAverageRating(journey.comments);
   return (
-    <div className="mx-auto max-w-[920px]">
+    <div className="mx-auto max-w-[920px] bg-slate-100 shadow-xl mb-10">
       <div className="relative">
         <div className="absolute left-4 top-0 flex gap-[6px]">
           <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
@@ -82,17 +82,22 @@ const JourneyUI = async (id: string) => {
         <Button
           action={buttonAction.SET_JOURNEY_ID}
           ressourceId={parseInt(id)}
-          className="absolute right-5 top-5 border-orange bg-gray"
+          className="absolute right-5 top-5 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
         >
           <span>Créer un évènement</span>
-          <Icons.arrowLink fill="#d8552b" className="ml-2" />
+          <Icons.arrowLink
+            stroke="#f0f0f0"
+            width={20}
+            height={20}
+            className="ml-2"
+          />
         </Button>
       </div>
       <div className="flex-1 rounded-t-2xl px-5 pb-40 pt-14">
         <h1 className="text-xl font-extrabold text-orange">{journey.title}</h1>
-        <div className="flex items-center gap-1 text-beige-600">
-          <Icons.mapPin fill="rgba(206, 192, 173, 60%)" />
-          <p className="text-sm font-medium">{journey.steps[0].city}</p>
+        <div className="flex items-center gap-1 text-orange-600 font-semibold">
+          <Icons.mapPin />
+          <p>{journey.steps[0].city}</p>
         </div>
         <p>Créé le {format(new Date(journey.createdAt), "dd/MM/yyyy")}</p>
 
@@ -100,12 +105,28 @@ const JourneyUI = async (id: string) => {
         <div className="mt-[18px] flex items-center justify-between text-lg font-semibold text-orange">
           <h2>Accessibilité</h2>
         </div>
-        <div className="mt-4 flex gap-6">
-          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
+        <div className="mt-4 flex gap-6 text-center">
+          {/* <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
             <LevelBullet level={journey.mobilityImpaired} />
             <Icons.pmr />
+          </div> */}
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <Icons.pmr />
+            <p className="text-md">{journey.mobilityImpaired}</p>
           </div>
-          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2  border-cadetblue bg-white">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <Icons.partiallySighted />
+            <p className="text-md">{journey.partiallySighted}</p>
+          </div>
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <Icons.partiallyDeaf />
+            <p className="text-md">{journey.partiallyDeaf}</p>
+          </div>
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <Icons.cognitivelyImpaired />
+            <p className="text-md">{journey.cognitivelyImpaired}</p>
+          </div>
+          {/* <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2  border-cadetblue bg-white">
             <LevelBullet level={journey.partiallySighted} />
             <Icons.partiallySighted />
           </div>
@@ -116,7 +137,7 @@ const JourneyUI = async (id: string) => {
           <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
             <LevelBullet level={journey.cognitivelyImpaired} />
             <Icons.cognitivelyImpaired />
-          </div>
+          </div> */}
         </div>
         <h2 className="mt-[18px] text-lg font-semibold text-orange">
           Pré-requis
@@ -148,7 +169,7 @@ const JourneyUI = async (id: string) => {
 const JourneyDetail = ({ params }: { params: Params }) => {
   // get journey by id
   return (
-    <main className="flex min-h-screen flex-col bg-gray">
+    <main className="flex min-h-screen flex-col bg-background">
       <TopBar />
       <Suspense fallback={<div>Loading...</div>}>
         {JourneyUI(params.id)}

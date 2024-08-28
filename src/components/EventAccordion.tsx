@@ -62,7 +62,10 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
           </AccordionTrigger>
           <AccordionContent className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
             {groupedEvents[original].map((event) => (
-              <div key={event.id} className="flex flex-col rounded-lg bg-gray">
+              <div
+                key={event.id}
+                className="flex flex-col rounded-lg bg-slate-200 shadow-xl"
+              >
                 <Link href={`/evenements/${event.id}`}>
                   <Image
                     src={`${event.image}`}
@@ -71,12 +74,14 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
                     width={200}
                     height={200}
                   />
-                  <h3 className="text-xl font-bold">{event.title}</h3>
-                  <p className="">{event.description}</p>
-                  <p className="">
-                    Participants: {event.numberPlayerMin} -{" "}
-                    {event.numberPlayerMax}
-                  </p>
+                  <div className="p-2">
+                    <h3 className="text-xl font-bold">{event.title}</h3>
+                    <p className="">{event.description}</p>
+                    <p className="font-semibold">
+                      Participants: {event.numberPlayerMin} -{" "}
+                      {event.numberPlayerMax}
+                    </p>
+                  </div>
                 </Link>
               </div>
             ))}

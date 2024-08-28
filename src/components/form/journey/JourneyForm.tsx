@@ -176,7 +176,14 @@ const JourneyForm = () => {
   return (
     <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll bg-background px-5  pb-12 pt-5">
       <div className="flex justify-end">
-        <Button onClick={dismissModal}>
+        {/* <Button onClick={dismissModal}>
+          <span>Quitter</span>
+          <Icons.close width={14} height={14} className="ml-2" />
+        </Button> */}
+        <Button
+          className="mt-5 border-red-600 bg-red-600 hover:bg-red-500 shadow-xl text-white p-2"
+          onClick={dismissModal}
+        >
           <span>Quitter</span>
           <Icons.close width={14} height={14} className="ml-2" />
         </Button>
@@ -204,13 +211,17 @@ const JourneyForm = () => {
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi
               nam illo iste veniam ea! Doloremque distinctio mollitia omnis.
             </p>
-            <Button type="button" onClick={dismissModal}>
+            <Button
+              className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+              type="button"
+              onClick={dismissModal}
+            >
               <span>Terminer</span>
               <Icons.check
                 width={14}
                 height={14}
                 className="ml-2"
-                fill="#d8552b"
+                fill="#f0f0f0"
               />
             </Button>
           </div>

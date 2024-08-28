@@ -20,7 +20,7 @@ type FirstStepProps = {
 const IntroductionStep = ({ form, next }: FirstStepProps) => {
   return (
     <div>
-      <h2>Créez votre propre Parcours !</h2>
+      <h1 className="font-semibold text-xl">Créez votre propre Parcours !</h1>
       <p>
         Ajouter un titre, une description et une image afin de rednre votre
         parcours le plus attrayant possible
@@ -59,13 +59,19 @@ const IntroductionStep = ({ form, next }: FirstStepProps) => {
 
       {/* TODO: add image file input */}
       <Button
-        type="button"
         onClick={async () => {
           await next();
         }}
+        type="submit"
+        className="mt-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
       >
         <span>Suivant</span>
-        <Icons.arrowLink className="ml-2" />
+        <Icons.arrowLink
+          stroke="#f0f0f0"
+          width={20}
+          height={20}
+          className="ml-2"
+        />
       </Button>
     </div>
   );

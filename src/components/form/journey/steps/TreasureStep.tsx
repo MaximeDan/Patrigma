@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Icons } from "@/components/Icons";
 
 type TreasureStepProps = {
   prev: () => void;
@@ -42,13 +43,31 @@ const TreasureStep = ({ form, next, prev }: TreasureStepProps) => {
       />
 
       <div className="mt-11 flex justify-between xs:mt-[60px]">
-        <Button onClick={prev}>Retour</Button>
         <Button
+          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          onClick={prev}
+        >
+          <Icons.arrowLink
+            stroke="#f0f0f0"
+            width={20}
+            height={20}
+            className="mr-2 -scale-x-100"
+          />
+          <span>Retour</span>
+        </Button>
+        <Button
+          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
           onClick={async () => {
             await next();
           }}
         >
-          Continuer
+          <span>Continuer</span>
+          <Icons.arrowLink
+            stroke="#f0f0f0"
+            width={20}
+            height={20}
+            className="ml-2"
+          />
         </Button>
       </div>
     </div>

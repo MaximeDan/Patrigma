@@ -5,10 +5,11 @@
 @layer base {
   :root {
     /* colors */
-    --background: #0c0c0c;
-    --foreground: 34.5deg 25.2% 74.3%;
-    --orange: #d8552b;
+    --background: #f8fafc;
+    --foreground: #0c0a09;
+    --orange: #ea580c;
     --orange-600: #e89980;
+    --orange-700: #c2410c;
     --green: #7f986d;
     --beige: #cec0ad;
     --beige-600: rgba(206, 192, 173, 60%);

@@ -23,42 +23,42 @@ services:
   #     - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
   #     - "traefik.http.routers.whoami.entrypoints=web"
 
-  db:
+  patrigma_db:
     image: postgres:latest
     container_name: patrigma_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      POSTGRES_USER: patrigma
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: patrigma_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U patrigma -d patrigma_db -h localhost -p 5432"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d patrigma_db -h localhost -p 5432"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  next:
-    build:
-      context: .
-      target: next
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - NODE_ENV=${NODE_ENV}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      - BASE_URL=${BASE_URL}
-      - NEXT_PUBLIC_BASE_URL=${BASE_URL}
-    ports:
-      - "3000:3000"
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - "./src:/patrigma/src"
-    command: ["npm", "run", "start"]
+  # next:
+  #   build:
+  #     context: .
+  #     target: next
+  #   environment:
+  #     - DATABASE_URL=${DATABASE_URL}
+  #     - NODE_ENV=${NODE_ENV}
+  #     - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+  #     - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+  #     - BASE_URL=${BASE_URL}
+  #     - NEXT_PUBLIC_BASE_URL=${BASE_URL}
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   volumes:
+  #     - "./src:/patrigma/src"
+  #   command: ["npm", "run", "start"]
 
 volumes:
   postgres_data:

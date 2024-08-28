@@ -110,9 +110,12 @@ const EventForm = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 mx-auto flex size-full max-w-[920px] flex-col overflow-scroll  bg-background px-5  pb-12 pt-5">
+    <div className="fixed left-0 top-0 z-10 mx-auto flex size-full max-w-[920px] flex-col overflow-scroll  bg-slate-100 px-5  pb-12 pt-5">
       <div className="flex justify-end">
-        <Button onClick={dismissModal}>
+        <Button
+          className="mt-5 border-red-600 bg-red-600 hover:bg-red-500 shadow-xl text-white p-2"
+          onClick={dismissModal}
+        >
           <span>Quitter</span>
           <Icons.close width={14} height={14} className="ml-2" />
         </Button>
@@ -124,10 +127,12 @@ const EventForm = () => {
               control={form.control}
               name="title"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mb-3">
                   <FormControl>
                     <>
-                      <Label htmlFor="title">Titre*</Label>
+                      <Label className="font-semibold" htmlFor="title">
+                        Titre*
+                      </Label>
                       <Input {...field} id="title" className="max-w-[500px]" />
                     </>
                   </FormControl>
@@ -140,10 +145,12 @@ const EventForm = () => {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mb-3">
                   <FormControl>
                     <>
-                      <Label htmlFor="description">Description*</Label>
+                      <Label className="font-semibold" htmlFor="description">
+                        Description*
+                      </Label>
                       <Textarea
                         {...field}
                         id="description"
@@ -160,10 +167,13 @@ const EventForm = () => {
                 control={form.control}
                 name="numberPlayerMin"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="mb-3">
                     <FormControl>
                       <>
-                        <Label htmlFor="numberPlayerMin">
+                        <Label
+                          className="font-semibold"
+                          htmlFor="numberPlayerMin"
+                        >
                           Nombre mininum de participants*
                         </Label>
                         <Input {...field} type="number" id="numberPlayerMin" />
@@ -180,7 +190,10 @@ const EventForm = () => {
                   <FormItem>
                     <FormControl>
                       <>
-                        <Label htmlFor="numberPlayerMax">
+                        <Label
+                          className="font-semibold"
+                          htmlFor="numberPlayerMax"
+                        >
                           Nombre maximum de participants*
                         </Label>
                         <Input {...field} type="number" id="numberPlayerMax" />
@@ -222,9 +235,9 @@ const EventForm = () => {
               control={form.control}
               name="isPrivate"
               render={({ field }) => (
-                <FormItem className="flex max-w-[500px] flex-row items-center justify-between rounded-lg border p-3">
+                <FormItem className="flex max-w-[500px] flex-row items-center justify-between rounded-lg border p-3 mb-3">
                   <div className="space-y-0.5">
-                    <Label>Partie privée</Label>
+                    <Label className="font-semibold">Partie privée</Label>
                     <FormDescription>
                       Si vous cochez cette case, vous devrez fournir un code
                       d'accès pour rejoindre la partie.
@@ -234,6 +247,7 @@ const EventForm = () => {
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className="ml-5"
                     />
                   </FormControl>
                 </FormItem>
@@ -248,7 +262,9 @@ const EventForm = () => {
                   <FormItem>
                     <FormControl>
                       <>
-                        <Label htmlFor="accessCode">Code d'accès</Label>
+                        <Label className="font-semibold" htmlFor="accessCode">
+                          Code d'accès
+                        </Label>
                         <Input {...field} id="accessCode" />
                       </>
                     </FormControl>
@@ -258,9 +274,17 @@ const EventForm = () => {
               />
             )}
 
-            <Button type="submit" className="mt-5">
+            <Button
+              type="submit"
+              className="mt-5 border-orange bg-orange text-white p-2"
+            >
               <span>Créer l'évènement</span>
-              <Icons.arrowLink width={14} height={14} className="ml-2" />
+              <Icons.arrowLink
+                stroke="#f0f0f0"
+                width={20}
+                height={20}
+                className="ml-2"
+              />
             </Button>
           </form>
         )}
