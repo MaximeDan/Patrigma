@@ -16,7 +16,6 @@ async function fetchUserEvents(userId: number): Promise<Event[]> {
 
 const UserEventsFeed = async () => {
   const session = await getServerSession(authOptions);
-  console.log("session", session);
   const events = await fetchUserEvents(session?.user?.id ?? 0);
   return (
     <div className="mt-4 flex flex-col items-center justify-center px-16">

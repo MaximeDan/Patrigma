@@ -3,8 +3,8 @@
  */
 
 import { testApiHandler } from "next-test-api-route-handler";
-import * as postCommentHandler from "@/app/api/comments/route"; // POST handler
-import * as commentByIdHandler from "@/app/api/comments/[id]/route"; // GET, PUT, DELETE handlers
+import * as postCommentHandler from "@/app/api/comments/route";
+import * as commentByIdHandler from "@/app/api/comments/[id]/route";
 
 describe("Comment API", () => {
   describe("POST /api/comments", () => {
@@ -36,6 +36,31 @@ describe("Comment API", () => {
                 journeyId: 1,
                 rating: 5,
               }),
+            }),
+          );
+        },
+      });
+    });
+
+    it("should return an error when required fields are missing", async () => {
+      await testApiHandler({
+        appHandler: postCommentHandler,
+        test: async ({ fetch }) => {
+          const res = await fetch({
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              comment: {
+                content: "Incomplete comment",
+              },
+            }),
+          });
+
+          expect(res.status).toBe(400);
+          const data = await res.json();
+          expect(data).toEqual(
+            expect.objectContaining({
+              message: expect.any(String),
             }),
           );
         },

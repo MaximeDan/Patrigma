@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import {
   journeyFormSchema,
-  firstStepSchema,
-  secondStepSchema,
-  thirdStepSchema,
-  forthStepSchema,
+  introductionStepSchema,
+  stepsOverviewStepSchema,
+  detailsStepSchema,
+  treasureStepSchema,
 } from "@/validators/journeyFormSchema";
 import { z } from "zod";
 import { useJourneyFormStore } from "@/store/journeyFormStore";
@@ -35,10 +35,10 @@ type JourneyStep = {
   }[];
 };
 
-const firstStepFields = Object.keys(firstStepSchema.shape);
-const secondStepFields = Object.keys(secondStepSchema.shape);
-const thirdStepFields = Object.keys(thirdStepSchema.shape);
-const forthStepFields = Object.keys(forthStepSchema.shape);
+const firstStepFields = Object.keys(introductionStepSchema.shape);
+const secondStepFields = Object.keys(detailsStepSchema.shape);
+const thirdStepFields = Object.keys(stepsOverviewStepSchema.shape);
+const treasureStepFields = Object.keys(treasureStepSchema.shape);
 
 const steps = [
   {
@@ -51,7 +51,7 @@ const steps = [
     fields: thirdStepFields,
   },
   {
-    fields: forthStepFields,
+    fields: treasureStepFields,
   },
 ];
 
