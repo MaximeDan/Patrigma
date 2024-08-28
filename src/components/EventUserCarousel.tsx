@@ -20,7 +20,7 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
   return (
     <>
       {events.length ? (
-        <Carousel className="w-full max-w-sm">
+        <Carousel className="w-full">
           <CarouselContent className="-ml-1 flex">
             {events.map((event) => (
               <CarouselItem key={event.id} className="pl-1">
@@ -48,8 +48,8 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="!p-0" />
-          <CarouselNext className="!p-0" />
+          <CarouselPrevious className="-left-4 size-12 border-orange bg-white !p-0 text-orange" />
+          <CarouselNext className="-right-4 size-12 border-orange bg-white !p-0 text-orange" />
         </Carousel>
       ) : (
         <p className="text-center text-lg text-camel">
