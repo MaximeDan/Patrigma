@@ -35,8 +35,6 @@ it("Create an event successfully", async () => {
           endAt: "2024-08-28T10:12:39.162Z",
         }),
       });
-      const json = await res.json();
-      console.log("create event", json);
       expect(res.status).toBe(201);
     },
   });
