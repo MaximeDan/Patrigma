@@ -10,7 +10,6 @@ jobs:
   test-app:
     name: Test App
     runs-on: ubuntu-latest
-    continue-on-error: true # à supprimer une fois les tests corrigés
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -79,7 +78,33 @@ jobs:
     outputs:
       version: ${{ needs.build-docker-prod.outputs.version }}
     steps:
+      - name: Check if release exists
+        id: check_release
+        run: |
+          RELEASE_URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ needs.build-docker-prod.outputs.version }}"
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" $RELEASE_URL)
+          if [ "$RESPONSE" == "200" ]; then
+            echo "Release already exists."
+            echo "exists=true" >> $GITHUB_ENV
+          else
+            echo "Release does not exist."
+            echo "exists=false" >> $GITHUB_ENV
+          fi
+
+      - name: Delete existing release if it exists
+        if: env.exists == 'true'
+        run: |
+          RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ needs.build-docker-prod.outputs.version }}" | jq -r '.id')
+          curl -s -X DELETE -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID"
+
+      - name: Delete existing tag if it exists
+        if: env.exists == 'true'
+        run: |
+          TAG_URL="https://api.github.com/repos/${{ github.repository }}/git/refs/tags/v${{ needs.build-docker-prod.outputs.version }}"
+          curl -s -X DELETE -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" $TAG_URL
+
       - name: Create GitHub Release
+        if: env.exists == 'false' || env.exists == 'true'
         id: create_release
         uses: actions/create-release@v1
         env:
