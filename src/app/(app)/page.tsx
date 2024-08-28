@@ -7,13 +7,13 @@ export default function Home() {
     <>
       <TopBar />
       <div className="mt-8 px-5">
-        <h1 className="text-center text-3xl font-bold text-orange-500">
+        <h1 className="text-center text-3xl font-bold text-orange">
           Mes événements
         </h1>
         <UserEventsFeed />
-        <h1 className="mt-8 text-center text-3xl font-bold text-orange-500">
+        <h2 className="mt-8 text-center text-2xl font-bold text-orange">
           Événements Suggérés
-        </h1>
+        </h2>
         <RandomEventsFeed />
       </div>
     </>

@@ -194,7 +194,7 @@ const BottomSheetModal = () => {
               />
 
               <div className="flex  justify-end">
-                <Button className="mt-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500">
+                <Button className="mt-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange">
                   <span>
                     {editedStep ? "Modifier l'étape" : "Ajouter l'étape"}
                   </span>

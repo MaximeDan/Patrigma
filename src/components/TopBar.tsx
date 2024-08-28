@@ -74,7 +74,7 @@ const TopBar = () => {
                 variant="default"
                 size="sm"
                 onClick={() => signIn()}
-                className="bg-orange text-sm text-white hover:bg-orange-500"
+                className="border-2 border-orange bg-white text-sm font-semibold text-orange"
               >
                 Se connecter
               </Button>
@@ -82,7 +82,7 @@ const TopBar = () => {
                 <Button
                   variant="default"
                   size="sm"
-                  className="bg-orange text-sm text-white hover:bg-orange-500"
+                  className="border-2 border-orange bg-white text-sm font-semibold text-orange"
                 >
                   S'enregistrer
                 </Button>
@@ -91,7 +91,7 @@ const TopBar = () => {
           )}
         </div>
       </header>
-      <hr className="mb-8 border-orange-600 border-2" />
+      <hr className="mb-8 border-2 border-orange-600" />
     </>
   );
 };

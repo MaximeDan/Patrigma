@@ -44,7 +44,7 @@ const TreasureStep = ({ form, next, prev }: TreasureStepProps) => {
 
       <div className="mt-11 flex justify-between xs:mt-[60px]">
         <Button
-          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="border-orange bg-orange hover:bg-orange shadow-xl text-white p-2"
           onClick={prev}
         >
           <Icons.arrowLink
@@ -56,7 +56,7 @@ const TreasureStep = ({ form, next, prev }: TreasureStepProps) => {
           <span>Retour</span>
         </Button>
         <Button
-          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="border-orange bg-orange hover:bg-orange shadow-xl text-white p-2"
           onClick={async () => {
             await next();
           }}
