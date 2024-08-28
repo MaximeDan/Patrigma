@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { testApiHandler } from "next-test-api-route-handler";
 import * as journeyHandler from "@/app/api/journeys/route";
 import * as journeyWithParamsHandler from "@/app/api/journeys/[id]/route";
