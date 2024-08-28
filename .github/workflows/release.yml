@@ -44,8 +44,9 @@ jobs:
       - name: Convert repository owner to lowercase
         id: convert_repo_owner
         run: |
-          echo "repo_owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-          echo "::set-output name=repo_owner::$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+          repo_owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "repo_owner=$repo_owner" >> $GITHUB_ENV
+          echo "::set-output name=repo_owner::$repo_owner"
 
       - name: Get version from package.json
         id: get_version
@@ -75,6 +76,8 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     needs: build-docker-prod
+    outputs:
+      version: ${{ needs.build-docker-prod.outputs.version }}
     steps:
       - name: Create GitHub Release
         id: create_release
@@ -86,8 +89,8 @@ jobs:
           release_name: "Release v${{ needs.build-docker-prod.outputs.version }}"
           draft: false
           prerelease: false
-          body: "Docker image for this release: ghcr.io/${{ needs.build-docker-prod.outputs.repo_owner }}/patrigma:v${{ needs.build-docker-prod.outputs.version }}"
-          
+          body: "Docker image for this release: https://ghcr.io/${{ needs.build-docker-prod.outputs.repo_owner }}/patrigma:v${{ needs.build-docker-prod.outputs.version }}"
+
   notify:
     runs-on: ubuntu-latest
     needs: create_release
@@ -97,9 +100,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Succeeded for Release v${{ needs.build-docker-prod.outputs.version }}"
+          title: "Build Succeeded for Release v${{ needs.create_release.outputs.version }}"
           message: |
-            The build for release v${{ needs.build-docker-prod.outputs.version }} was successful.
+            The build for release v${{ needs.create_release.outputs.version }} was successful.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
             The Docker image has been published successfully.
@@ -109,10 +112,9 @@ jobs:
         uses: containrrr/shoutrrr-action@v1
         with:
           url: ${{ secrets.NOTIFICATION_URL }}
-          title: "Build Failed for Release v${{ needs.build-docker-prod.outputs.version }}"
+          title: "Build Failed for Release v${{ needs.create_release.outputs.version }}"
           message: |
-            The build for release v${{ needs.build-docker-prod.outputs.version }} has failed.
+            The build for release v${{ needs.create_release.outputs.version }} has failed.
             Commit message: ${{ github.event.head_commit.message }}
             Commit SHA: ${{ github.sha }}
             Check the build logs for details.
-
