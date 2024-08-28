@@ -19,7 +19,7 @@ describe("Comment API", () => {
               comment: {
                 content: "This is a test comment from test",
                 authorId: 1,
-                journeyId: 1,
+                journeyId: 5,
                 rating: 5,
               },
             }),
@@ -33,7 +33,7 @@ describe("Comment API", () => {
               data: expect.objectContaining({
                 content: "This is a test comment from test",
                 authorId: 1,
-                journeyId: 1,
+                journeyId: 5,
                 rating: 5,
               }),
             }),
@@ -110,7 +110,7 @@ describe("Comment API", () => {
               comment: {
                 content: "Updated test comment content",
                 authorId: 1,
-                journeyId: 1,
+                journeyId: 5,
                 rating: 4,
               },
             }),
@@ -124,7 +124,7 @@ describe("Comment API", () => {
               data: expect.objectContaining({
                 content: "Updated test comment content",
                 authorId: 1,
-                journeyId: 1,
+                journeyId: 5,
                 rating: 4,
               }),
             }),
