@@ -84,7 +84,6 @@ const JourneyForm = () => {
     // @ts-ignore
     const stepObject: StepWithoutDates[] = parsedSteps.steps.map(
       (step, index) => {
-        // to do : get optional additional location fields (city, country, address, postal code)
         return {
           puzzle: step.puzzle,
           hint: step.hint,
@@ -97,8 +96,6 @@ const JourneyForm = () => {
         };
       },
     );
-
-    // to do : estimate distance and duration from steps
 
     // get user id from session
     const journeyObject: JourneyWithoutDates = {
@@ -126,7 +123,7 @@ const JourneyForm = () => {
 
     const token = session?.accessToken;
     const res = await fetch(
-      `${process.env.BASE_URL || "http://localhost:3000"}/api/journeys`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/journeys`,
       {
         method: "POST",
         body: JSON.stringify(body),
