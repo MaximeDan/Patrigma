@@ -29,7 +29,7 @@ export default withAuth(
 
         if (token) {
           try {
-            const { payload } = await jwtVerify(token.jwt, secretKey);
+            await jwtVerify(token.jwt, secretKey);
             return true;
           } catch (error) {
             return false;
