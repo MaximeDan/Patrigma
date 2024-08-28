@@ -76,7 +76,7 @@ const runTests = async () => {
   } catch (error) {
     console.error("Tests failed:");
     console.error(error);
-    process.exit(1);
+    throw new Error("Tests failed");
   }
 };
 
@@ -86,6 +86,7 @@ const stopDocker = async () => {
 };
 
 const main = async () => {
+  let exitCode = 0;
   try {
     await startDocker();
     await applyMigrations();
@@ -93,8 +94,10 @@ const main = async () => {
     await runTests();
   } catch (error) {
     console.error("Error during setup, migration, or tests:", error);
+    exitCode = 1;
   } finally {
     await stopDocker();
+    process.exit(exitCode);
   }
 };
 

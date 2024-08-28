@@ -75,8 +75,12 @@ jobs:
         run: |
           docker-compose -f docker-compose.dev.yml up -d  
           
-          echo "Waiting for database to be ready..."
-          sleep 30
+          until docker exec -i <your_database_container_name> pg_isready -U <your_database_user>; do
+            echo "Waiting for the database to be ready..."
+            sleep 2
+          done
+
+          echo "Database is ready!"
 
       - name: Run Prisma migrations
         env:
@@ -96,7 +100,13 @@ jobs:
         run: |
           npm run start &  # Start the Next.js application in the background
           echo "Waiting for Next.js to be ready..."
-          sleep 10
+
+          until curl -s http://localhost:3000 > /dev/null; do
+            echo "Waiting for Next.js to be ready..."
+            sleep 2
+          done
+
+          echo "Next.js is ready!"
 
       - name: Install xvfb
         run: sudo apt-get install -y xvfb
