@@ -249,19 +249,19 @@ const EventDetail = ({ params }: { params: Params }) => {
           <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 text-center">
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.pmr />
-              <p className="text-md mt-1">{journey.mobilityImpaired}</p>
+              <p className="text-sm mt-1">{journey.mobilityImpaired}</p>
             </div>
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.partiallySighted />
-              <p className="text-md mt-1">{journey.partiallySighted}</p>
+              <p className="text-sm mt-1">{journey.partiallySighted}</p>
             </div>
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.partiallyDeaf />
-              <p className="text-md mt-1">{journey.partiallyDeaf}</p>
+              <p className="text-sm mt-1">{journey.partiallyDeaf}</p>
             </div>
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.cognitivelyImpaired />
-              <p className="text-md mt-1">{journey.cognitivelyImpaired}</p>
+              <p className="text-sm mt-1">{journey.cognitivelyImpaired}</p>
             </div>
           </div>
 
