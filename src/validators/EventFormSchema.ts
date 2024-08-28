@@ -33,13 +33,14 @@ export const eventFormSchema = z.object({
   ),
 
   isPrivate: z.boolean().default(false),
-  accessCode: z.string().optional(),
+  accessCode: z.string().nullable().optional(),
   startAt: z.date({
     required_error: "Veuillez renseigner une date de début",
   }),
   endAt: z.date({
     required_error: "Veuillez renseigner une date de fin",
   }),
+  image: z.string().url(),
 });
 
 eventFormSchema.superRefine((data, ctx) => {
