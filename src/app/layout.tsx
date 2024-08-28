@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import "./globals.css";
 import { ClientSessionProvider } from "@/providers/Providers";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,6 +62,12 @@ export default async function RootLayout({
 
   return (
     <html lang="fr">
+      <head>
+        <Script
+          strategy="afterInteractive"
+          src="https://tarteaucitron.io/load.js?domain=patrigma.code-with-alex.com&uuid=549002fcffff1a72b5c2709ab424dc378cc745e7"
+        />
+      </head>
       <body className={`${inter.className} min-h-screen bg-background`}>
         <ClientSessionProvider session={session}>
           {children}
