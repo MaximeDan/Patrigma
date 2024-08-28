@@ -35,26 +35,26 @@ const levelIntToText = (level: number) => {
   }
 };
 
-const LevelBullet = ({ level }: { level: string }) => {
-  switch (level) {
-    case "unaccessible":
-      return (
-        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-1" />
-      );
-    case "partiallyAccessible":
-      return (
-        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-2" />
-      );
-    case "accessible":
-      return (
-        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-3" />
-      );
-    default:
-      return (
-        <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level" />
-      );
-  }
-};
+// const LevelBullet = ({ level }: { level: string }) => {
+//   switch (level) {
+//     case "unaccessible":
+//       return (
+//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-1" />
+//       );
+//     case "partiallyAccessible":
+//       return (
+//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-2" />
+//       );
+//     case "accessible":
+//       return (
+//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-3" />
+//       );
+//     default:
+//       return (
+//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level" />
+//       );
+//   }
+// };
 
 const JourneyUI = async (id: string) => {
   const journey = await getSingleJourney(id);
@@ -62,7 +62,7 @@ const JourneyUI = async (id: string) => {
 
   const averageRating = calculateAverageRating(journey.comments);
   return (
-    <div className="mx-auto max-w-[920px] bg-slate-100 shadow-xl mb-10">
+    <div className="mx-auto mb-10 w-full max-w-[920px] bg-slate-100 shadow-xl">
       <div className="relative">
         <div className="absolute left-4 top-0 flex gap-[6px]">
           <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
@@ -82,7 +82,7 @@ const JourneyUI = async (id: string) => {
         <Button
           action={buttonAction.SET_JOURNEY_ID}
           ressourceId={parseInt(id)}
-          className="absolute right-5 top-5 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="absolute right-5 top-5 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
         >
           <span>Créer un évènement</span>
           <Icons.arrowLink
@@ -95,7 +95,7 @@ const JourneyUI = async (id: string) => {
       </div>
       <div className="flex-1 rounded-t-2xl px-5 pb-40 pt-14">
         <h1 className="text-xl font-extrabold text-orange">{journey.title}</h1>
-        <div className="flex items-center gap-1 text-orange-600 font-semibold">
+        <div className="flex items-center gap-1 font-semibold text-orange-600">
           <Icons.mapPin />
           <p>{journey.steps[0].city}</p>
         </div>
@@ -105,26 +105,26 @@ const JourneyUI = async (id: string) => {
         <div className="mt-[18px] flex items-center justify-between text-lg font-semibold text-orange">
           <h2>Accessibilité</h2>
         </div>
-        <div className="mt-4 flex gap-6 text-center">
+        <div className="mt-4 flex flex-wrap gap-6 text-center">
           {/* <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
             <LevelBullet level={journey.mobilityImpaired} />
             <Icons.pmr />
           </div> */}
           <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
             <Icons.pmr />
-            <p className="text-md">{journey.mobilityImpaired}</p>
+            <p className="text-sm">{journey.mobilityImpaired}</p>
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
             <Icons.partiallySighted />
-            <p className="text-md">{journey.partiallySighted}</p>
+            <p className="text-sm">{journey.partiallySighted}</p>
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
             <Icons.partiallyDeaf />
-            <p className="text-md">{journey.partiallyDeaf}</p>
+            <p className="text-sm">{journey.partiallyDeaf}</p>
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
             <Icons.cognitivelyImpaired />
-            <p className="text-md">{journey.cognitivelyImpaired}</p>
+            <p className="text-sm">{journey.cognitivelyImpaired}</p>
           </div>
           {/* <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2  border-cadetblue bg-white">
             <LevelBullet level={journey.partiallySighted} />

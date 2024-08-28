@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <TopBar />
-      <div className="mt-8">
+      <div className="mt-8 px-5">
         <h1 className="text-center text-3xl font-bold text-orange-500">
           Mes événements
         </h1>
