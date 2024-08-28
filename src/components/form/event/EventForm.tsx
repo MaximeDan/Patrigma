@@ -113,7 +113,7 @@ const EventForm = () => {
     <div className="fixed left-0 top-0 z-10 mx-auto flex size-full max-w-[920px] flex-col overflow-scroll  bg-slate-100 px-5  pb-12 pt-5">
       <div className="flex justify-end">
         <Button
-          className="mt-5 border-red-600 bg-red-600 hover:bg-red-500 shadow-xl text-white p-2"
+          className="mt-5 border-red-600 bg-red-600 p-2 text-white shadow-xl hover:bg-red-500"
           onClick={dismissModal}
         >
           <span>Quitter</span>
@@ -235,7 +235,7 @@ const EventForm = () => {
               control={form.control}
               name="isPrivate"
               render={({ field }) => (
-                <FormItem className="flex max-w-[500px] flex-row items-center justify-between rounded-lg border p-3 mb-3">
+                <FormItem className="mb-3 flex max-w-[500px] flex-row items-center justify-between rounded-lg border p-3">
                   <div className="space-y-0.5">
                     <Label className="font-semibold">Partie privée</Label>
                     <FormDescription>
@@ -276,7 +276,7 @@ const EventForm = () => {
 
             <Button
               type="submit"
-              className="mt-5 border-orange bg-orange text-white p-2"
+              className="mt-5 border-orange bg-orange p-2 text-white"
             >
               <span>Créer l'évènement</span>
               <Icons.arrowLink

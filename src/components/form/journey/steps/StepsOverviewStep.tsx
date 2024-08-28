@@ -61,7 +61,7 @@ const StepsOverviewStep = ({ form, next, prev }: ThirdStepProps) => {
       />
 
       <Button
-        className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2 flex items-center"
+        className="flex items-center border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
         onClick={showBottomSheet}
       >
         <p>Ajouter</p>
@@ -70,7 +70,7 @@ const StepsOverviewStep = ({ form, next, prev }: ThirdStepProps) => {
 
       <div className="mt-11 flex justify-between xs:mt-[60px]">
         <Button
-          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
           onClick={prev}
         >
           <Icons.arrowLink
@@ -82,7 +82,7 @@ const StepsOverviewStep = ({ form, next, prev }: ThirdStepProps) => {
           <span>Retour</span>
         </Button>
         <Button
-          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
           type="button"
           onClick={async () => {
             await next();

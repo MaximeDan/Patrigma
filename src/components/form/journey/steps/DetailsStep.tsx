@@ -252,7 +252,7 @@ const DetailsStep = ({ form, next, prev }: SecondStepProps) => {
 
       <div className="mt-11 flex justify-between xs:mt-[60px]">
         <Button
-          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
           onClick={prev}
         >
           <Icons.arrowLink
@@ -264,7 +264,7 @@ const DetailsStep = ({ form, next, prev }: SecondStepProps) => {
           <span>Retour</span>
         </Button>
         <Button
-          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
           type="button"
           onClick={async () => {
             await next();

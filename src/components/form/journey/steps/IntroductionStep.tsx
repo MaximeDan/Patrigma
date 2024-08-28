@@ -20,7 +20,7 @@ type FirstStepProps = {
 const IntroductionStep = ({ form, next }: FirstStepProps) => {
   return (
     <div>
-      <h1 className="font-semibold text-xl">Créez votre propre Parcours !</h1>
+      <h1 className="text-xl font-semibold">Créez votre propre Parcours !</h1>
       <p>
         Ajouter un titre, une description et une image afin de rednre votre
         parcours le plus attrayant possible
@@ -63,7 +63,7 @@ const IntroductionStep = ({ form, next }: FirstStepProps) => {
           await next();
         }}
         type="submit"
-        className="mt-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+        className="mt-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
       >
         <span>Suivant</span>
         <Icons.arrowLink

@@ -48,7 +48,7 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
   return (
     <Link
       href={`/parcours/${journey.id}`}
-      className="flex flex-col rounded-lg bg-slate-200 w-25 shadow-xl"
+      className="w-25 flex flex-col rounded-lg bg-slate-200 shadow-xl"
     >
       <div className="relativ rounded-sm">
         <Image
@@ -60,16 +60,16 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
         />
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h2 className="font-semibold mb-2">{journey.title}</h2>
-        <div className="flex mb-2">
+        <h2 className="mb-2 font-semibold">{journey.title}</h2>
+        <div className="mb-2 flex">
           <div className="flex flex-wrap gap-[6px]">
-            <div className="flex items-center flex-shrink-0 rounded-md bg-slate-300 px-2 py-[6px]">
+            <div className="flex flex-shrink-0 items-center rounded-md bg-slate-300 px-2 py-[6px]">
               <Icons.dumbbel />
               <p className="text-sm font-semibold text-gray">
                 {phisicalDificulty}
               </p>
             </div>
-            <div className="flex items-center flex-shrink-0 gap-1 rounded-md bg-slate-300 px-2 py-[6px]">
+            <div className="flex flex-shrink-0 items-center gap-1 rounded-md bg-slate-300 px-2 py-[6px]">
               <Icons.bulb />
               <p className="text-sm font-semibold text-gray">
                 {cluesDificulty}
