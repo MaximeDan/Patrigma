@@ -82,7 +82,7 @@ const JourneyUI = async (id: string) => {
         <Button
           action={buttonAction.SET_JOURNEY_ID}
           ressourceId={parseInt(id)}
-          className="absolute right-5 top-5 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
+          className="absolute right-5 top-5 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
         >
           <span>Créer un évènement</span>
           <Icons.arrowLink
@@ -110,19 +110,19 @@ const JourneyUI = async (id: string) => {
             <LevelBullet level={journey.mobilityImpaired} />
             <Icons.pmr />
           </div> */}
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
             <Icons.pmr />
             <p className="text-sm">{journey.mobilityImpaired}</p>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
             <Icons.partiallySighted />
             <p className="text-sm">{journey.partiallySighted}</p>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
             <Icons.partiallyDeaf />
             <p className="text-sm">{journey.partiallyDeaf}</p>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
             <Icons.cognitivelyImpaired />
             <p className="text-sm">{journey.cognitivelyImpaired}</p>
           </div>

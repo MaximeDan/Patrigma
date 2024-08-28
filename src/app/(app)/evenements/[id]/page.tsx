@@ -169,7 +169,7 @@ const EventDetail = ({ params }: { params: Params }) => {
                 <Button
                   onClick={handleJoin}
                   type="submit"
-                  className="mt-1 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
+                  className="mt-1 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
                 >
                   <span>Rejoindre</span>
                   <Icons.arrowLink
@@ -244,19 +244,19 @@ const EventDetail = ({ params }: { params: Params }) => {
             Accessibilité
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
-            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
               <Icons.pmr />
               <p className="mt-1 text-sm">{journey.mobilityImpaired}</p>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
               <Icons.partiallySighted />
               <p className="mt-1 text-sm">{journey.partiallySighted}</p>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
               <Icons.partiallyDeaf />
               <p className="mt-1 text-sm">{journey.partiallyDeaf}</p>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
+            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
               <Icons.cognitivelyImpaired />
               <p className="mt-1 text-sm">{journey.cognitivelyImpaired}</p>
             </div>
@@ -265,9 +265,10 @@ const EventDetail = ({ params }: { params: Params }) => {
           <h2 className="mt-8 text-lg font-semibold text-orange">Pré-requis</h2>
           <p className="">{journey.requirement}</p>
 
-          <div className="mt-8 flex flex-col items-start gap-4 rounded-lg border border-orange-500 bg-slate-100 p-4 shadow-xl">
+          <div className="mt-8 flex flex-col items-start gap-4 rounded-lg border border-orange bg-slate-100 p-4 shadow-xl">
             <h2 className="text-lg font-semibold text-orange">Parcours</h2>
             <div className="flex flex-col items-start gap-2 rounded-lg pl-4">
+              <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md">
               <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md">
                 <ParallaxImage
                   src={

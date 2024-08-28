@@ -1,4 +1,3 @@
-// __tests__/auth/registerSchema.test.ts
 import registerSchema from "@/validators/registerSchema";
 
 describe("registerSchema", () => {

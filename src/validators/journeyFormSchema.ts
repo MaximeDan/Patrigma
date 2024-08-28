@@ -1,16 +1,15 @@
 import { z } from "zod";
 
-export const firstStepSchema = z.object({
+export const introductionStepSchema = z.object({
   title: z.string({ required_error: "Ce champ est requis" }).min(1, {
     message: "Ce champ est requis",
   }),
   description: z.string({ required_error: "Ce champ est requis" }).min(1, {
     message: "Ce champ est requis",
   }),
-  // image: z.string(),
 });
 
-export const secondStepSchema = z.object({
+export const detailsStepSchema = z.object({
   requirement: z.string({ required_error: "Ce champ est requis" }).min(1, {
     message: "Ce champ est requis",
   }),
@@ -46,40 +45,37 @@ export const secondStepSchema = z.object({
   ),
 });
 
-export const thirdStepSchema = z.object({
+export const stepsOverviewStepSchema = z.object({
   steps: z
     .string()
-    .min(1, { message: "Vous devez ajouter au moins deux étapes" }),
-  // to do: fix this
-  // .refine(
-  //   (val) => {
-  //     if (val.includes("<!DOCTYPE>")) {
-  //       // at build time, it seems that a redirection happens, val output is the hmtl page
-  //       // todo: fix
-  //       return false;
-  //     }
-  //     const steps = JSON.parse(val);
-  //     if (steps.steps) {
-  //       return steps.length >= 2;
-  //     } else {
-  //       return false;
-  //     }
-  //   },
-  //   {
-  //     message: "Vous devez ajouter au moins deux étapes",
-  //   },
-  // ),
+    .min(1, { message: "Vous devez ajouter au moins deux étapes" })
+    .refine(
+      (val) => {
+        try {
+          const parsed = JSON.parse(val);
+          if (Array.isArray(parsed.steps)) {
+            return parsed.steps.length >= 2;
+          }
+          return false;
+        } catch (e) {
+          return false;
+        }
+      },
+      {
+        message: "Vous devez ajouter au moins deux étapes",
+      },
+    ),
 });
 
-export const forthStepSchema = z.object({
+export const treasureStepSchema = z.object({
   treasure: z.string({ required_error: "Ce champ est requis" }).min(1, {
     message: "Ce champ est requis",
   }),
 });
 
 export const journeyFormSchema = z.object({
-  ...firstStepSchema.shape,
-  ...secondStepSchema.shape,
-  ...thirdStepSchema.shape,
-  ...forthStepSchema.shape,
+  ...introductionStepSchema.shape,
+  ...detailsStepSchema.shape,
+  ...stepsOverviewStepSchema.shape,
+  ...treasureStepSchema.shape,
 });

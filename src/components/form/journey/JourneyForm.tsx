@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import {
   journeyFormSchema,
-  firstStepSchema,
-  secondStepSchema,
-  thirdStepSchema,
-  forthStepSchema,
+  introductionStepSchema,
+  stepsOverviewStepSchema,
+  detailsStepSchema,
+  treasureStepSchema,
 } from "@/validators/journeyFormSchema";
 import { z } from "zod";
 import { useJourneyFormStore } from "@/store/journeyFormStore";
@@ -35,10 +35,10 @@ type JourneyStep = {
   }[];
 };
 
-const firstStepFields = Object.keys(firstStepSchema.shape);
-const secondStepFields = Object.keys(secondStepSchema.shape);
-const thirdStepFields = Object.keys(thirdStepSchema.shape);
-const forthStepFields = Object.keys(forthStepSchema.shape);
+const firstStepFields = Object.keys(introductionStepSchema.shape);
+const secondStepFields = Object.keys(detailsStepSchema.shape);
+const thirdStepFields = Object.keys(stepsOverviewStepSchema.shape);
+const treasureStepFields = Object.keys(treasureStepSchema.shape);
 
 const steps = [
   {
@@ -51,7 +51,7 @@ const steps = [
     fields: thirdStepFields,
   },
   {
-    fields: forthStepFields,
+    fields: treasureStepFields,
   },
 ];
 
@@ -178,7 +178,7 @@ const JourneyForm = () => {
           <Icons.close width={14} height={14} className="ml-2" />
         </Button> */}
         <Button
-          className="mt-5 border-red-600 bg-red-600 hover:bg-red-500 shadow-xl text-white p-2"
+          className="mt-5 border-red-600 bg-red-600 p-2 text-white shadow-xl hover:bg-red-500"
           onClick={dismissModal}
         >
           <span>Quitter</span>
@@ -209,7 +209,7 @@ const JourneyForm = () => {
               nam illo iste veniam ea! Doloremque distinctio mollitia omnis.
             </p>
             <Button
-              className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+              className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
               type="button"
               onClick={dismissModal}
             >

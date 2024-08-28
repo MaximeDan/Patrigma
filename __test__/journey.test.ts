@@ -54,10 +54,6 @@ it("Create a journey successfully", async () => {
               pictureHint: "https://test.com/image1.jpg",
               latitude: 45.7578137,
               longitude: 4.8320114,
-              // address: "1 Place Bellecour",
-              // city: "Lyon",
-              // postalCode: "69002",
-              // country: "France",
               stepNumber: 1,
             },
             {
@@ -188,7 +184,6 @@ it("Update a journey with missing arguments", async () => {
         body: JSON.stringify({
           journey: {
             authorId: 1,
-            // title: "Mon premier parcours (modifié)",
             description: "Ceci est un exemple de parcours (modifié)",
             requirement: "Aucun",
             treasure: "Un trésor caché (modifié)",
