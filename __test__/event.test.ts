@@ -35,6 +35,8 @@ it("Create an event successfully", async () => {
           endAt: "2024-08-28T10:12:39.162Z",
         }),
       });
+      const data = await res.json();
+      console.log("create event", data);
       expect(res.status).toBe(201);
     },
   });
@@ -86,6 +88,8 @@ it("Update a journey with a specific id", async () => {
           image: "https://www.google.com",
         }),
       });
+      const data = await res.json();
+      console.log("update event", data);
       expect(res.status).toBe(200);
     },
   });
@@ -152,6 +156,8 @@ it("Delete an event with a specific id", async () => {
     appHandler: eventWithParamsHandler,
     async test({ fetch }) {
       const res = await fetch({ method: "DELETE" });
+      const data = await res.json();
+      console.log("delete event", data);
       expect(res.status).toBe(204);
     },
   });
