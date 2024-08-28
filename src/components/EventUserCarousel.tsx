@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Event } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
@@ -20,13 +20,13 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
   return (
     <>
       {events.length ? (
-        <Carousel className="w-full max-w-sm">
+        <Carousel className="w-full">
           <CarouselContent className="-ml-1 flex">
             {events.map((event) => (
               <CarouselItem key={event.id} className="pl-1">
                 <Link href={`/evenements/${event.id}`} passHref>
                   <div className="cursor-pointer p-1">
-                    <Card>
+                    <Card className="bg-slate-200">
                       {event.image && (
                         <Image
                           src={event.image}
@@ -39,14 +39,17 @@ const EventUserCarousel: React.FC<EventUserCarouselProps> = ({ events }) => {
                       <CardHeader>
                         <CardTitle>{event.title}</CardTitle>
                       </CardHeader>
+                      <CardContent>
+                        Débute le : {event.startAt.toLocaleDateString("fr-FR")}
+                      </CardContent>
                     </Card>
                   </div>
                 </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="!p-0" />
-          <CarouselNext className="!p-0" />
+          <CarouselPrevious className="-left-4 size-12 border-orange bg-white !p-0 text-orange" />
+          <CarouselNext className="-right-4 size-12 border-orange bg-white !p-0 text-orange" />
         </Carousel>
       ) : (
         <p className="text-center text-lg text-camel">

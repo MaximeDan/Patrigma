@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { Event, Step } from "@prisma/client";
 import TopBar from "@/components/TopBar";
 import { JourneyWithStepsAndComments } from "@/types/journey";
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/Icons";
 
 const LeafletEventMap = dynamic(() => import("@/components/map/EventMap"), {
   ssr: false,
@@ -21,6 +23,8 @@ const EventStart = ({ params }: { params: Params }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -55,11 +59,15 @@ const EventStart = ({ params }: { params: Params }) => {
         setCurrentStep(journey.steps[stepIndex + 1]);
         setShowHint(false);
         setUserAnswer("");
+        setFeedbackMessage("");
+        setIsError(false);
       } else {
-        alert("Congratulations! You've completed the event.");
+        setFeedbackMessage("Félicitations ! Vous avez terminé l'évènements.");
+        setIsError(false);
       }
     } else {
-      alert("Incorrect answer. Try again or use a hint.");
+      setFeedbackMessage("Mauvaise réponse. Réessayez !");
+      setIsError(true);
     }
   };
 
@@ -70,45 +78,68 @@ const EventStart = ({ params }: { params: Params }) => {
   return (
     <>
       <TopBar />
-      <main className="flex min-h-screen flex-col bg-gray">
-        <div className="relative flex-1 px-5 pb-40 pt-14">
-          <h1 className="text-xl font-extrabold text-orange-400">
-            {event.title}
-          </h1>
-          <div className="mt-4">
-            <h2 className="text-lg font-semibold text-orange-400">
-              Etape n°{stepIndex + 1}
-            </h2>
-            <div className="my-4">
-              <LeafletEventMap
-                longitude={currentStep.longitude}
-                latitude={currentStep.latitude}
-                name={currentStep.puzzle}
-              />
-            </div>
-            <p className="text-sm">{currentStep.puzzle}</p>
-            <div className="mt-4 flex items-center">
-              <input
-                type="text"
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                className="flex-1 rounded-md border p-2 text-black"
-                placeholder="Your answer"
-              />
-              <button
-                onClick={handleCheckAnswer}
-                className="ml-4 rounded-md bg-orange p-2 text-white"
+      <main className="flex min-h-screen flex-col bg-background">
+        <div>
+          <div className="relative flex-1 px-5 pb-40 pt-14">
+            <h1 className="text-xl font-extrabold text-orange-500">
+              {event.title}
+            </h1>
+            <div className="mt-4">
+              <h2 className="text-lg font-semibold text-orange-500">
+                Etape n°{stepIndex + 1}
+              </h2>
+              <div className="my-4 ">
+                <LeafletEventMap
+                  longitude={currentStep.longitude}
+                  latitude={currentStep.latitude}
+                  name={currentStep.puzzle}
+                />
+              </div>
+              <p className="text-sm">{currentStep.puzzle}</p>
+              <div className="mt-4 flex  items-start">
+                <input
+                  type="text"
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  className="rounded-md border p-2 text-black"
+                  placeholder="Votre réponse"
+                />
+                {/* <button
+                  onClick={handleCheckAnswer}
+                  className="ml-4 rounded-md bg-orange p-2 text-white hover:bg-orange-500 shadow-xl"
+                >
+                  Valider
+                </button> */}
+                <Button
+                  className="ml-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+                  type="button"
+                  onClick={handleCheckAnswer}
+                >
+                  <span>Valider</span>
+                  <Icons.arrowLink
+                    stroke="#f0f0f0"
+                    width={20}
+                    height={20}
+                    className="ml-2"
+                  />
+                </Button>
+              </div>
+              {feedbackMessage && (
+                <p
+                  className={`mt-2 text-sm ${isError ? "text-red-500" : "text-green-500"}`}
+                >
+                  {feedbackMessage}
+                </p>
+              )}
+
+              <Button
+                className="mt-2 border-yellow-500 bg-yellow-500 text-white p-2 shadow-xl hover:bg-yellow-400"
+                onClick={() => setShowHint(!showHint)}
               >
-                Submit
-              </button>
+                <span>Voir l'indice</span>
+              </Button>
+              {showHint && <p className="mt-2 text-sm">{currentStep.hint}</p>}
             </div>
-            {showHint && <p className="mt-2 text-sm">{currentStep.hint}</p>}
-            <button
-              onClick={() => setShowHint(true)}
-              className="mt-4 rounded-md bg-gray-200 p-2 text-gray-700"
-            >
-              Show Hint
-            </button>
           </div>
         </div>
       </main>

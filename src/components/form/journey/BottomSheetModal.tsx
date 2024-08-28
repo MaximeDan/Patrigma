@@ -20,6 +20,7 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import LeafletMap from "@/components/map/LeafletMap";
 import { Icons } from "@/components/Icons";
+import { Plus } from "lucide-react";
 
 type AddStepFormValues = z.infer<typeof addStepSchema>;
 
@@ -106,9 +107,9 @@ const BottomSheetModal = () => {
       onClose={onDismiss}
       disableDrag={dragDisabled}
     >
-      <Sheet.Container>
-        <Sheet.Header className="bg-gray" />
-        <Sheet.Content className="bg-gray px-5">
+      <Sheet.Container className="p-2">
+        <Sheet.Header className="bg-red" />
+        <Sheet.Content className="px-5">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(processForm)}>
               <div className="flex">
@@ -193,12 +194,14 @@ const BottomSheetModal = () => {
                 )}
               />
 
-              <Button>
-                <span>
-                  {editedStep ? "Modifier l'étape" : "Ajouter une étape"}
-                </span>
-                <Icons.arrowLink width={14} height={14} className="ml-2" />
-              </Button>
+              <div className="flex  justify-end">
+                <Button className="mt-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2">
+                  <span>
+                    {editedStep ? "Modifier l'étape" : "Ajouter l'étape"}
+                  </span>
+                  <Plus size={24} stroke="#f0f0f0" />
+                </Button>
+              </div>
             </form>
           </Form>
         </Sheet.Content>

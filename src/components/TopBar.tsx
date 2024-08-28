@@ -26,13 +26,13 @@ const TopBar = () => {
         <nav className="hidden gap-5 sm:flex">
           <Link
             href="/"
-            className={`mx-auto flex h-10 flex-1 items-center justify-center font-semibold uppercase ${isMainPage ? "text-orange" : "text-foreground"}`}
+            className={`mx-auto flex h-10 flex-1 items-center justify-center font-bold uppercase ${isMainPage ? "text-orange" : "text-foreground"}`}
           >
             Accueil
           </Link>
           <Link
             href="/parcours"
-            className={`flex h-10 flex-1 items-center justify-center font-semibold uppercase ${
+            className={`flex h-10 flex-1 items-center justify-center font-bold uppercase ${
               currentPath.includes("/parcours")
                 ? "text-orange"
                 : "text-foreground"
@@ -43,7 +43,7 @@ const TopBar = () => {
 
           <Link
             href="/evenements"
-            className={`flex h-10 flex-1 items-center justify-center font-semibold uppercase ${
+            className={`flex h-10 flex-1 items-center justify-center font-bold uppercase ${
               currentPath.includes("/evenements")
                 ? "text-orange"
                 : "text-foreground"
@@ -74,7 +74,7 @@ const TopBar = () => {
                 variant="default"
                 size="sm"
                 onClick={() => signIn()}
-                className="bg-orange-500 text-sm text-white hover:bg-orange-600"
+                className="bg-orange text-sm text-white hover:bg-orange-500"
               >
                 Se connecter
               </Button>
@@ -82,7 +82,7 @@ const TopBar = () => {
                 <Button
                   variant="default"
                   size="sm"
-                  className="bg-orange-500 text-sm text-white hover:bg-orange-600"
+                  className="bg-orange text-sm text-white hover:bg-orange-500"
                 >
                   S'enregistrer
                 </Button>
@@ -91,7 +91,7 @@ const TopBar = () => {
           )}
         </div>
       </header>
-      <hr className="mb-8 border-beige" />
+      <hr className="mb-8 border-orange-600 border-2" />
     </>
   );
 };
