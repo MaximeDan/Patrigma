@@ -29,16 +29,16 @@ const Profil = () => {
             </Button>
           </div>
         </section> */}
-        <section className="flex flex-col rounded-lg bg-gray px-5 py-4">
+        <section className="flex flex-col rounded-lg px-5 py-4">
           <Link href="/" className="flex h-8 items-center gap-5 text-sm">
             <div className="flex size-5 items-center justify-center">
-              <Icons.questionMark fill="#CEC0AD" />
+              <Icons.questionMark fill="#EA580C" />
             </div>
             <span className="font-semibold">Signaler un problème</span>
           </Link>
           <Link href="/" className="flex h-8 items-center gap-5 text-sm">
             <div className="flex size-5 items-center justify-center">
-              <Icons.file fill="#CEC0AD" />
+              <Icons.file fill="#EA580C" />
             </div>
             <span className="font-semibold">
               Conditions générales d’utilisation
@@ -46,21 +46,27 @@ const Profil = () => {
           </Link>
           <Link href="/" className="flex h-8 items-center gap-5 text-sm">
             <div className="flex size-5 items-center justify-center">
-              <Icons.eye fill="#CEC0AD" />
+              <Icons.eye fill="#EA580C" />
             </div>
             <span className="font-semibold">Politique de confidentialité</span>
           </Link>
           <Link href="/" className="flex h-8 items-center gap-5 text-sm">
             <div className="flex size-5 items-center justify-center">
-              <Icons.legals fill="#CEC0AD" />
+              <Icons.legals fill="#EA580C" />
             </div>
             <span className="font-semibold">Mentions légales</span>
           </Link>
         </section>
-        <Button action={buttonAction.SIGN_OUT} variant="danger">
+        <Button
+          action={buttonAction.SIGN_OUT}
+          variant="danger"
+          className="hover:bg-red-50"
+        >
           Déconnexion
         </Button>
-        <Button variant="dangerFilled">Supprimer mon compte</Button>
+        <Button variant="dangerFilled" className="hover:bg-red-500">
+          Supprimer mon compte
+        </Button>
       </main>
     </>
   );
