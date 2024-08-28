@@ -33,7 +33,7 @@ const StepsOverviewStep = ({ form, next, prev }: ThirdStepProps) => {
   }, [steps]);
 
   return (
-    <div>
+    <div className="bg-slate-50">
       <h2>Quelles sont les étapes ?</h2>
       {steps.map((step, index) => (
         <div key={index} className="flex items-center">
@@ -60,24 +60,41 @@ const StepsOverviewStep = ({ form, next, prev }: ThirdStepProps) => {
         )}
       />
 
-      <Button className="flex items-center" onClick={showBottomSheet}>
-        <Plus size={24} stroke="var(--orange)" />
-        <p>Ajouter une étape</p>
+      <Button
+        className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2 flex items-center"
+        onClick={showBottomSheet}
+      >
+        <p>Ajouter</p>
+        <Plus size={24} stroke="#f0f0f0" />
       </Button>
 
       <div className="mt-11 flex justify-between xs:mt-[60px]">
-        <Button type="button" onClick={prev}>
-          <Icons.arrowLink className="mr-2 -scale-x-100" />
+        <Button
+          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+          onClick={prev}
+        >
+          <Icons.arrowLink
+            stroke="#f0f0f0"
+            width={20}
+            height={20}
+            className="mr-2 -scale-x-100"
+          />
           <span>Retour</span>
         </Button>
         <Button
+          className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
           type="button"
           onClick={async () => {
             await next();
           }}
         >
           <span>Continuer</span>
-          <Icons.arrowLink className="ml-2" />
+          <Icons.arrowLink
+            stroke="#f0f0f0"
+            width={20}
+            height={20}
+            className="ml-2"
+          />
         </Button>
       </div>
       <BottomSheetModal />

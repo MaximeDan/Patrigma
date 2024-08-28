@@ -17,52 +17,40 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
 
   switch (journey.physicalDifficulty) {
     case 1:
-      phisicalDificulty = "facile";
+      phisicalDificulty = "Facile";
       break;
     case 2:
-      phisicalDificulty = "intermédiaire";
+      phisicalDificulty = "Intermédiaire";
       break;
     case 3:
-      phisicalDificulty = "difficile";
+      phisicalDificulty = "Difficile";
       break;
     default:
-      phisicalDificulty = "facile";
+      phisicalDificulty = "Facile";
       break;
   }
 
   switch (journey.cluesDifficulty) {
     case 1:
-      cluesDificulty = "facile";
+      cluesDificulty = "Facile";
       break;
     case 2:
-      cluesDificulty = "intermédiaire";
+      cluesDificulty = "Intermédiaire";
       break;
     case 3:
-      cluesDificulty = "difficile";
+      cluesDificulty = "Difficile";
       break;
     default:
-      cluesDificulty = "facile";
+      cluesDificulty = "Facile";
       break;
   }
 
   return (
     <Link
       href={`/parcours/${journey.id}`}
-      className="flex flex-col rounded-lg bg-gray"
+      className="flex flex-col rounded-lg bg-slate-200 w-25 shadow-xl"
     >
-      <div className="relative">
-        <div className="absolute left-4 flex gap-[6px]">
-          <div className="flex items-center rounded-b-md bg-white px-2 py-[6px]">
-            <Icons.dumbbel />
-            <p className="text-sm font-semibold text-gray">
-              {phisicalDificulty}
-            </p>
-          </div>
-          <div className="flex items-center gap-1 rounded-b-md bg-green px-2 py-[6px]">
-            <Icons.bulb />
-            <p className="text-sm font-semibold text-gray">{cluesDificulty}</p>
-          </div>
-        </div>
+      <div className="relativ rounded-sm">
         <Image
           width={500}
           height={500}
@@ -72,15 +60,31 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
         />
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h2 className="font-semibold">{journey.title}</h2>
-        <Rating rating={averageRate} ratingCount={journey.comments.length} />
+        <h2 className="font-semibold mb-2">{journey.title}</h2>
+        <div className="flex mb-2">
+          <div className="flex flex-wrap gap-[6px]">
+            <div className="flex items-center flex-shrink-0 rounded-md bg-slate-300 px-2 py-[6px]">
+              <Icons.dumbbel />
+              <p className="text-sm font-semibold text-gray">
+                {phisicalDificulty}
+              </p>
+            </div>
+            <div className="flex items-center flex-shrink-0 gap-1 rounded-md bg-slate-300 px-2 py-[6px]">
+              <Icons.bulb />
+              <p className="text-sm font-semibold text-gray">
+                {cluesDificulty}
+              </p>
+            </div>
+          </div>
+        </div>
         <p className="mb-4 text-sm">{journey.description}</p>
+        <Rating rating={averageRate} ratingCount={journey.comments.length} />
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-center gap-1 text-orange">
-            <Icons.mapPin fill="#d8552b" />
-            {/* <p className="text-sm font-medium">{journey.steps[0].city}</p> */}
+            <Icons.mapPin />
+            <p className="text-sm font-medium">{journey.steps[0].city}</p>
           </div>
-          <Icons.arrowLink width={18} height={18} />
+          <Icons.arrowLink stroke="#ea580c" width={25} height={25} />
         </div>
       </div>
     </Link>

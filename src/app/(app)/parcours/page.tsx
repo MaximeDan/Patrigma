@@ -9,7 +9,7 @@ const Parcours = () => {
     <>
       <TopBar />
       <main className="container">
-        <section className="grid grid-cols-1 gap-7 pb-40 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section className="grid grid-cols-1 gap-7 pb-40 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           <Suspense fallback={<div>Loading...</div>}>
             <JourneysFeed />
           </Suspense>
