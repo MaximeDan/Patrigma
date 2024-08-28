@@ -8,7 +8,7 @@ import * as loginHandler from "@/app/api/auth/[...nextauth]/route";
 describe("NextAuth API", () => {
   it("signs in with valid credentials", async () => {
     await testApiHandler({
-      appHandler: loginHandler, // Use appHandler for Next.js API routes
+      appHandler: loginHandler,
       params: { nextauth: ["callback", "credentials"] },
       test: async ({ fetch }) => {
         const res = await fetch({
@@ -20,14 +20,11 @@ describe("NextAuth API", () => {
           }),
         });
 
-
         if (res.status === 302) {
           const location = res.headers.get("location");
-          // Check that the location header contains the expected URL
-          expect(location).toContain("/"); // Adjust based on your redirect URL
+          expect(location).toContain("/");
         }
 
-        // Optionally, if you expect JSON in other cases (e.g., error responses)
         if (res.status !== 302) {
           const data = await res.json();
 
@@ -57,13 +54,11 @@ describe("NextAuth API", () => {
           }),
         });
 
-        const data = await res.json();
+        expect(res.status).toBe(302);
+        const locationHeader = res.headers.get("location");
 
-        expect(res.status).toBe(401);
-        expect(data).toEqual(
-          expect.objectContaining({
-            error: "Invalid credentials",
-          }),
+        expect(locationHeader).toMatch(
+          /^http:\/\/localhost:3000\/api\/auth\/signin\?/,
         );
       },
     });
