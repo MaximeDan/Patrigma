@@ -40,9 +40,15 @@ export async function PUT(
   try {
     const id: number = Number(params.id);
     const body = await request.json();
+    const data: EventRequestBody = {
+      ...body,
+      accessCode: body.accessCode || undefined,
+      startAt: new Date(body.startAt),
+      endAt: new Date(body.endAt),
+    };
 
-    // Parse the body with zod to get the event
-    const event = eventFormSchema.safeParse(body);
+    // check if the body is valid for the event schema
+    const event = eventFormSchema.safeParse(data);
     if (!event.success) {
       return NextResponse.json({ error: event.error }, { status: 400 });
     }
