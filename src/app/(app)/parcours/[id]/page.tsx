@@ -35,27 +35,6 @@ const levelIntToText = (level: number) => {
   }
 };
 
-// const LevelBullet = ({ level }: { level: string }) => {
-//   switch (level) {
-//     case "unaccessible":
-//       return (
-//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-1" />
-//       );
-//     case "partiallyAccessible":
-//       return (
-//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-2" />
-//       );
-//     case "accessible":
-//       return (
-//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level-3" />
-//       );
-//     default:
-//       return (
-//         <div className="absolute right-[6px] top-[6px] size-[10px] rounded-full bg-level" />
-//       );
-//   }
-// };
-
 const JourneyUI = async (id: string) => {
   const journey = await getSingleJourney(id);
   if (!journey) return notFound();
@@ -151,6 +130,7 @@ const JourneyUI = async (id: string) => {
           <Rating
             rating={averageRating}
             ratingCount={journey.comments.length}
+            hasCommentCount
           />
           {journey.comments.map((comment) => (
             <div key={comment.id} className="mb-3 flex flex-col gap-1">
