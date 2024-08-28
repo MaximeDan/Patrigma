@@ -40,6 +40,7 @@ export const eventFormSchema = z.object({
   endAt: z.date({
     required_error: "Veuillez renseigner une date de fin",
   }),
+  image: z.string().url(),
 });
 
 eventFormSchema.superRefine((data, ctx) => {
