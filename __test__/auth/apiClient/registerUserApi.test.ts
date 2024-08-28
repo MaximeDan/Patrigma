@@ -142,7 +142,7 @@ describe("Registration API", () => {
             username: "johndoe",
             name: "John",
             lastName: "Doe",
-            dateOfBirth: new Date(Date.now() + 86400000).toISOString(), 
+            dateOfBirth: new Date(Date.now() + 86400000).toISOString(),
           }),
         });
         const data = await res.json();

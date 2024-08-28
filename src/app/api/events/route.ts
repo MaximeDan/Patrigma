@@ -35,11 +35,17 @@ export async function POST(request: NextRequest) {
     // Parse the body with zod to get the event
     const event = eventFormSchema.safeParse(data);
     if (!event.success) {
-      return NextResponse.json({ error: event.error }, { status: 400 });
+      return NextResponse.json(
+        {
+          message: event.error.issues[0].message,
+          path: event.error.issues[0].path,
+        },
+        { status: 400 },
+      );
     }
 
     const result = await registerOrModifyEvent(null, data);
-    return NextResponse.json({ data: result }, { status: 200 });
+    return NextResponse.json({ data: result }, { status: 201 });
   } catch (error: any) {
     return handleException(error);
   }
