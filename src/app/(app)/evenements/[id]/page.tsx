@@ -269,51 +269,52 @@ const EventDetail = ({ params }: { params: Params }) => {
             <h2 className="text-lg font-semibold text-orange">Parcours</h2>
             <div className="flex flex-col items-start gap-2 rounded-lg pl-4">
               <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md">
-              <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md">
-                <ParallaxImage
-                  src={
-                    journey.steps[0]?.picturePuzzle ||
-                    "https://picsum.photos/200"
-                  }
-                  alt={journey.steps[0]?.puzzle}
-                />
-                <div>
-                  <h3 className=" text-lg font-semibold">{journey.title}</h3>
-                  <p className=" text-sm">
-                    {journey.steps[0]?.city || "Unknown"}
-                  </p>
-                  <div className="flex items-center">
-                    <Rating
-                      rating={
-                        journey.comments.length > 0
-                          ? journey.comments.reduce(
-                              (sum, comment) => sum + (comment.rating ?? 0),
-                              0,
-                            ) / journey.comments.length
-                          : 0
-                      }
-                      ratingCount={journey.comments.length}
-                    />
+                <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md">
+                  <ParallaxImage
+                    src={
+                      journey.steps[0]?.picturePuzzle ||
+                      "https://picsum.photos/200"
+                    }
+                    alt={journey.steps[0]?.puzzle}
+                  />
+                  <div>
+                    <h3 className=" text-lg font-semibold">{journey.title}</h3>
+                    <p className=" text-sm">
+                      {journey.steps[0]?.city || "Unknown"}
+                    </p>
+                    <div className="flex items-center">
+                      <Rating
+                        rating={
+                          journey.comments.length > 0
+                            ? journey.comments.reduce(
+                                (sum, comment) => sum + (comment.rating ?? 0),
+                                0,
+                              ) / journey.comments.length
+                            : 0
+                        }
+                        ratingCount={journey.comments.length}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <h2 className="mt-5 text-lg font-semibold text-orange">
-              Commentaires
-            </h2>
-            <div className="rounded-lg pl-2">
-              {journey.comments.map((comment) => (
-                <div
-                  key={comment.id}
-                  className="mt-2 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md"
-                >
-                  {comment.rating !== null && (
-                    <Rating rating={comment.rating} ratingCount={1} />
-                  )}
-                  <p className=" mt-2 text-sm">{comment.content}</p>
-                </div>
-              ))}
+              <h2 className="mt-5 text-lg font-semibold text-orange">
+                Commentaires
+              </h2>
+              <div className="rounded-lg pl-2">
+                {journey.comments.map((comment) => (
+                  <div
+                    key={comment.id}
+                    className="mt-2 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md"
+                  >
+                    {comment.rating !== null && (
+                      <Rating rating={comment.rating} ratingCount={1} />
+                    )}
+                    <p className=" mt-2 text-sm">{comment.content}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
