@@ -83,12 +83,13 @@ describe("Comment API", () => {
           expect(data).toEqual(
             expect.objectContaining({
               data: expect.objectContaining({
-                id: 2,
-                authorId: expect.any(Number),
-                content:
-                  "Très recommandé! Les défis étaient engageants et amusants.",
-                journeyId: expect.any(Number),
+                id: commentId,
+                authorId: 1,
+                content: "This is a test comment from test",
+                journeyId: 5,
                 rating: 5,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
               }),
             }),
           );
