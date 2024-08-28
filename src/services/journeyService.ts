@@ -119,39 +119,32 @@ export const registerOrModifyJourney = async (
     const journeyToUpdate = await readJourneyWithSteps(id);
     if (!journeyToUpdate) throw new NotFoundException("Journey not found");
 
-    // Check if the provided step ids exist for the journey
-    const existingStepIds = journeyToUpdate.steps.map((step) => step.id);
+    // Récupère les étapes existantes du parcours
+    const existingSteps = journeyToUpdate.steps;
 
-    const providedStepIds = steps
-      .filter((step) => Number.isFinite(step.id))
-      .map((step) => step.id as number);
+    // Map pour associer chaque stepNumber à son étape existante
+    const existingStepsMap = new Map<number, StepWithoutDates>(
+      existingSteps.map((step) => [step.stepNumber, step]),
+    );
 
-    for (const stepId of providedStepIds) {
-      if (!existingStepIds.includes(stepId)) {
-        throw new BadRequestException(
-          `Step with id ${stepId} does not exist for the journey`,
-        );
-      }
+    // Combinaison des étapes existantes avec celles fournies dans la requête
+    for (const providedStep of steps) {
+      existingStepsMap.set(providedStep.stepNumber, providedStep);
     }
 
-    // Combine existing steps and provided steps
-    const combinedSteps = journeyToUpdate.steps.map((existingStep) => {
-      const updatedStep = steps.find((step) => step.id === existingStep.id);
-      return updatedStep || existingStep;
-    });
+    // Transformation du Map en tableau d'étapes
+    const combinedSteps = Array.from(existingStepsMap.values());
 
-    // Add new steps that do not have an id
-    const newSteps = steps.filter((step) => !step.id);
-    combinedSteps.push(...newSteps);
-
-    // Validate and sort the combined steps
+    // Validation de l'unicité et séquentialité des stepNumbers
     const sortedAndValidatedSteps = SortAndValidatetSteps(combinedSteps);
 
+    // Mise à jour du parcours avec les étapes combinées et validées
     upsertedJourneyWithSteps = await updateJourney(
       id,
       journey,
       sortedAndValidatedSteps,
     );
+
     if (!upsertedJourneyWithSteps)
       throw new InternalServerErrorException("Internal server error");
   }
