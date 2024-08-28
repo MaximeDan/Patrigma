@@ -111,7 +111,7 @@ const EventStart = ({ params }: { params: Params }) => {
                   Valider
                 </button> */}
                 <Button
-                  className="ml-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+                  className="ml-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
                   type="button"
                   onClick={handleCheckAnswer}
                 >
@@ -133,7 +133,7 @@ const EventStart = ({ params }: { params: Params }) => {
               )}
 
               <Button
-                className="mt-2 border-yellow-500 bg-yellow-500 text-white p-2 shadow-xl hover:bg-yellow-400"
+                className="mt-2 border-yellow-500 bg-yellow-500 p-2 text-white shadow-xl hover:bg-yellow-400"
                 onClick={() => setShowHint(!showHint)}
               >
                 <span>Voir l'indice</span>

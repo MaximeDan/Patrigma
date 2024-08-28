@@ -19,7 +19,6 @@ import { Sheet } from "react-modal-sheet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import LeafletMap from "@/components/map/LeafletMap";
-import { Icons } from "@/components/Icons";
 import { Plus } from "lucide-react";
 
 type AddStepFormValues = z.infer<typeof addStepSchema>;
@@ -195,7 +194,7 @@ const BottomSheetModal = () => {
               />
 
               <div className="flex  justify-end">
-                <Button className="mt-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2">
+                <Button className="mt-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500">
                   <span>
                     {editedStep ? "Modifier l'étape" : "Ajouter l'étape"}
                   </span>

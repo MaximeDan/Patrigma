@@ -6,6 +6,7 @@ import { testApiHandler } from "next-test-api-route-handler";
 import * as postCommentHandler from "@/app/api/comments/route";
 import * as commentByIdHandler from "@/app/api/comments/[id]/route";
 
+let commentId: number;
 describe("Comment API", () => {
   describe("POST /api/comments", () => {
     it("should create a new comment successfully", async () => {
@@ -26,6 +27,7 @@ describe("Comment API", () => {
           });
 
           const data = await res.json();
+          commentId = data.data.id;
 
           expect(res.status).toBe(201);
           expect(data).toEqual(
@@ -72,7 +74,7 @@ describe("Comment API", () => {
     it("should retrieve a comment by id", async () => {
       await testApiHandler({
         appHandler: commentByIdHandler,
-        params: { id: "2" },
+        params: { id: commentId.toString() },
         test: async ({ fetch }) => {
           const res = await fetch({ method: "GET" });
           const data = await res.json();
@@ -100,7 +102,7 @@ describe("Comment API", () => {
       await testApiHandler({
         appHandler: commentByIdHandler,
         paramsPatcher: (params) => {
-          params.id = "2";
+          params.id = commentId.toString();
         },
         test: async ({ fetch }) => {
           const res = await fetch({
@@ -139,7 +141,7 @@ describe("Comment API", () => {
       await testApiHandler({
         appHandler: commentByIdHandler,
         paramsPatcher: (params) => {
-          params.id = "2";
+          params.id = commentId.toString();
         },
         test: async ({ fetch }) => {
           const res = await fetch({ method: "DELETE" });

@@ -178,7 +178,7 @@ const JourneyForm = () => {
           <Icons.close width={14} height={14} className="ml-2" />
         </Button> */}
         <Button
-          className="mt-5 border-red-600 bg-red-600 hover:bg-red-500 shadow-xl text-white p-2"
+          className="mt-5 border-red-600 bg-red-600 p-2 text-white shadow-xl hover:bg-red-500"
           onClick={dismissModal}
         >
           <span>Quitter</span>
@@ -209,7 +209,7 @@ const JourneyForm = () => {
               nam illo iste veniam ea! Doloremque distinctio mollitia omnis.
             </p>
             <Button
-              className="border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+              className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
               type="button"
               onClick={dismissModal}
             >

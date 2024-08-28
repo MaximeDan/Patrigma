@@ -10,7 +10,6 @@ import { UserEvent, Event } from "@prisma/client";
 import { JourneyWithStepsAndComments } from "@/types/journey";
 import { format } from "date-fns";
 import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -125,13 +124,13 @@ const EventDetail = ({ params }: { params: Params }) => {
       <TopBar />
       <div className="mx-auto max-w-[920px]">
         <ParallaxImage src={event.image} alt={event.title} />
-        <div className="-translate-y-4 px-5 pb-5 pt-7 shadow-lg bg-slate-100">
+        <div className="-translate-y-4 bg-slate-100 px-5 pb-5 pt-7 shadow-lg">
           <div className="flex justify-between">
             <div>
               {isEventStartable && (
                 <div>
                   <Button
-                    className="mt-1 border-blue-700 bg-blue-600 text-white p-2 shadow-xl hover:bg-blue-500"
+                    className="mt-1 border-blue-700 bg-blue-600 p-2 text-white shadow-xl hover:bg-blue-500"
                     onClick={handleStart}
                   >
                     <span>Lancer l'événement</span>
@@ -154,7 +153,7 @@ const EventDetail = ({ params }: { params: Params }) => {
                 //   Quitter
                 // </button>
                 <Button
-                  className="mt-1 border-red-600 bg-red-600 text-white p-2 hover:bg-red-500 shadow-xl"
+                  className="mt-1 border-red-600 bg-red-600 p-2 text-white shadow-xl hover:bg-red-500"
                   onClick={handleLeave}
                 >
                   <span>Quitter l'évènement</span>
@@ -170,7 +169,7 @@ const EventDetail = ({ params }: { params: Params }) => {
                 <Button
                   onClick={handleJoin}
                   type="submit"
-                  className="mt-1 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+                  className="mt-1 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
                 >
                   <span>Rejoindre</span>
                   <Icons.arrowLink
@@ -183,7 +182,7 @@ const EventDetail = ({ params }: { params: Params }) => {
               )}
             </div>
           </div>
-          <h1 className="mt-4 text-4xl mb-5 font-extrabold text-orange-500">
+          <h1 className="mb-5 mt-4 text-4xl font-extrabold text-orange-500">
             {event.title}
           </h1>
           <div className="flex items-center gap-4">
@@ -196,7 +195,7 @@ const EventDetail = ({ params }: { params: Params }) => {
           </div>
           <p className="mt-4 text-sm">{event.description}</p>
 
-          <h2 className="mt-8 text-lg font-semibold text-orange-500 mb-2">
+          <h2 className="mb-2 mt-8 text-lg font-semibold text-orange-500">
             Détails de l'événement
           </h2>
           <div className="flex flex-wrap items-center gap-2">
@@ -226,7 +225,7 @@ const EventDetail = ({ params }: { params: Params }) => {
             </div>
           </div>
           <div className="mt-3">
-            <p className="font-semibold text-sm">
+            <p className="text-sm font-semibold">
               Participants actuels: {participantCount}
             </p>
           </div>
@@ -246,22 +245,22 @@ const EventDetail = ({ params }: { params: Params }) => {
           <h2 className="mt-8 text-lg font-semibold text-orange-500">
             Accessibilité
           </h2>
-          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 text-center">
+          <div className="mt-4 grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.pmr />
-              <p className="text-sm mt-1">{journey.mobilityImpaired}</p>
+              <p className="mt-1 text-sm">{journey.mobilityImpaired}</p>
             </div>
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.partiallySighted />
-              <p className="text-sm mt-1">{journey.partiallySighted}</p>
+              <p className="mt-1 text-sm">{journey.partiallySighted}</p>
             </div>
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.partiallyDeaf />
-              <p className="text-sm mt-1">{journey.partiallyDeaf}</p>
+              <p className="mt-1 text-sm">{journey.partiallyDeaf}</p>
             </div>
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange-500 bg-slate-200 p-2 shadow-md">
               <Icons.cognitivelyImpaired />
-              <p className="text-sm mt-1">{journey.cognitivelyImpaired}</p>
+              <p className="mt-1 text-sm">{journey.cognitivelyImpaired}</p>
             </div>
           </div>
 
@@ -270,10 +269,10 @@ const EventDetail = ({ params }: { params: Params }) => {
           </h2>
           <p className="">{journey.requirement}</p>
 
-          <div className="mt-8 flex flex-col items-start gap-4 rounded-lg border border-orange-500 p-4 bg-slate-100 shadow-xl">
+          <div className="mt-8 flex flex-col items-start gap-4 rounded-lg border border-orange-500 bg-slate-100 p-4 shadow-xl">
             <h2 className="text-lg font-semibold text-orange-500">Parcours</h2>
             <div className="flex flex-col items-start gap-2 rounded-lg pl-4">
-              <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 p-4 bg-slate-200 shadow-md">
+              <div className="flex w-full items-center gap-4 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md">
                 <ParallaxImage
                   src={
                     journey.steps[0]?.picturePuzzle ||
@@ -310,7 +309,7 @@ const EventDetail = ({ params }: { params: Params }) => {
               {journey.comments.map((comment) => (
                 <div
                   key={comment.id}
-                  className="mt-2 rounded-lg border border-gray-600 p-4 shadow-md bg-slate-200"
+                  className="mt-2 rounded-lg border border-gray-600 bg-slate-200 p-4 shadow-md"
                 >
                   {comment.rating !== null && (
                     <Rating rating={comment.rating} ratingCount={1} />
