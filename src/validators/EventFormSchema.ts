@@ -33,7 +33,7 @@ export const eventFormSchema = z.object({
   ),
 
   isPrivate: z.boolean().default(false),
-  accessCode: z.string().nullable().optional(),
+  accessCode: z.string().optional(),
   startAt: z.date({
     required_error: "Veuillez renseigner une date de début",
   }),
