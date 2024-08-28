@@ -23,6 +23,8 @@ const EventStart = ({ params }: { params: Params }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -57,11 +59,15 @@ const EventStart = ({ params }: { params: Params }) => {
         setCurrentStep(journey.steps[stepIndex + 1]);
         setShowHint(false);
         setUserAnswer("");
+        setFeedbackMessage("");
+        setIsError(false);
       } else {
-        alert("Congratulations! You've completed the event.");
+        setFeedbackMessage("Félicitations ! Vous avez terminé l'évènements.");
+        setIsError(false);
       }
     } else {
-      alert("Incorrect answer. Try again or use a hint.");
+      setFeedbackMessage("Mauvaise réponse. Réessayez !");
+      setIsError(true);
     }
   };
 
@@ -90,34 +96,49 @@ const EventStart = ({ params }: { params: Params }) => {
                 />
               </div>
               <p className="text-sm">{currentStep.puzzle}</p>
-              <div className="mt-4 flex items-center">
+              <div className="mt-4 flex  items-start">
                 <input
                   type="text"
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
-                  className="flex-1 rounded-md border p-2 text-black"
-                  placeholder="Your answer"
+                  className="rounded-md border p-2 text-black"
+                  placeholder="Votre réponse"
                 />
-                <button
+                {/* <button
                   onClick={handleCheckAnswer}
                   className="ml-4 rounded-md bg-orange p-2 text-white hover:bg-orange-500 shadow-xl"
                 >
                   Valider
-                </button>
+                </button> */}
+                <Button
+                  className="ml-2 border-orange bg-orange hover:bg-orange-500 shadow-xl text-white p-2"
+                  type="button"
+                  onClick={handleCheckAnswer}
+                >
+                  <span>Valider</span>
+                  <Icons.arrowLink
+                    stroke="#f0f0f0"
+                    width={20}
+                    height={20}
+                    className="ml-2"
+                  />
+                </Button>
               </div>
-              {showHint && <p className="mt-2 text-sm">{currentStep.hint}</p>}
-              {/* <button
-              onClick={() => setShowHint(true)}
-              className="mt-4 rounded-md bg-gray-200 p-2 text-gray-700"
-            >
-              Voir l'indice
-            </button> */}
+              {feedbackMessage && (
+                <p
+                  className={`mt-2 text-sm ${isError ? "text-red-500" : "text-green-500"}`}
+                >
+                  {feedbackMessage}
+                </p>
+              )}
+
               <Button
                 className="mt-2 border-yellow-500 bg-yellow-500 text-white p-2 shadow-xl hover:bg-yellow-400"
                 onClick={() => setShowHint(!showHint)}
               >
                 <span>Voir l'indice</span>
               </Button>
+              {showHint && <p className="mt-2 text-sm">{currentStep.hint}</p>}
             </div>
           </div>
         </div>

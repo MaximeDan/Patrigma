@@ -15,21 +15,35 @@ interface EventAccordionProps {
 }
 
 const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
-  const [openItem, setOpenItem] = useState<string>();
+  const [openItem, setOpenItem] = useState<string | undefined>(undefined);
+
+  // Obtenir la date actuelle
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Réinitialiser les heures, minutes, secondes et millisecondes à 0
+
+  // Regrouper et filtrer les événements
   const groupedEvents = events?.reduce(
     (groups: Record<string, Event[]>, event) => {
-      const date = new Date(event.startAt).toISOString().split("T")[0];
-      if (!groups[date]) {
-        groups[date] = [];
+      const eventDate = new Date(event.startAt);
+      eventDate.setHours(0, 0, 0, 0);
+
+      // Ne conserver que les événements dont la date est supérieure ou égale à aujourd'hui
+      if (eventDate >= today) {
+        const dateKey = eventDate.toISOString().split("T")[0];
+        if (!groups[dateKey]) {
+          groups[dateKey] = [];
+        }
+        groups[dateKey].push(event);
       }
-      groups[date].push(event);
       return groups;
     },
     {},
   );
 
+  // Trier les dates filtrées
   const sortedDates = Object.keys(groupedEvents).sort();
 
+  // Formater les dates pour l'affichage
   const formattedDates = sortedDates.map((date) => ({
     original: date,
     formatted: new Date(date).toLocaleDateString("fr-FR", {
@@ -39,13 +53,18 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
       day: "numeric",
     }),
   }));
+
+  // N'initialiser openItem que si aucun élément n'est déjà ouvert
   useEffect(() => {
-    setOpenItem(formattedDates[0].formatted);
-  }, []);
-  if (!events) return;
+    if (!openItem && formattedDates.length > 0) {
+      setOpenItem(formattedDates[0].formatted);
+    }
+  }, [formattedDates, openItem]);
+
+  if (!events) return null;
 
   const handleToggle = (date: string) => {
-    setOpenItem((prev) => (prev === date ? "" : date));
+    setOpenItem((prev) => (prev === date ? undefined : date));
   };
 
   return (
@@ -91,4 +110,5 @@ const EventAccordion: React.FC<EventAccordionProps> = ({ events }) => {
     </Accordion>
   );
 };
+
 export default EventAccordion;
