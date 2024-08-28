@@ -4,9 +4,14 @@ import { Icons } from "./Icons";
 type RatingProps = {
   rating: number;
   ratingCount: number;
+  hasCommentCount?: boolean;
 };
 
-const Rating = ({ rating, ratingCount }: RatingProps) => {
+const Rating = ({
+  rating,
+  ratingCount,
+  hasCommentCount = false,
+}: RatingProps) => {
   const fullStars = Math.floor(rating);
   const halfStars = rating % 1 !== 0 ? 1 : 0;
   const emptyStars = 5 - fullStars - halfStars;
@@ -28,7 +33,9 @@ const Rating = ({ rating, ratingCount }: RatingProps) => {
   return (
     <div className="mb-3 mt-1 flex items-start">
       {stars}
-      <p className="ml-1 text-[16px] text-orange-700">{`(${ratingCount} avis)`}</p>
+      {hasCommentCount && (
+        <p className="ml-1 text-[16px] text-orange-700">{`(${ratingCount} avis)`}</p>
+      )}
     </div>
   );
 };
