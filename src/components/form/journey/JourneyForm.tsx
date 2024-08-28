@@ -209,7 +209,7 @@ const JourneyForm = () => {
               nam illo iste veniam ea! Doloremque distinctio mollitia omnis.
             </p>
             <Button
-              className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
+              className="border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
               type="button"
               onClick={dismissModal}
             >

@@ -81,11 +81,11 @@ const EventStart = ({ params }: { params: Params }) => {
       <main className="flex min-h-screen flex-col bg-background">
         <div>
           <div className="relative flex-1 px-5 pb-40 pt-14">
-            <h1 className="text-xl font-extrabold text-orange-500">
+            <h1 className="text-xl font-extrabold text-orange">
               {event.title}
             </h1>
             <div className="mt-4">
-              <h2 className="text-lg font-semibold text-orange-500">
+              <h2 className="text-lg font-semibold text-orange">
                 Etape n°{stepIndex + 1}
               </h2>
               <div className="my-4 ">
@@ -106,12 +106,12 @@ const EventStart = ({ params }: { params: Params }) => {
                 />
                 {/* <button
                   onClick={handleCheckAnswer}
-                  className="ml-4 rounded-md bg-orange p-2 text-white hover:bg-orange-500 shadow-xl"
+                  className="ml-4 rounded-md bg-orange p-2 text-white hover:bg-orange shadow-xl"
                 >
                   Valider
                 </button> */}
                 <Button
-                  className="ml-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
+                  className="ml-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
                   type="button"
                   onClick={handleCheckAnswer}
                 >

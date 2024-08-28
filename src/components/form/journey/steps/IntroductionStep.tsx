@@ -63,7 +63,7 @@ const IntroductionStep = ({ form, next }: FirstStepProps) => {
           await next();
         }}
         type="submit"
-        className="mt-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange-500"
+        className="mt-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
       >
         <span>Suivant</span>
         <Icons.arrowLink

@@ -85,7 +85,7 @@ const Login = () => {
             />
             <Button
               type="submit"
-              className="mt-4 w-full bg-orange text-white hover:bg-orange-500 md:w-auto"
+              className="mt-4 w-full bg-orange text-white hover:bg-orange md:w-auto"
             >
               <span>Se connecter</span>
               <Icons.check
