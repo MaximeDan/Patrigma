@@ -28,7 +28,7 @@ const TopBar = () => {
             href="/"
             className={`mx-auto flex h-10 flex-1 items-center justify-center font-bold uppercase ${isMainPage ? "text-orange" : "text-foreground"}`}
           >
-            Accueil
+            COUCOU les loulous
           </Link>
           <Link
             href="/parcours"
