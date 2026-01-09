@@ -31,7 +31,10 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   try {
-    await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
 
     const body = await request.json();
     // Parse the body with zod to get the journey and steps

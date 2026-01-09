@@ -146,12 +146,6 @@ const EventDetail = ({ params }: { params: Params }) => {
             </div>
             <div>
               {isJoined ? (
-                // <button
-                //   onClick={handleLeave}
-                //   className="rounded bg-red-500 min-w-10 px-4 py-2 text-white"
-                // >
-                //   Quitter
-                // </button>
                 <Button
                   className="mt-1 border-red-600 bg-red-600 p-2 text-white shadow-xl hover:bg-red-500"
                   onClick={handleLeave}
@@ -160,12 +154,6 @@ const EventDetail = ({ params }: { params: Params }) => {
                   <Icons.close width={14} height={14} className="ml-2" />
                 </Button>
               ) : (
-                // <button
-                //   onClick={handleJoin}
-                //   className="rounded bg-orange px-4 py-2 text-white"
-                // >
-                //   Rejoindre
-                // </button>
                 <Button
                   onClick={handleJoin}
                   type="submit"
