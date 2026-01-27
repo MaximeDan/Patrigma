@@ -114,6 +114,7 @@ const JourneyUI = async (id: string) => {
           <Rating
             rating={averageRating}
             ratingCount={journey.comments.length}
+            hasCommentCount
           />
           {journey.comments.map((comment) => (
             <div key={comment.id} className="mb-3 flex flex-col gap-1">

@@ -63,13 +63,13 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
         <h2 className="mb-2 font-semibold">{journey.title}</h2>
         <div className="mb-2 flex">
           <div className="flex flex-wrap gap-[6px]">
-            <div className="flex flex-shrink-0 items-center rounded-md bg-slate-300 px-2 py-[6px]">
+            <div className="flex shrink-0 items-center rounded-md bg-slate-300 px-2 py-[6px]">
               <Icons.dumbbel />
               <p className="text-sm font-semibold text-gray">
                 {phisicalDificulty}
               </p>
             </div>
-            <div className="flex flex-shrink-0 items-center gap-1 rounded-md bg-slate-300 px-2 py-[6px]">
+            <div className="flex shrink-0 items-center gap-1 rounded-md bg-slate-300 px-2 py-[6px]">
               <Icons.bulb />
               <p className="text-sm font-semibold text-gray">
                 {cluesDificulty}
@@ -78,7 +78,11 @@ const JourneyCard = ({ journey }: JourneyCardProps) => {
           </div>
         </div>
         <p className="mb-4 text-sm">{journey.description}</p>
-        <Rating rating={averageRate} ratingCount={journey.comments.length} />
+        <Rating
+          rating={averageRate}
+          ratingCount={journey.comments.length}
+          hasCommentCount
+        />
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-center gap-1 text-orange">
             <Icons.mapPin />
