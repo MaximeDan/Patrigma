@@ -85,10 +85,6 @@ const JourneyUI = async (id: string) => {
           <h2>Accessibilité</h2>
         </div>
         <div className="mt-4 flex flex-wrap gap-6 text-center">
-          {/* <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
-            <LevelBullet level={journey.mobilityImpaired} />
-            <Icons.pmr />
-          </div> */}
           <div className="flex flex-col items-center justify-center rounded-lg border-2 border-orange bg-slate-200 p-2 shadow-md">
             <Icons.pmr />
             <p className="text-sm">{journey.mobilityImpaired}</p>
@@ -105,18 +101,6 @@ const JourneyUI = async (id: string) => {
             <Icons.cognitivelyImpaired />
             <p className="text-sm">{journey.cognitivelyImpaired}</p>
           </div>
-          {/* <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2  border-cadetblue bg-white">
-            <LevelBullet level={journey.partiallySighted} />
-            <Icons.partiallySighted />
-          </div>
-          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
-            <LevelBullet level={journey.partiallyDeaf} />
-            <Icons.partiallyDeaf />
-          </div>
-          <div className="relative flex aspect-[1/1] max-h-32 max-w-32 flex-1 items-center justify-center rounded-lg border-2 border-cadetblue bg-white">
-            <LevelBullet level={journey.cognitivelyImpaired} />
-            <Icons.cognitivelyImpaired />
-          </div> */}
         </div>
         <h2 className="mt-[18px] text-lg font-semibold text-orange">
           Pré-requis

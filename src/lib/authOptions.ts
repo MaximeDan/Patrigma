@@ -7,6 +7,10 @@ import prisma from "./prisma";
 import { SignJWT } from "jose";
 import { secretKey } from "@/constant/secret";
 
+if (!process.env.NEXTAUTH_SECRET) {
+  throw new Error("NEXTAUTH_SECRET environment variable is not set");
+}
+
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
@@ -49,10 +53,13 @@ export const authOptions = {
       }
       return session;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account: _account }) {
       if (user) {
-        // @ts-ignore
-        const dbUser = await readUserByEmail(user.user.email);
+        const userEmail = (user as any)?.user?.email;
+        if (!userEmail) {
+          throw new Error("User email is missing");
+        }
+        const dbUser = await readUserByEmail(userEmail);
         token.id = dbUser?.id ?? (user.id as number);
         token.name = dbUser?.name;
         token.email = dbUser?.email;

@@ -18,8 +18,8 @@ interface LeafletMapProps {
   form: any;
   updateCoordinates: (latitude: number, longitude: number) => void;
 }
-// @ts-ignore todo: fix this @MaximeDan
-delete L.Icon.Default.prototype._getIconUrl;
+// Fix for Leaflet default icon paths in Next.js
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "/icons/marker-icon-2x.png",

@@ -45,7 +45,6 @@ export const createJourney = async (
       steps: {
         createMany: {
           data: steps.map((step) => ({
-            journeyId: journey.id,
             puzzle: step.puzzle,
             answer: step.answer,
             hint: step.hint,

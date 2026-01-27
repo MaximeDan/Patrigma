@@ -80,8 +80,8 @@ const JourneyForm = () => {
   const processForm: SubmitHandler<JourneyFormValues> = async (data) => {
     const { steps, ...journey } = data;
 
-    const parsedSteps: JourneyStep = JSON.parse(steps);
-    // @ts-ignore
+    const parsedSteps = JSON.parse(steps) as JourneyStep;
+    // journeyId will be assigned by the backend when creating the journey
     const stepObject: StepWithoutDates[] = parsedSteps.steps.map(
       (step, index) => {
         return {
@@ -93,7 +93,8 @@ const JourneyForm = () => {
           stepNumber: index + 1,
           pictureHint: undefined,
           picturePuzzle: undefined,
-        };
+          journeyId: 0, // Placeholder - will be assigned by backend
+        } as StepWithoutDates;
       },
     );
 
@@ -173,10 +174,6 @@ const JourneyForm = () => {
   return (
     <div className="fixed left-0 top-0 z-10 flex size-full flex-col overflow-scroll bg-background px-5  pb-12 pt-5">
       <div className="flex justify-end">
-        {/* <Button onClick={dismissModal}>
-          <span>Quitter</span>
-          <Icons.close width={14} height={14} className="ml-2" />
-        </Button> */}
         <Button
           className="mt-5 border-red-600 bg-red-600 p-2 text-white shadow-xl hover:bg-red-500"
           onClick={dismissModal}

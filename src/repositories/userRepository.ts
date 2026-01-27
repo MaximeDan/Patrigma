@@ -13,7 +13,10 @@ export const readUserByEmail = async (
     const user = await prisma.user.findUnique({ where: { email } });
     return user;
   } catch (error) {
-    console.error("Error reading user by email", error);
+    // Log error for debugging but don't expose to client
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error reading user by email", error);
+    }
     return null;
   }
 };

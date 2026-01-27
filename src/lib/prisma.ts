@@ -1,6 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is not set");
+}
+
 const prismaClientSingleton = () => {
+  // For Prisma 7: connection URL is read from prisma.config.ts
+  // For Prisma 5: connection URL is read from schema.prisma (legacy)
+  // This works with both versions
   return new PrismaClient();
 };
 

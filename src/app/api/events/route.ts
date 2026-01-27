@@ -3,6 +3,9 @@ import { getAllEvents, registerOrModifyEvent } from "@/services/eventService";
 import { EventRequestBody } from "@/types/event";
 import { eventFormSchema } from "@/validators/EventFormSchema";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import { UnauthorizedException } from "@/types/exceptions";
 
 /**
  * @returns NextResponse
@@ -24,6 +27,11 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      throw new UnauthorizedException("Unauthorized");
+    }
+
     const body = await request.json();
     const data: EventRequestBody = {
       ...body,

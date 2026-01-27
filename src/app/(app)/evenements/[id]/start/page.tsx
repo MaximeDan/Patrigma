@@ -104,12 +104,6 @@ const EventStart = ({ params }: { params: Params }) => {
                   className="rounded-md border p-2 text-black"
                   placeholder="Votre réponse"
                 />
-                {/* <button
-                  onClick={handleCheckAnswer}
-                  className="ml-4 rounded-md bg-orange p-2 text-white hover:bg-orange shadow-xl"
-                >
-                  Valider
-                </button> */}
                 <Button
                   className="ml-2 border-orange bg-orange p-2 text-white shadow-xl hover:bg-orange"
                   type="button"

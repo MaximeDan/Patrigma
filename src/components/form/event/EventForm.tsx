@@ -23,7 +23,6 @@ import { addDays } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
-import { handleException } from "@/utils/errorHandlerUtils";
 import { EventRequestBody } from "@/types/event";
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;
@@ -82,7 +81,9 @@ const EventForm = () => {
 
       const token = session?.accessToken;
 
-      const response = await fetch(`${process.env.BASE_URL}/api/events`, {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events`,
+        {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +99,10 @@ const EventForm = () => {
         setFormStatus("errored");
       }
     } catch (error) {
-      handleException(error);
+      setFormStatus("errored");
+      if (process.env.NODE_ENV === "development") {
+        console.error("Error creating event:", error);
+      }
     }
   };
 

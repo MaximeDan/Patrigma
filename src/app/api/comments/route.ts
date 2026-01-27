@@ -3,6 +3,9 @@ import { registerOrModifyComment } from "@/services/commentService";
 import { CommentWithoutDates } from "@/types/comment";
 import { commentBodySchema } from "@/validators/api/commentSchema";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import { UnauthorizedException } from "@/types/exceptions";
 
 /**
  * @params request: NextRequest
@@ -11,6 +14,11 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      throw new UnauthorizedException("Unauthorized");
+    }
+
     const body = await request.json();
     // Parse the body with zod to get the comment
     const comment: CommentWithoutDates = commentBodySchema.parse(body).comment;
